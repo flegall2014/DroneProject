@@ -1,0 +1,13 @@
+<?xml version="1.0" ?><svg clip-rule="evenodd" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><defs><style type="text/css"><![CDATA[
+    .str2 {stroke:#434242;stroke-width:5}
+    .str0 {stroke:#434242;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
+    .str1 {stroke:#434242;stroke-width:15;stroke-linejoin:round}
+    .fil2 {fill:#434242}
+    .fil1 {fill:#FEFEFE}
+    .fil5 {fill:#0075D8}
+    .fil6 {fill:#008BFF}
+    .fil7 {fill:#289CFF}
+    .fil3 {fill:#979798}
+    .fil4 {fill:#CDCDCE}
+    .fil0 {fill:#FFFFFF}
+   ]]></style></defs><g id="Layer_x0020_1"><path class="fil0 str0" d="M190 30h140c11 0 20 9 20 20v400c0 11-9 20-20 20h-280c-11 0-20-9-20-20v-260l160-160z"/><path class="fil1 str0" d="M160 190h-130l160-160v130c0 17-14 30-30 30z"/><path class="fil2 str1" d="M400 88l64 63c6 6 6 16 0 22l-202 201-127 43 42-128 202-201c6-6 15-6 21 0z"/><rect class="fil3" height="219.999" transform="matrix(-2.121 -2.121 .064 -.064 424.911 211.53)" width="39.999"/><polygon class="fil4" points="177,289 262,374 135,417"/><rect class="fil5" height="229.998" transform="matrix(.707 .707 -.707 .707 396.628 183.246)" width="39.997"/><rect class="fil6" height="230.001" transform="matrix(.707 .707 -.707 .707 368.344 154.959)" width="39.999"/><rect class="fil7" height="230.001" transform="matrix(.707 .707 -.707 .707 340.059 126.675)" width="40.001"/><path class="fil2 str2" d="M135 417l66-23c-3-10-9-19-17-27-7-8-17-13-27-17l-22 67z"/></g></svg>

@@ -1,0 +1,373 @@
+// Qt
+#include <QDebug>
+#include <QTextToSpeech>
+
+// Application
+#include "mastercontroller.h"
+#include "pluginloader.h"
+#include "dronemodel.h"
+#include "settingcontroller.h"
+#include "drone.h"
+#include "comstation.h"
+#include "waypointmodel.h"
+#include <defs.h>
+#include <waypoint.h>
+#include <serializehelper.h>
+
+//-------------------------------------------------------------------------------------------------
+
+MasterController::MasterController(QObject *pParent) : QObject(pParent)
+{
+    // Application main title
+    m_sApplicationTitle = tr("Welcome to Spy'C ground station");
+
+    // Setup setting controller
+    m_pSettingController = new SettingController(this);
+
+    // Com station
+    m_pComStation = new ComStation();
+    m_pComStation->moveToThread(&m_comStationThread);
+
+    //
+    // Handle communication with com station
+    //
+
+    // Connect thread started to comStation run
+    connect(&m_comStationThread, &QThread::started, m_pComStation, &ComStation::run, Qt::QueuedConnection);
+
+    // Listen to com station incoming messages
+    connect(this, &MasterController::outGoingMessage, m_pComStation, &ComStation::onSendMessage, Qt::QueuedConnection);
+    connect(m_pComStation, &ComStation::incomingMessage, this, &MasterController::onIncomingMessage, Qt::QueuedConnection);
+
+    // Main drone model
+    m_pDroneModel = new DroneModel(this);
+
+    // Handle requests
+    connect(this, &MasterController::validateSafetyPlanReq, this, &MasterController::onValidateSafetyPlan, Qt::QueuedConnection);
+    connect(this, &MasterController::validateMissionPlanReq, this, &MasterController::onValidateMissionPlan, Qt::QueuedConnection);
+    connect(this, &MasterController::validateLandingPlanReq, this, &MasterController::onValidateLandingPlan, Qt::QueuedConnection);
+    connect(this, &MasterController::takeOffRequest, this, &MasterController::onTakeOffRequest, Qt::QueuedConnection);
+    connect(this, &MasterController::failSafeRequest, this, &MasterController::onFailSafeRequest, Qt::QueuedConnection);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+MasterController::~MasterController()
+{
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool MasterController::startup(const QStringList &lArgs)
+{
+    if (!m_pSettingController->startup(lArgs))
+        return false;
+    return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::shutdown()
+{
+    m_comStationThread.terminate();
+    m_pSettingController->shutdown();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::sendMessage(const QString &sMessage)
+{
+    emit outGoingMessage(sMessage);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::startComStation()
+{
+    m_comStationThread.start();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+DroneModel *MasterController::droneModel() const
+{
+    return m_pDroneModel;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+SettingController *MasterController::settingController() const
+{
+    return m_pSettingController;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+Drone *MasterController::getDrone(const QString &sDroneUID) const
+{
+    foreach (Drone *pDrone, m_vDrones)
+        if ((pDrone != nullptr) && (pDrone->uid() == sDroneUID))
+            return pDrone;
+    return nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::onIncomingMessage(const QString &sMessage)
+{
+    // Retrieve message type
+    QString sMessageType = Core::SerializeHelper::messageType(sMessage);
+
+    // Retrieve drone UID
+    QString sDroneUID = Core::SerializeHelper::droneUID(sMessage);
+
+    // Drone already registered?
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone == nullptr)
+    {
+        pDrone = new Drone(sDroneUID, this);
+        pDrone->initialize(m_pSettingController->allSettings());
+        connect(pDrone, &Drone::globalStatusChanged, this, &MasterController::onDroneGlobalStatusChanged, Qt::QueuedConnection);
+        m_vDrones << pDrone;
+    }
+
+    // Did we get a drone?
+    if (pDrone == nullptr)
+        return;
+
+    // Process drone status
+    if (sMessageType == TAG_DRONE_STATUS)
+        pDrone->deserializeGlobalStatus(sMessage);
+    else
+    // Safety plan
+    if (sMessageType == TAG_SAFETY_PLAN)
+        pDrone->deserializeSafetyPlan(sMessage);
+    else
+    // Mission plan
+    if (sMessageType == TAG_MISSION_PLAN)
+        pDrone->deserializeMissionPlan(sMessage);
+    else
+    // Landing plan
+    if (sMessageType == TAG_LANDING_PLAN)
+        pDrone->deserializeLandingPlan(sMessage);
+    else
+    // Position
+    if (sMessageType == TAG_POSITION)
+        pDrone->deserializePosition(sMessage);
+    else
+    if (sMessageType == TAG_BATTERY)
+        pDrone->deserializeBatteryLevel(sMessage);
+    else
+    if (sMessageType == TAG_RETURN)
+        pDrone->deserializeReturnLevel(sMessage);
+    else
+    // Process drone error
+    if (sMessageType == TAG_DRONE_ERROR)
+    {
+        QString sDroneUID;
+        SpyCore::DroneError eDroneError;
+        Core::SerializeHelper::deSerializeDroneError(sMessage, eDroneError, sDroneUID);
+    }
+    else
+    {
+        qDebug() << "UNKNOWN MESSAGE " << sMessageType << sMessage;
+    }
+
+    // Add drone
+    m_pDroneModel->addDrone(pDrone);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::onDroneGlobalStatusChanged()
+{
+    Drone *pSender = dynamic_cast<Drone *>(sender());
+    if (pSender != nullptr)
+    {
+        if (pSender->globalStatus() != SpyCore::NOMINAL)
+        {
+            QString sVoiceMsg = "";
+            if (pSender->globalStatus() == SpyCore::WARNING)
+            {
+                sVoiceMsg = QString("%1 is in warning state").arg(pSender->uid());
+            }
+            else
+            if (pSender->globalStatus() == SpyCore::CRITICAL)
+            {
+                sVoiceMsg = QString("%1 is in critical state").arg(pSender->uid());
+            }
+            if (!sVoiceMsg.isEmpty())
+                m_pSettingController->say(sVoiceMsg);
+        }
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::onTakeOffRequest(const QString &sDroneUID)
+{
+    sendMessage(Core::SerializeHelper::serializeTakeOffRequest(sDroneUID));
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::onFailSafeRequest(const QString &sDroneUID)
+{
+    sendMessage(Core::SerializeHelper::serializeFailSafeRequest(sDroneUID));
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::uploadSafetyPlan(const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+        sendMessage(pDrone->serializeSafetyPlan());
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::uploadMissionPlan(const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+        sendMessage(pDrone->serializeMissionPlan());
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::uploadLandingPlan(const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+        sendMessage(pDrone->serializeLandingPlan());
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::setCurrentDrone(Drone *pCurrentDrone)
+{
+    m_pCurrentDrone = pCurrentDrone;
+    emit currentDroneChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+Drone *MasterController::currentDrone() const
+{
+    return m_pCurrentDrone;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::setApplicationTitle(const QString &sApplicationTitle)
+{
+    m_sApplicationTitle = sApplicationTitle;
+    emit applicationTitleChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+const QString &MasterController::applicationTitle() const
+{
+    return m_sApplicationTitle;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::takeOff(const QString &sDroneUID)
+{
+    emit takeOffRequest(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::failSafe(const QString &sDroneUID)
+{
+    emit failSafeRequest(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::validateSafetyPlanRequest(const QString &sDroneUID)
+{
+    emit validateSafetyPlanReq(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::onValidateSafetyPlan(const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+    {
+        // Retrieve safety area
+        QGeoPath safety = pDrone->safetyModel()->path();
+        if (!safety.isEmpty())
+        {
+            if (safety.size() > 2)
+            {
+                pDrone->closeSafety();
+                uploadSafetyPlan(pDrone->uid());
+            }
+            else
+                emit missionPlanError(SpyCore::NOT_ENOUGH_POINTS_IN_SAFETY, pDrone->uid());
+        }
+        else emit missionPlanError(SpyCore::EMPTY_SAFETY, pDrone->uid());
+    }
+}
+
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::validateMissionPlanRequest(const QString &sDroneUID)
+{
+    emit validateMissionPlanReq(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::onValidateMissionPlan(const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+    {
+        // Retrieve safety area
+        QGeoPath missionPlan = pDrone->missionPlanModel()->path();
+        if (!missionPlan.isEmpty())
+        {
+            if (missionPlan.size() > 2)
+                uploadMissionPlan(pDrone->uid());
+            else
+                emit missionPlanError(SpyCore::NOT_ENOUGH_POINTS_IN_MISSION_PLAN, pDrone->uid());
+        }
+        else emit missionPlanError(SpyCore::EMPTY_MISSION_PLAN, pDrone->uid());
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::validateLandingPlanRequest(const QString &sDroneUID)
+{
+    emit validateLandingPlanReq(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::onValidateLandingPlan(const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+    {
+        // Retrieve landing plan
+        QGeoPath landingPlan = pDrone->landingPlanModel()->path();
+        if (!landingPlan.isEmpty())
+        {
+            if (landingPlan.size() == 3)
+                uploadLandingPlan(pDrone->uid());
+            else
+                emit missionPlanError(SpyCore::UNEXPECTED_LANDING_PLAN_COUNT, pDrone->uid());
+        }
+        else emit missionPlanError(SpyCore::EMPTY_LANDING_PLAN, pDrone->uid());
+    }
+}
