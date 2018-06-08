@@ -372,7 +372,6 @@ void DroneBase::deserializePosition(const QString &sPosition)
         geoCoord.setAltitude(dAltitude);
         setPosition(geoCoord);
         setHeading(positionNode.attributes()[ATTR_HEADING].toDouble());
-        qDebug() << "SET FLIGHT STATUS = " << m_eFlightStatus;
         setFlightStatus(positionNode.attributes()[ATTR_FLIGHT_STATUS].toInt());
     }
 }

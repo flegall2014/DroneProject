@@ -212,9 +212,6 @@ private:
     //! Landing plan
     WayPointList m_landingPlan;
 
-    //! Exclusion area
-    QList<QGeoPath> m_lExclusionArea;
-
     //! Current position
     QGeoCoordinate m_position;
 
