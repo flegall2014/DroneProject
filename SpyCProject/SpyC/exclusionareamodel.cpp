@@ -4,7 +4,7 @@
 
 // Application
 #include "exclusionareamodel.h"
-#include "baseshape.h"
+#include <baseshape.h>
 
 //-------------------------------------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ QHash<int, QByteArray> ExclusionAreaModel::roleNames() const
 
 //-------------------------------------------------------------------------------------------------
 
-void ExclusionAreaModel::addShape(BaseShape *pShape)
+void ExclusionAreaModel::addShape(Core::BaseShape *pShape)
 {
     if (pShape != nullptr)
     {
@@ -64,14 +64,14 @@ void ExclusionAreaModel::addShape(BaseShape *pShape)
 
 //-------------------------------------------------------------------------------------------------
 
-BaseShape *ExclusionAreaModel::currentShape() const
+Core::BaseShape *ExclusionAreaModel::currentShape() const
 {
     return m_pCurrentShape;
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void ExclusionAreaModel::setCurrentShape(BaseShape *pShape)
+void ExclusionAreaModel::setCurrentShape(Core::BaseShape *pShape)
 {
     m_pCurrentShape = pShape;
     emit currentShapeChanged();
@@ -88,9 +88,13 @@ int ExclusionAreaModel::shapeCount() const
 
 void ExclusionAreaModel::addRectangle(const QGeoCoordinate &center)
 {
+    qDebug() << "ADD RECTANGLE " << center.latitude() << center.longitude();
     QGeoCoordinate topLeft = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 135);
     QGeoCoordinate bottomRight = center.atDistanceAndAzimuth(DEFAULT_RADIUS, -45);
-    RectangleShape *pShape = new RectangleShape(topLeft, bottomRight, this);
+    qDebug() << topLeft.latitude() << topLeft.longitude();
+    qDebug() << bottomRight.latitude() << bottomRight.longitude();
+
+    Core::RectangleShape *pShape = new Core::RectangleShape(topLeft, bottomRight, this);
     setCurrentShape(pShape);
     addShape(pShape);
     emit shapeCountChanged();
@@ -100,7 +104,7 @@ void ExclusionAreaModel::addRectangle(const QGeoCoordinate &center)
 
 void ExclusionAreaModel::addCircle(const QGeoCoordinate &center)
 {
-    CircleShape *pShape = new CircleShape(center, DEFAULT_RADIUS, this);
+    Core::CircleShape *pShape = new Core::CircleShape(center, DEFAULT_RADIUS, this);
     setCurrentShape(pShape);
     addShape(pShape);
     emit shapeCountChanged();
@@ -113,7 +117,7 @@ void ExclusionAreaModel::addTriangle(const QGeoCoordinate &center)
     QGeoCoordinate point1 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 90);
     QGeoCoordinate point2 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 210);
     QGeoCoordinate point3 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 330);
-    TriangleShape *pShape = new TriangleShape(point1, point2, point3, this);
+    Core::TriangleShape *pShape = new Core::TriangleShape(point1, point2, point3, this);
     setCurrentShape(pShape);
     addShape(pShape);
     emit shapeCountChanged();
@@ -124,7 +128,7 @@ void ExclusionAreaModel::addTriangle(const QGeoCoordinate &center)
 void ExclusionAreaModel::removeShape(int iShapeIndex)
 {
     beginResetModel();
-    BaseShape *pShape = m_vShapes.takeAt(iShapeIndex);
+    Core::BaseShape *pShape = m_vShapes.takeAt(iShapeIndex);
     if (pShape != nullptr)
         delete pShape;
     endResetModel();
@@ -144,7 +148,7 @@ void ExclusionAreaModel::clear()
 
 //-------------------------------------------------------------------------------------------------
 
-const QVector<BaseShape *> &ExclusionAreaModel::shapes() const
+const QVector<Core::BaseShape *> &ExclusionAreaModel::shapes() const
 {
     return m_vShapes;
 }

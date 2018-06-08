@@ -25,6 +25,17 @@ WayPoint::~WayPoint()
 
 //-------------------------------------------------------------------------------------------------
 
+bool WayPoint::operator==(const WayPoint &other) const
+{
+    return m_geoCoord == other.geoCoord() &&
+        m_eType == other.type() &&
+            m_bClockWise == other.clockWise() &&
+                m_hMetaData == other.metaData() &&
+                    m_eSpeed == other.speed();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 const QGeoCoordinate &WayPoint::geoCoord() const
 {
     return m_geoCoord;

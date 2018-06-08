@@ -102,6 +102,12 @@ Item {
             root.msgType = SpyC.CRITICAL_MSG
         }
         else
+        if (dialogType === SpyC.EMPTY_EXCLUSION_AREA)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/UnexpectedLandingPlanCountErrorDialog.qml"
+            root.msgType = SpyC.CRITICAL_MSG
+        }
+        else
         if (dialogType === SpyC.EXIT_SPYC)
         {
             dialogLoader.source = "qrc:/qml/dialogs/ConfirmExitSpyCDialog.qml"

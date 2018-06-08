@@ -63,7 +63,6 @@ DISTFILES +=
 HEADERS += \
     alert.h \
     alertmodel.h \
-    baseshape.h \
     comstation.h \
     dronemodel.h \
     exclusionareamodel.h \
@@ -81,7 +80,6 @@ HEADERS += \
 SOURCES += \
     alert.cpp \
     alertmodel.cpp \
-    baseshape.cpp \
     comstation.cpp \
     dronemodel.cpp \
     exclusionareamodel.cpp \

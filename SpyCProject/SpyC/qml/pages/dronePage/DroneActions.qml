@@ -112,13 +112,6 @@ Grid {
             onClicked: dialogMgr.showDialog(SpyC.CONFIRM_FAILSAFE)
             label: qsTr("Fail safe")
             textPosition: "below"
-
-            function onFlightStatusChanged()
-            {
-                console.log("TOTOTOTOTOTOTOTO ", targetDrone.flightStatus)
-            }
-
-            Component.onCompleted: targetDrone.flightStatusChanged.connect(onFlightStatusChanged)
         }
     }
 

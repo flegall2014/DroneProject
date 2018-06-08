@@ -134,5 +134,6 @@
         <file>qml/widgets/StandardRadioButton.qml</file>
         <file>qml/widgets/BatteryWidget.qml</file>
         <file>icons/ico-ruler.svg</file>
+        <file>qml/dialogs/EmptyExclusionAreaErrorDialog.qml</file>
     </qresource>
 </RCC>

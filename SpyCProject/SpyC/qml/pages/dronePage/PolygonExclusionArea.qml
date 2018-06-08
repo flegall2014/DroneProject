@@ -48,7 +48,7 @@ MapItemView {
         onTargetShapeChanged: {
             if ((typeof targetShape !== "undefined") && (targetShape !== null))
             {
-                polygonShape.visible = (targetShape.type === BaseShape.TRIANGLE) || (targetShape.type === BaseShape.RECTANGLE)
+                polygonShape.visible = (targetShape.type === SpyC.TRIANGLE) || (targetShape.type === SpyC.RECTANGLE)
                 if (polygonShape.visible)
                 {
                     targetShape.pathChanged.connect(onCurrentPathChanged)

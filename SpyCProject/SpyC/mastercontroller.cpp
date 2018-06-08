@@ -10,6 +10,7 @@
 #include "drone.h"
 #include "comstation.h"
 #include "waypointmodel.h"
+#include "exclusionareamodel.h"
 #include <defs.h>
 #include <waypoint.h>
 #include <serializehelper.h>
@@ -46,6 +47,7 @@ MasterController::MasterController(QObject *pParent) : QObject(pParent)
     connect(this, &MasterController::validateSafetyPlanReq, this, &MasterController::onValidateSafetyPlan, Qt::QueuedConnection);
     connect(this, &MasterController::validateMissionPlanReq, this, &MasterController::onValidateMissionPlan, Qt::QueuedConnection);
     connect(this, &MasterController::validateLandingPlanReq, this, &MasterController::onValidateLandingPlan, Qt::QueuedConnection);
+    connect(this, &MasterController::validateExclusionAreaReq, this, &MasterController::onValidateExclusionArea, Qt::QueuedConnection);
     connect(this, &MasterController::takeOffRequest, this, &MasterController::onTakeOffRequest, Qt::QueuedConnection);
     connect(this, &MasterController::failSafeRequest, this, &MasterController::onFailSafeRequest, Qt::QueuedConnection);
 }
@@ -206,7 +208,20 @@ void MasterController::onDroneGlobalStatusChanged()
 
 void MasterController::onTakeOffRequest(const QString &sDroneUID)
 {
-    sendMessage(Core::SerializeHelper::serializeTakeOffRequest(sDroneUID));
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+    {
+        if (pDrone->missionPlan().isEmpty())
+            emit missionPlanError(SpyCore::EMPTY_MISSION_PLAN, sDroneUID);
+        else
+        if (pDrone->safetyPlan().isEmpty())
+            emit missionPlanError(SpyCore::EMPTY_SAFETY_PLAN, sDroneUID);
+        else
+        if (pDrone->landingPlan().isEmpty())
+            emit missionPlanError(SpyCore::EMPTY_LANDING_PLAN, sDroneUID);
+        else
+        sendMessage(Core::SerializeHelper::serializeTakeOffRequest(sDroneUID));
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -241,6 +256,15 @@ void MasterController::uploadLandingPlan(const QString &sDroneUID)
     Drone *pDrone = getDrone(sDroneUID);
     if (pDrone != nullptr)
         sendMessage(pDrone->serializeLandingPlan());
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::uploadExclusionArea(const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+        sendMessage(pDrone->serializeExclusionArea());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -310,10 +334,9 @@ void MasterController::onValidateSafetyPlan(const QString &sDroneUID)
                 pDrone->closeSafety();
                 uploadSafetyPlan(pDrone->uid());
             }
-            else
-                emit missionPlanError(SpyCore::NOT_ENOUGH_POINTS_IN_SAFETY, pDrone->uid());
+            else emit missionPlanError(SpyCore::NOT_ENOUGH_POINTS_IN_SAFETY, pDrone->uid());
         }
-        else emit missionPlanError(SpyCore::EMPTY_SAFETY, pDrone->uid());
+        else emit missionPlanError(SpyCore::EMPTY_SAFETY_PLAN, pDrone->uid());
     }
 }
 
@@ -369,5 +392,28 @@ void MasterController::onValidateLandingPlan(const QString &sDroneUID)
                 emit missionPlanError(SpyCore::UNEXPECTED_LANDING_PLAN_COUNT, pDrone->uid());
         }
         else emit missionPlanError(SpyCore::EMPTY_LANDING_PLAN, pDrone->uid());
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::validateExclusionAreaRequest(const QString &sDroneUID)
+{
+    emit validateExclusionAreaReq(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::onValidateExclusionArea(const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+    {
+        // Retrieve landing plan
+        const QVector<Core::BaseShape *> &vShapes = pDrone->exclusionAreaModel()->shapes();
+        if (!vShapes.isEmpty())
+            emit missionPlanError(SpyCore::EMPTY_EXCLUSION_AREA, pDrone->uid());
+        else
+            uploadExclusionArea(pDrone->uid());
     }
 }

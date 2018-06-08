@@ -8,10 +8,12 @@
 #include <QGeoPath>
 
 // Application
+#include "spyclib_global.h"
 #include <spycore.h>
 #define DEFAULT_RADIUS 500
 
-class BaseShape : public QObject
+namespace Core {
+class SPYCLIBSHARED_EXPORT BaseShape : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QGeoPath path READ path NOTIFY pathChanged)
@@ -100,7 +102,7 @@ signals:
     void typeChanged();
 };
 
-class RectangleShape : public BaseShape
+class SPYCLIBSHARED_EXPORT RectangleShape : public BaseShape
 {
     Q_OBJECT
 
@@ -132,7 +134,7 @@ public:
     static void deserialize(const QString &sSerialized, QGeoCoordinate &center, QGeoPath &geoPath);
 };
 
-class CircleShape : public BaseShape
+class SPYCLIBSHARED_EXPORT CircleShape : public BaseShape
 {
     Q_OBJECT
     Q_PROPERTY(double radius READ radius NOTIFY pathChanged)
@@ -179,7 +181,7 @@ private:
     double m_dRadius = 0;
 };
 
-class TriangleShape : public BaseShape
+class SPYCLIBSHARED_EXPORT TriangleShape : public BaseShape
 {
     Q_OBJECT
 
@@ -200,5 +202,6 @@ public:
     //! Deserialize
     static void deserialize(const QString &sSerialized, QGeoCoordinate &center, QGeoPath &geoPath);
 };
+}
 
 #endif // BASESHAPE_H

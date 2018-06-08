@@ -6,6 +6,7 @@
 #include <cxmlnode.h>
 #include <defs.h>
 #define BASE_INCREMENT 100
+using namespace Core;
 
 //-------------------------------------------------------------------------------------------------
 

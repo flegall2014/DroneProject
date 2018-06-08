@@ -58,8 +58,11 @@ int DroneBase::flightStatus() const
 
 void DroneBase::setFlightStatus(int iFlightStatus)
 {
-    m_eFlightStatus = (SpyCore::FlightStatus)iFlightStatus;
-    emit flightStatusChanged();
+    if ((SpyCore::FlightStatus)iFlightStatus != m_eFlightStatus)
+    {
+        m_eFlightStatus = (SpyCore::FlightStatus)iFlightStatus;
+        emit flightStatusChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -80,8 +83,11 @@ const QGeoCoordinate &DroneBase::position() const
 
 void DroneBase::setPosition(const QGeoCoordinate &position)
 {
-    m_position = position;
-    emit positionChanged();
+    if (position != m_position)
+    {
+        m_position = position;
+        emit positionChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -95,8 +101,11 @@ double DroneBase::heading() const
 
 void DroneBase::setHeading(double dHeading)
 {
-    m_dHeading = dHeading;
-    emit headingChanged();
+    if (dHeading != m_dHeading)
+    {
+        m_dHeading = dHeading;
+        emit headingChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -108,8 +117,11 @@ int DroneBase::batteryLevel() const
 
 void DroneBase::setBatteryLevel(int iBatteryLevel)
 {
-    m_iBatteryLevel = iBatteryLevel;
-    emit batteryLevelChanged();
+    if (iBatteryLevel != m_iBatteryLevel)
+    {
+        m_iBatteryLevel = iBatteryLevel;
+        emit batteryLevelChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -123,8 +135,11 @@ int DroneBase::returnLevel() const
 
 void DroneBase::setReturnLevel(int iReturnLevel)
 {
-    m_iReturnLevel = iReturnLevel;
-    emit returnLevelChanged();
+    if (iReturnLevel != m_iReturnLevel)
+    {
+        m_iReturnLevel = iReturnLevel;
+        emit returnLevelChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -138,8 +153,11 @@ const QGeoPath &DroneBase::safetyPlan() const
 
 void DroneBase::setSafetyPlan(const QGeoPath &geoPath)
 {
-    m_safetyPlan = geoPath;
-    emit safetyPlanChanged();
+    if (geoPath != m_safetyPlan)
+    {
+        m_safetyPlan = geoPath;
+        emit safetyPlanChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -153,8 +171,11 @@ const WayPointList &DroneBase::missionPlan() const
 
 void DroneBase::setMissionPlan(const WayPointList &missionPlan)
 {
-    m_missionPlan = missionPlan;
-    emit missionPlanChanged();
+    if (missionPlan != m_missionPlan)
+    {
+        m_missionPlan = missionPlan;
+        emit missionPlanChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -168,8 +189,11 @@ const WayPointList &DroneBase::landingPlan() const
 
 void DroneBase::setLandingPlan(const WayPointList &landingPlan)
 {
-    m_landingPlan = landingPlan;
-    emit landingPlanChanged();
+    if (landingPlan != m_landingPlan)
+    {
+        m_landingPlan = landingPlan;
+        emit landingPlanChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -183,8 +207,11 @@ const QString &DroneBase::videoUrl() const
 
 void DroneBase::setVideoUrl(const QString &sVideoUrl)
 {
-    m_sVideoUrl = sVideoUrl;
-    emit videoUrlChanged();
+    if (sVideoUrl != m_sVideoUrl)
+    {
+        m_sVideoUrl = sVideoUrl;
+        emit videoUrlChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -345,6 +372,7 @@ void DroneBase::deserializePosition(const QString &sPosition)
         geoCoord.setAltitude(dAltitude);
         setPosition(geoCoord);
         setHeading(positionNode.attributes()[ATTR_HEADING].toDouble());
+        qDebug() << "SET FLIGHT STATUS = " << m_eFlightStatus;
         setFlightStatus(positionNode.attributes()[ATTR_FLIGHT_STATUS].toInt());
     }
 }
@@ -558,4 +586,18 @@ void DroneBase::deserializePlan(const CXMLNode &node, QGeoPath &geoPath, QString
         QGeoCoordinate geoCoord(dLatitude, dLongitude, dAltitude);
         geoPath.addCoordinate(geoCoord);
     }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+QString DroneBase::serializeExclusionArea()
+{
+    return QString("");
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::deserializeExclusionArea(const QString &sExclusionArea)
+{
+
 }

@@ -15,7 +15,7 @@
 #include "alertmodel.h"
 #include "gallerymodel.h"
 #include "exclusionareamodel.h"
-#include "baseshape.h"
+#include <baseshape.h>
 #include "translator.h"
 #include "helper.h"
 SpyC *SpyC::sInstance = nullptr;
@@ -28,9 +28,7 @@ SpyC::SpyC(QObject *parent) : QObject(parent)
     registerTypes();
 
     // Drone controller
-    QThread thread;
-    m_pMasterController = new MasterController();
-    m_pMasterController->moveToThread(&thread);
+    m_pMasterController = new MasterController(this);
 
     // Helper
     m_pHelper = new Helper(this);
@@ -59,6 +57,8 @@ SpyC *SpyC::instance()
 
 bool SpyC::startup(const QStringList &lArgs)
 {
+    Q_UNUSED(lArgs);
+
     // Start controller
     if (!m_pMasterController->startup())
         return false;
@@ -98,7 +98,7 @@ void SpyC::registerTypes()
     qmlRegisterType<AlertModel>("Components", 1, 0, "AlertModel");
     qmlRegisterType<GalleryModel>("Components", 1, 0, "GalleryModel");
     qmlRegisterType<ExclusionAreaModel>("Components", 1, 0, "ExclusionAreaModel");
-    qmlRegisterType<BaseShape>("Components", 1, 0, "BaseShape");
+    qmlRegisterType<Core::BaseShape>("Components", 1, 0, "BaseShape");
 }
 
 //-------------------------------------------------------------------------------------------------

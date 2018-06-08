@@ -174,6 +174,12 @@ public:
     //! Deserialize landing plan
     void deserializeLandingPlan(const QString &sLandingPlan);
 
+    //! Serialize exclusion area
+    QString serializeExclusionArea();
+
+    //! Deserialize exclusion area
+    void deserializeExclusionArea(const QString &sExclusionArea);
+
 private:
     //! Serialize plan
     QString serializePlan(const QVector<Core::WayPoint> &plan, const QString &sPlanType, const QString &sDroneUID);

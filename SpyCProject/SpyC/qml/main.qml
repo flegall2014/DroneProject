@@ -83,7 +83,9 @@ ApplicationWindow {
             // Safety error
             function onMissionPlanError(error, droneUID)
             {
-                if (error === SpyC.EMPTY_SAFETY)
+                console.log("MISSION PLAN ERROR " << error << droneUID)
+
+                if (error === SpyC.EMPTY_SAFETY_PLAN)
                     dialogMgr.showDialog(SpyC.EMPTY_SAFETY_ERROR, droneUID)
                 else
                 if (error === SpyC.NOT_ENOUGH_POINTS_IN_SAFETY)

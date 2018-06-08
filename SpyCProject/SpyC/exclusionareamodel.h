@@ -7,12 +7,14 @@
 #include <QGeoPath>
 
 // Application
+namespace Core {
 class BaseShape;
+}
 
 class ExclusionAreaModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(BaseShape *currentShape READ currentShape WRITE setCurrentShape NOTIFY currentShapeChanged)
+    Q_PROPERTY(Core::BaseShape *currentShape READ currentShape WRITE setCurrentShape NOTIFY currentShapeChanged)
     Q_PROPERTY(int shapeCount READ shapeCount NOTIFY shapeCountChanged)
 
 public:
@@ -63,27 +65,27 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Return exclusion area list
-    const QVector<BaseShape *> &shapes() const;
+    const QVector<Core::BaseShape *> &shapes() const;
 
     //! Return current shape
-    BaseShape *currentShape() const;
+    Core::BaseShape *currentShape() const;
 
     //! Set current shape
-    void setCurrentShape(BaseShape *pShape);
+    void setCurrentShape(Core::BaseShape *pShape);
 
 private:
     //! Add shape
-    void addShape(BaseShape *pShape);
+    void addShape(Core::BaseShape *pShape);
 
     //! Return shape count
     int shapeCount() const;
 
 private:
     //! Shapes
-    QVector<BaseShape *> m_vShapes;
+    QVector<Core::BaseShape *> m_vShapes;
 
     //! Current shape
-    BaseShape *m_pCurrentShape = nullptr;
+    Core::BaseShape *m_pCurrentShape = nullptr;
 
 signals:
     //! Current shape changed

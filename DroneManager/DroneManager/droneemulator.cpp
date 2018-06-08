@@ -28,9 +28,9 @@ DroneEmulator::DroneEmulator(const QString &sDroneUID, QObject *pParent) : Core:
     // Timer
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
-    m_droneTimer.setInterval(250);
-    connect(&m_droneTimer, &QTimer::timeout, this, &DroneEmulator::timeOut, Qt::QueuedConnection);
-    m_droneTimer.start();
+    m_positionTimer.setInterval(250);
+    connect(&m_positionTimer, &QTimer::timeout, this, &DroneEmulator::positionTimeOut, Qt::QueuedConnection);
+    m_positionTimer.start();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -48,9 +48,21 @@ DroneEmulator::DroneEmulator(const QString &sDroneUID, const QString &sVideoUrl,
     // Timer
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
-    m_droneTimer.setInterval(250);
-    connect(&m_droneTimer, &QTimer::timeout, this, &DroneEmulator::timeOut, Qt::QueuedConnection);
-    m_droneTimer.start();
+
+    // Position timer
+    m_positionTimer.setInterval(250);
+    connect(&m_positionTimer, &QTimer::timeout, this, &DroneEmulator::positionTimeOut, Qt::QueuedConnection);
+    m_positionTimer.start();
+
+    // Battery timer
+    m_batteryTimer.setInterval(3000);
+    connect(&m_batteryTimer, &QTimer::timeout, this, &DroneEmulator::batteryTimeOut, Qt::QueuedConnection);
+    m_batteryTimer.start();
+
+    // Return timer
+    m_returnTimer.setInterval(3000);
+    connect(&m_returnTimer, &QTimer::timeout, this, &DroneEmulator::returnTimeOut, Qt::QueuedConnection);
+    m_positionTimer.start();
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -53,8 +53,7 @@ void Drone::initialize(const QMap<int, QVariant> &mSettings)
     m_pAlertModel = new AlertModel(this);
     m_pGalleryModel = new GalleryModel(m_mSettings[SpyCore::GALLERY_PATH].toString(), this);
     m_pExclusionAreaModel = new ExclusionAreaModel(this);
-    connect(this, &Drone::batteryStatusChanged, this, &Drone::onGlobalStatusChanged, Qt::QueuedConnection);
-    connect(this, &Drone::positionStatusChanged, this, &Drone::onGlobalStatusChanged, Qt::QueuedConnection);
+    connect(this, &Drone::batteryStatusChanged, this, &Drone::onGlobalStatusChanged, Qt::QueuedConnection);;
 }
 
 //-------------------------------------------------------------------------------------------------

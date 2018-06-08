@@ -9,7 +9,7 @@ using namespace Core;
 
 BatterySimulator::BatterySimulator(QObject *pParent) : BaseSimulator(pParent)
 {
-    m_timer.setInterval(500);
+    m_timer.setInterval(1000);
     connect(&m_timer, &QTimer::timeout, this, &BatterySimulator::onTimeOut, Qt::QueuedConnection);
 }
 

@@ -66,6 +66,9 @@ public:
     //! Validate a landing plan request
     Q_INVOKABLE void validateLandingPlanRequest(const QString &sDroneUID);
 
+    //! Validate an exclusion area request
+    Q_INVOKABLE void validateExclusionAreaRequest(const QString &sDroneUID);
+
     //! Take off
     Q_INVOKABLE void takeOff(const QString &sDroneUID);
 
@@ -100,6 +103,9 @@ public:
 
     //! Upload landing plan
     void uploadLandingPlan(const QString &sDroneUID);
+
+    //! Uplaod exclusion area
+    void uploadExclusionArea(const QString &sDroneUID);
 
 private:
     //-------------------------------------------------------------------------------------------------
@@ -157,6 +163,9 @@ public slots:
     //! Validate landing plan
     void onValidateLandingPlan(const QString &sDroneUID);
 
+    //! Validate exclusion area
+    void onValidateExclusionArea(const QString &sDroneUID);
+
 signals:
     //! Current drone changed
     void currentDroneChanged();
@@ -181,6 +190,9 @@ signals:
 
     //! Validate landing plan request
     void validateLandingPlanReq(const QString &sDroneUID);
+
+    //! Validate exclusion area request
+    void validateExclusionAreaReq(const QString &sDroneUID);
 
     //! Send a take off request
     void takeOffRequest(const QString &sDroneUID);

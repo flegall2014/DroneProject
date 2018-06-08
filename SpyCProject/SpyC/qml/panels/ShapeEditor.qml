@@ -60,7 +60,7 @@ Item {
     onCurrentShapeChanged: {
         if ((typeof currentShape !== "undefined") && (currentShape !== null))
         {
-            if (currentShape.type === BaseShape.CIRCLE)
+            if (currentShape.type === SpyC.CIRCLE)
                 shapeEditorLoader.sourceComponent = circleEditorComponent
             else
                 shapeEditorLoader.sourceComponent = polygonEditorComponent

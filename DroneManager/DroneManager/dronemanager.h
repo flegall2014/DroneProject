@@ -53,8 +53,14 @@ private:
     Core::TCPServer *m_pServer = nullptr;
 
 public slots:
-    //! Drone time out
-    void onDroneTimeOut();
+    //! Drone position time out
+    void onPositionTimeOut();
+
+    //! Drone battery time out
+    void onBatteryTimeOut();
+
+    //! Return time out
+    void onReturnTimeOut();
 
     //! Take off drone
     void onTakeOffRequest(const QString &DroneUID);

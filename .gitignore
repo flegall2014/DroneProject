@@ -9,8 +9,10 @@
 *.so
 *.dll
 *.dylib
+*.Release
+*.mp4
 
-# Qt-es
+*.Debug
 
 /.qmake.cache
 /.qmake.stash
@@ -34,3 +36,5 @@ Makefile*
 *.qmlproject.user.*
 
 build
+*.Release
+*.Debug

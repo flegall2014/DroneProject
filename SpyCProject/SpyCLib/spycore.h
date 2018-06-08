@@ -74,7 +74,7 @@ public:
     enum GalleryRole {FileNameRole=Qt::UserRole+1, FilePathRole, PositionRole};
 
     //! Mission plan error
-    enum MissionPlanError {EMPTY_SAFETY=Qt::UserRole+1, NOT_ENOUGH_POINTS_IN_SAFETY,
+    enum MissionPlanError {EMPTY_SAFETY_PLAN=Qt::UserRole+1, NOT_ENOUGH_POINTS_IN_SAFETY,
                            EMPTY_MISSION_PLAN, NOT_ENOUGH_POINTS_IN_MISSION_PLAN, EMPTY_EXCLUSION_AREA,
                            EMPTY_LANDING_PLAN, UNEXPECTED_LANDING_PLAN_COUNT};
 

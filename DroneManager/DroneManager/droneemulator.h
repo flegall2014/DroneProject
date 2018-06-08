@@ -29,6 +29,7 @@ public:
 
     //-------------------------------------------------------------------------------------------------
     // Control methods
+
     //-------------------------------------------------------------------------------------------------
 
     //! Take off
@@ -44,8 +45,14 @@ private:
     //! Battery simulator
     Core::BatterySimulator *m_pBatterySimulator = nullptr;
 
-    //! Drone timer
-    QTimer m_droneTimer;
+    //! Position timer
+    QTimer m_positionTimer;
+
+    //! Battery timer
+    QTimer m_batteryTimer;
+
+    //! Return timer
+    QTimer m_returnTimer;
 
 public slots:
     //! Position changed
@@ -55,8 +62,14 @@ public slots:
     void onBatteryLevelChanged(int iLevel, int iReturn);
 
 signals:
-    //! Time out
-    void timeOut();
+    //! Position time out
+    void positionTimeOut();
+
+    //! Battery time out
+    void batteryTimeOut();
+
+    //! Return time out
+    void returnTimeOut();
 };
 
 #endif // DRONEEMULATOR_H

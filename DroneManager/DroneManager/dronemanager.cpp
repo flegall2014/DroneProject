@@ -45,7 +45,9 @@ DroneManager::DroneManager(QObject *pParent) : QObject(pParent)
         connect(pDrone, &DroneEmulator::safetyPlanChanged, this, &DroneManager::onSafetyPlanChanged);
         connect(pDrone, &DroneEmulator::missionPlanChanged, this, &DroneManager::onMissionPlanChanged);
         connect(pDrone, &DroneEmulator::landingPlanChanged, this, &DroneManager::onLandingPlanChanged);
-        connect(pDrone, &DroneEmulator::timeOut, this, &DroneManager::onDroneTimeOut, Qt::QueuedConnection);
+        connect(pDrone, &DroneEmulator::positionTimeOut, this, &DroneManager::onPositionTimeOut, Qt::QueuedConnection);
+        connect(pDrone, &DroneEmulator::batteryTimeOut, this, &DroneManager::onBatteryTimeOut, Qt::QueuedConnection);
+        connect(pDrone, &DroneEmulator::returnTimeOut, this, &DroneManager::onReturnTimeOut, Qt::QueuedConnection);
         connect(pDrone, &DroneEmulator::droneError, this, &DroneManager::onDroneError, Qt::QueuedConnection);
         m_vDrones << pDrone;
     }
@@ -78,15 +80,29 @@ DroneEmulator *DroneManager::getDrone(const QString &sDroneUID) const
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneManager::onDroneTimeOut()
+void DroneManager::onPositionTimeOut()
 {
     DroneEmulator *pSender = dynamic_cast<DroneEmulator *>(sender());
     if (pSender != nullptr)
-    {
         sendMessage(pSender->serializePosition());
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneManager::onBatteryTimeOut()
+{
+    DroneEmulator *pSender = dynamic_cast<DroneEmulator *>(sender());
+    if (pSender != nullptr)
         sendMessage(pSender->serializeBatteryLevel());
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneManager::onReturnTimeOut()
+{
+    DroneEmulator *pSender = dynamic_cast<DroneEmulator *>(sender());
+    if (pSender != nullptr)
         sendMessage(pSender->serializeReturnLevel());
-    }
 }
 
 //-------------------------------------------------------------------------------------------------

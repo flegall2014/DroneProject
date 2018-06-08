@@ -55,7 +55,8 @@ HEADERS += \
     tcpserver.h \
     tcpclient.h \
     defs.h \
-    dronebase.h
+    dronebase.h \
+    baseshape.h
 
 SOURCES += \
     spycore.cpp \
@@ -66,4 +67,5 @@ SOURCES += \
     batterysimulator.cpp \
     flightsimulator.cpp \
     tcpserver.cpp \
-    tcpclient.cpp
+    tcpclient.cpp \
+    baseshape.cpp

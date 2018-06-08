@@ -213,35 +213,11 @@ public slots:
     void onGlobalStatusChanged();
 
 signals:
-    //! UID changed
-    void uidChanged();
-
-    //! Video url changed
-    void videoUrlChanged();
-
     //! Global status changed
     void globalStatusChanged();
 
-    //! Mode changed
-    void flightStatusChanged();
-
-    //! Battery level changed
-    void batteryLevelChanged();
-
-    //! Return level changed
-    void returnLevelChanged();
-
     //! Battery status changed
     void batteryStatusChanged();
-
-    //! Position changed
-    void positionChanged();
-
-    //! Heading changed
-    void headingChanged();
-
-    //! Position status changed
-    void positionStatusChanged();
 
     //! Mission plan model changed
     void missionPlanModelChanged();

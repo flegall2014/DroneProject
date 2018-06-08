@@ -6,7 +6,6 @@
 #include "waypoint.h"
 #include <cxmlnode.h>
 #include "spyclib_global.h"
-class BaseShape;
 
 namespace Core {
 class SPYCLIBSHARED_EXPORT SerializeHelper
