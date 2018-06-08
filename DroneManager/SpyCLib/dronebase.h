@@ -13,6 +13,7 @@
 #include <waypoint.h>
 #include <spycore.h>
 #include "cxmlnode.h"
+#include "baseshape.h"
 
 namespace Core {
 class SPYCLIBSHARED_EXPORT DroneBase : public QObject
@@ -223,6 +224,9 @@ private:
 
     //! Return level
     int m_iReturnLevel = 0;
+
+    //! Exclusion area
+    QVector<BaseShape> m_vExclusionArea;
 
 signals:
     //! UID changed

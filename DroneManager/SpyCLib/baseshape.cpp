@@ -159,13 +159,13 @@ void BaseShape::setAltitudeAtIndex(int iIndex, double dAltitude)
 
 QString BaseShape::serialize()
 {
-    Core::CXMLNode rootNode;
     Core::CXMLNode shapeNode;
     if (m_eType == SpyCore::RECTANGLE)
         shapeNode.setTag(TAG_RECTANGLE);
     else
     if (m_eType == SpyCore::TRIANGLE)
         shapeNode.setTag(TAG_TRIANGLE);
+    shapeNode.attributes()[ATTR_NODE_TYPE] = m_eType;
     QStringList lCenter;
     lCenter << QString::number(m_center.latitude()) << QString::number(m_center.longitude());
     shapeNode.attributes()[ATTR_CENTER] = lCenter.join(",");
@@ -176,8 +176,7 @@ QString BaseShape::serialize()
         coordNode.attributes()[ATTR_LONGITUDE] = m_path.coordinateAt(i).longitude();
         shapeNode.nodes() << coordNode;
     }
-    rootNode.nodes() << shapeNode;
-    return rootNode.toJsonString();
+    return shapeNode.toJsonString();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -317,14 +316,13 @@ double CircleShape::radius() const
 
 QString CircleShape::serialize()
 {
-    Core::CXMLNode rootNode;
     Core::CXMLNode circleNode(TAG_CIRCLE);
+    circleNode.attributes()[ATTR_NODE_TYPE] = TAG_CIRCLE;
     QStringList lCenter;
     lCenter << QString::number(m_center.latitude()) << QString::number(m_center.longitude());
     circleNode.attributes()[ATTR_CENTER] = lCenter.join(",");
     circleNode.attributes()[ATTR_RADIUS] = QString::number(m_dRadius);
-    rootNode.nodes() << circleNode;
-    return rootNode.toJsonString();
+    return circleNode.toJsonString();
 }
 
 //-------------------------------------------------------------------------------------------------
