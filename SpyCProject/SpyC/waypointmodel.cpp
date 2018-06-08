@@ -172,10 +172,13 @@ void WayPointModel::setPlan(const QGeoPath &geoPath)
 
 //-------------------------------------------------------------------------------------------------
 
-void WayPointModel::addCoordinate(const QGeoCoordinate &coordinate)
+void WayPointModel::addCoordinate(const QGeoCoordinate &coordinate, int iPosition)
 {
     beginResetModel();
-    m_vWayPoints << Core::WayPoint(coordinate);
+    if ((iPosition >= 0) && (iPosition < m_vWayPoints.size()))
+        m_vWayPoints.insert(iPosition, coordinate);
+    else
+        m_vWayPoints << Core::WayPoint(coordinate);
     endResetModel();
     emit pathChanged();
 }

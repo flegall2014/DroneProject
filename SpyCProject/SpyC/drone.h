@@ -135,13 +135,13 @@ public:
     Q_INVOKABLE virtual void clearLandingPlan();
 
     //! Add coordinate to mission plan
-    Q_INVOKABLE void addCoordinateToMissionPlan(const QGeoCoordinate &geoCoordinate);
+    Q_INVOKABLE void addCoordinateToMissionPlan(const QGeoCoordinate &geoCoordinate, int iPosition=-1);
 
     //! Add coordinate to safety
-    Q_INVOKABLE void addCoordinateToSafety(const QGeoCoordinate &geoCoordinate);
+    Q_INVOKABLE void addCoordinateToSafety(const QGeoCoordinate &geoCoordinate, int iPosition=-1);
 
     //! Add coordinate to landing plan
-    Q_INVOKABLE void addCoordinateToLandingPlan(const QGeoCoordinate &geoCoordinate);
+    Q_INVOKABLE void addCoordinateToLandingPlan(const QGeoCoordinate &geoCoordinate, int iPosition=-1);
 
     //! Set mission plan point position
     Q_INVOKABLE void setMissionPlanPointPosition(int iPointIndex, const QGeoCoordinate &geoCoord);

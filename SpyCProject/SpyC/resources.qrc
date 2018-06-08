@@ -135,5 +135,6 @@
         <file>qml/widgets/BatteryWidget.qml</file>
         <file>icons/ico-ruler.svg</file>
         <file>qml/dialogs/EmptyExclusionAreaErrorDialog.qml</file>
+        <file>images/ico-thales.png</file>
     </qresource>
 </RCC>

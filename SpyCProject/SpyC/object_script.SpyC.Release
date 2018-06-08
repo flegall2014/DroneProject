@@ -1,7 +1,6 @@
 INPUT(
 ./..\obj\alert.o
 ./..\obj\alertmodel.o
-./..\obj\baseshape.o
 ./..\obj\comstation.o
 ./..\obj\dronemodel.o
 ./..\obj\exclusionareamodel.o
@@ -17,7 +16,6 @@ INPUT(
 ./..\obj\drone.o
 ./..\obj\qrc_resources.o
 ./..\obj\moc_alertmodel.o
-./..\obj\moc_baseshape.o
 ./..\obj\moc_comstation.o
 ./..\obj\moc_dronemodel.o
 ./..\obj\moc_exclusionareamodel.o

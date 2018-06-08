@@ -77,7 +77,7 @@ public:
     void setPlan(const QGeoPath &geoPath);
 
     //! Add coordinate
-    void addCoordinate(const QGeoCoordinate &coordinate);
+    void addCoordinate(const QGeoCoordinate &coordinate, int iPosition=-1);
 
     //! Remove coordinate at index
     void removeCoordinateAtIndex(int iCoordIndex);

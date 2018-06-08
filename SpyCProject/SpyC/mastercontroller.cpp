@@ -360,7 +360,11 @@ void MasterController::onValidateMissionPlan(const QString &sDroneUID)
         if (!missionPlan.isEmpty())
         {
             if (missionPlan.size() > 2)
+            {
+                // Add current position
+                pDrone->addCoordinateToMissionPlan(pDrone->position(), 0);
                 uploadMissionPlan(pDrone->uid());
+            }
             else
                 emit missionPlanError(SpyCore::NOT_ENOUGH_POINTS_IN_MISSION_PLAN, pDrone->uid());
         }

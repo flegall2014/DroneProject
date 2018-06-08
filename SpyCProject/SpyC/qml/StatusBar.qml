@@ -52,7 +52,7 @@ Rectangle {
     Image {
         id: thalesIcon
         anchors.centerIn: parent
-        source: "file:///D:/projects/SpyC/SpyCProject/SpyC/thales/ico-thales.png"
+        source: "qrc:/images/ico-thales.png"
         height: parent.height
         fillMode: Image.PreserveAspectFit
         antialiasing: true

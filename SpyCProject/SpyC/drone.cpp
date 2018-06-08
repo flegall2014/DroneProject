@@ -237,33 +237,33 @@ void Drone::clearLandingPlan()
 
 //-------------------------------------------------------------------------------------------------
 
-void Drone::addCoordinateToMissionPlan(const QGeoCoordinate &geoCoordinate)
+void Drone::addCoordinateToMissionPlan(const QGeoCoordinate &geoCoordinate, int iPosition)
 {
     if (m_pMissionPlanModel != nullptr)
     {
-        m_pMissionPlanModel->addCoordinate(geoCoordinate);
+        m_pMissionPlanModel->addCoordinate(geoCoordinate, iPosition);
         DroneBase::setMissionPlan(m_pMissionPlanModel->plan());
     }
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void Drone::addCoordinateToSafety(const QGeoCoordinate &geoCoordinate)
+void Drone::addCoordinateToSafety(const QGeoCoordinate &geoCoordinate, int iPosition)
 {
     if (m_pSafetyModel != nullptr)
     {
-        m_pSafetyModel->addCoordinate(geoCoordinate);
+        m_pSafetyModel->addCoordinate(geoCoordinate, iPosition);
         setSafetyPlan(m_pSafetyModel->geoPath());
     }
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void Drone::addCoordinateToLandingPlan(const QGeoCoordinate &geoCoordinate)
+void Drone::addCoordinateToLandingPlan(const QGeoCoordinate &geoCoordinate, int iPosition)
 {
     if (m_pLandingPlanModel != nullptr)
     {
-        m_pLandingPlanModel->addCoordinate(geoCoordinate);
+        m_pLandingPlanModel->addCoordinate(geoCoordinate, iPosition);
         DroneBase::setLandingPlan(m_pLandingPlanModel->plan());
     }
 }
