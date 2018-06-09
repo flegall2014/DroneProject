@@ -86,7 +86,14 @@ void ExclusionAreaModel::setShapes(const QVector<Core::BaseShape *> &vShapes)
     qDeleteAll(m_vShapes);
     m_vShapes.clear();
     m_vShapes = vShapes;
+    foreach (Core::BaseShape *pShape, vShapes) {
+        qDebug() << "LOLO ! " << pShape;
+        Core::RectangleShape *p = dynamic_cast<Core::RectangleShape *>(pShape);
+        if (p!=nullptr)
+            qDebug() << p->topLeft().latitude() << p->topLeft().longitude() << p->bottomRight().latitude() << p->bottomRight().longitude();
+    }
     endResetModel();
+    emit shapeCountChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -100,12 +107,8 @@ int ExclusionAreaModel::shapeCount() const
 
 void ExclusionAreaModel::addRectangle(const QGeoCoordinate &center)
 {
-    qDebug() << "ADD RECTANGLE " << center.latitude() << center.longitude();
     QGeoCoordinate topLeft = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 135);
     QGeoCoordinate bottomRight = center.atDistanceAndAzimuth(DEFAULT_RADIUS, -45);
-    qDebug() << topLeft.latitude() << topLeft.longitude();
-    qDebug() << bottomRight.latitude() << bottomRight.longitude();
-
     Core::RectangleShape *pShape = new Core::RectangleShape(topLeft, bottomRight, this);
     setCurrentShape(pShape);
     addShape(pShape);

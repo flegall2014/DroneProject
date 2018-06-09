@@ -610,7 +610,6 @@ QString DroneBase::serializeExclusionArea()
             exclAreaNode.nodes() << shapeNode;
         }
     }
-    qDebug() << "DroneBase::serializeExclusionArea " << exclAreaNode.toJsonString();
     return exclAreaNode.toJsonString();
 }
 
@@ -618,47 +617,51 @@ QString DroneBase::serializeExclusionArea()
 
 void DroneBase::deserializeExclusionArea(const QString &sExclusionArea)
 {
-    qDebug() << "DroneBase::deserializeExclusionArea" << sExclusionArea;
-
     qDeleteAll(m_vExclusionArea);
-    CXMLNode exclusionArea = CXMLNode::parseJSON(sExclusionArea);
-    QVector<CXMLNode> vShapeNodes = exclusionArea.getNodesByTagName(TAG_SHAPES);
-    foreach (CXMLNode shapeNode, vShapeNodes)
+    m_vExclusionArea.clear();
+    CXMLNode exclusionAreaNode = CXMLNode::parseJSON(sExclusionArea);
+    QString sNodeType = exclusionAreaNode.attributes()[ATTR_NODE_TYPE];
+    if (sNodeType == TAG_EXCLUSION_AREA)
     {
-        SpyCore::ExclusionShape eShapeType = (SpyCore::ExclusionShape)shapeNode.attributes()[ATTR_NODE_TYPE].toInt();
-        if (eShapeType == SpyCore::RECTANGLE)
+        m_sDroneUID = exclusionAreaNode.attributes()[ATTR_DRONE_UID];
+        QVector<CXMLNode> vShapeNodes = exclusionAreaNode.getNodesByTagName(TAG_SHAPES);
+        foreach (CXMLNode shapeNode, vShapeNodes)
         {
-            QGeoCoordinate center;
-            QGeoPath geoPath;
-            RectangleShape::deserialize(shapeNode.toJsonString(), center, geoPath);
-            if (geoPath.size() == 4)
+            SpyCore::ExclusionShape eShapeType = (SpyCore::ExclusionShape)shapeNode.attributes()[ATTR_NODE_TYPE].toInt();
+            if (eShapeType == SpyCore::RECTANGLE)
             {
-                RectangleShape *pShape = new RectangleShape(this);
-                pShape->setPath(geoPath);
+                QGeoCoordinate center;
+                QGeoPath geoPath;
+                RectangleShape::deserialize(shapeNode.toJsonString(), center, geoPath);
+                if (geoPath.size() == 4)
+                {
+                    RectangleShape *pShape = new RectangleShape(this);
+                    pShape->setPath(geoPath);
+                    m_vExclusionArea << pShape;
+                }
+            }
+            else
+            if (eShapeType == SpyCore::TRIANGLE)
+            {
+                QGeoCoordinate center;
+                QGeoPath geoPath;
+                TriangleShape::deserialize(shapeNode.toJsonString(), center, geoPath);
+                if (geoPath.size() == 3)
+                {
+                    TriangleShape *pShape = new TriangleShape(this);
+                    pShape->setPath(geoPath);
+                    m_vExclusionArea << pShape;
+                }
+            }
+            else
+            if (eShapeType == SpyCore::CIRCLE)
+            {
+                QGeoCoordinate center;
+                double dRadius = 0;
+                CircleShape::deserialize(shapeNode.toJsonString(), center, dRadius);
+                CircleShape *pShape = new CircleShape(center, dRadius, this);
                 m_vExclusionArea << pShape;
             }
-        }
-        else
-        if (eShapeType == SpyCore::TRIANGLE)
-        {
-            QGeoCoordinate center;
-            QGeoPath geoPath;
-            RectangleShape::deserialize(shapeNode.toJsonString(), center, geoPath);
-            if (geoPath.size() == 3)
-            {
-                TriangleShape *pShape = new TriangleShape(this);
-                pShape->setPath(geoPath);
-                m_vExclusionArea << pShape;
-            }
-        }
-        else
-        if (eShapeType == SpyCore::CIRCLE)
-        {
-            QGeoCoordinate center;
-            double dRadius = 0;
-            CircleShape::deserialize(shapeNode.toJsonString(), center, dRadius);
-            CircleShape *pShape = new CircleShape(center, dRadius, this);
-            m_vExclusionArea << pShape;
         }
     }
 }

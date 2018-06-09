@@ -173,8 +173,8 @@ QString BaseShape::serialize()
     for (int i=0; i<m_path.size(); i++)
     {
         Core::CXMLNode coordNode(TAG_COORD);
-        coordNode.attributes()[ATTR_LATITUDE] = m_path.coordinateAt(i).latitude();
-        coordNode.attributes()[ATTR_LONGITUDE] = m_path.coordinateAt(i).longitude();
+        coordNode.attributes()[ATTR_LATITUDE] = QString::number(m_path.coordinateAt(i).latitude());
+        coordNode.attributes()[ATTR_LONGITUDE] = QString::number(m_path.coordinateAt(i).longitude());
         shapeNode.nodes() << coordNode;
     }
     return shapeNode.toJsonString();
@@ -257,7 +257,7 @@ QGeoCoordinate RectangleShape::bottomRight() const
 
 void RectangleShape::setPath(const QGeoPath &path)
 {
-    if (m_path.size() == 4)
+    if (path.size() == 4)
     {
         m_path = path;
         m_center = computeCenter();
