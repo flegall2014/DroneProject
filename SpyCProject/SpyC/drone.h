@@ -212,6 +212,9 @@ public slots:
     //! Global status changed
     void onGlobalStatusChanged();
 
+    //! Shape count changed
+    void onShapeCountChanged();
+
 signals:
     //! Global status changed
     void globalStatusChanged();

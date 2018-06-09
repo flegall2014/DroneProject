@@ -116,6 +116,9 @@ public:
     //! Set video url
     void setVideoUrl(const QString &sVideoUrl);
 
+    //! Set exclusion area
+    void setExclusionArea(const QVector<BaseShape *> &vShapes);
+
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
@@ -226,7 +229,7 @@ private:
     int m_iReturnLevel = 0;
 
     //! Exclusion area
-    QVector<BaseShape> m_vExclusionArea;
+    QVector<BaseShape *> m_vExclusionArea;
 
 signals:
     //! UID changed
@@ -258,6 +261,9 @@ signals:
 
     //! Landing plan changed
     void landingPlanChanged();
+
+    //! Exclusion area changed
+    void exclusionAreaChanged();
 
     //! New message
     void droneError(const SpyCore::DroneError &eDroneError, const QString &sDroneUID);

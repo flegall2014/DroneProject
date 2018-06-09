@@ -53,6 +53,7 @@ void Drone::initialize(const QMap<int, QVariant> &mSettings)
     m_pAlertModel = new AlertModel(this);
     m_pGalleryModel = new GalleryModel(m_mSettings[SpyCore::GALLERY_PATH].toString(), this);
     m_pExclusionAreaModel = new ExclusionAreaModel(this);
+    connect(m_pExclusionAreaModel, &ExclusionAreaModel::shapeCountChanged, this, &Drone::onShapeCountChanged, Qt::QueuedConnection);
     connect(this, &Drone::batteryStatusChanged, this, &Drone::onGlobalStatusChanged, Qt::QueuedConnection);;
 }
 
@@ -360,6 +361,15 @@ void Drone::onGlobalStatusChanged()
     SpyCore::Status eNewGlobalStatus = (SpyCore::Status)batteryStatus();
     if (eNewGlobalStatus != m_eGlobalStatus)
         setGlobalStatus(eNewGlobalStatus);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void Drone::onShapeCountChanged()
+{
+    // Set exclusion area
+    if (m_pExclusionAreaModel != nullptr)
+        setExclusionArea(m_pExclusionAreaModel->shapes());
 }
 
 //-------------------------------------------------------------------------------------------------

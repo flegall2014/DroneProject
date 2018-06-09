@@ -171,6 +171,8 @@ void DroneManager::onNewConnectionFromGroundStation()
 
 void DroneManager::onIncomingMessage(const QString &sMessage)
 {
+    qDebug() << sMessage;
+
     // Retrieve message type
     QString sMessageType = Core::SerializeHelper::messageType(sMessage);
 
@@ -192,6 +194,10 @@ void DroneManager::onIncomingMessage(const QString &sMessage)
         // Landing plan
         if (sMessageType == TAG_LANDING_PLAN)
             pDrone->deserializeLandingPlan(sMessage);
+        else
+        // Exclusion area
+        if (sMessageType == TAG_EXCLUSION_AREA)
+            pDrone->deserializeExclusionArea(sMessage);
         else
         // Take off
         if (sMessageType == TAG_TAKE_OFF)

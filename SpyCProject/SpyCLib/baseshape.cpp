@@ -254,6 +254,17 @@ QGeoCoordinate RectangleShape::bottomRight() const
 
 //-------------------------------------------------------------------------------------------------
 
+void RectangleShape::setPath(const QGeoPath &path)
+{
+    if (m_path.size() == 4)
+    {
+        m_path = path;
+        m_center = computeCenter();
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void RectangleShape::deserialize(const QString &sSerialized, QGeoCoordinate &center, QGeoPath &geoPath)
 {
     Core::CXMLNode rootNode = Core::CXMLNode::parseJSON(sSerialized);
@@ -388,6 +399,17 @@ TriangleShape::TriangleShape(const QGeoCoordinate &point1, const QGeoCoordinate 
 TriangleShape::~TriangleShape()
 {
 
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void TriangleShape::setPath(const QGeoPath &path)
+{
+    if (path.size() == 3)
+    {
+        m_path = path;
+        m_center = computeCenter();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -216,6 +216,14 @@ void DroneBase::setVideoUrl(const QString &sVideoUrl)
 
 //-------------------------------------------------------------------------------------------------
 
+void DroneBase::setExclusionArea(const QVector<BaseShape *> &vExclusionArea)
+{
+    m_vExclusionArea = vExclusionArea;
+    emit exclusionAreaChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void DroneBase::clearSafetyPlan()
 {
     while (!m_safetyPlan.isEmpty())
@@ -277,14 +285,10 @@ QString DroneBase::serializeGlobalStatus()
     landingPlanNode.setTag(TAG_LANDING_PLAN);
     statusNode.nodes() << landingPlanNode;
 
-    QString sFileName = QString("d:/tmp/CLIENT-droneserializedglobalstatus%1").arg(m_sDroneUID);
-    QFile file(sFileName);
-    if (file.open(QIODevice::WriteOnly))
-    {
-        QTextStream out(&file);
-        out << statusNode.toJsonString();
-        file.close();
-    }
+    // Add exclusion area
+    CXMLNode exclusionAreaNode = CXMLNode::parseJSON(serializeExclusionArea());
+    exclusionAreaNode.setTag(TAG_EXCLUSION_AREA);
+    statusNode.nodes() << exclusionAreaNode;
 
     return statusNode.toJsonString();
 }
@@ -336,6 +340,10 @@ void DroneBase::deserializeGlobalStatus(const QString &sGlobalStatus)
         vNodes = statusNode.getNodesByTagName(TAG_LANDING_PLAN);
         if (vNodes.size() > 0)
             deserializeLandingPlan(vNodes.first().toJsonString());
+
+        vNodes = statusNode.getNodesByTagName(TAG_EXCLUSION_AREA);
+        if (vNodes.size() > 0)
+            deserializeExclusionArea(vNodes.first().toJsonString());
     }
 }
 
@@ -495,12 +503,12 @@ void DroneBase::deserializeLandingPlan(const QString &sLandingPlan)
 
 //-------------------------------------------------------------------------------------------------
 
-QString DroneBase::serializePlan(const QVector<Core::WayPoint> &plan, const QString &sPlanType, const QString &sDroneUID)
+QString DroneBase::serializePlan(const QVector<WayPoint> &plan, const QString &sPlanType, const QString &sDroneUID)
 {
     CXMLNode planNode(sPlanType);
     planNode.attributes()[ATTR_NODE_TYPE] = sPlanType;
     planNode.attributes()[ATTR_DRONE_UID] = sDroneUID;
-    foreach (Core::WayPoint wayPoint, plan)
+    foreach (WayPoint wayPoint, plan)
     {
         // Static attributes
         CXMLNode wayPointNode(TAG_WAY_POINT);
@@ -563,7 +571,7 @@ void DroneBase::deserializePlan(const CXMLNode &node, WayPointList &vWayPointLis
         bool bClockWise = (bool)wayPointNode.attributes()[ATTR_WAY_POINT_CLOCKWISE].toInt();
 
         QGeoCoordinate geoCoord(dLatitude, dLongitude, dAltitude);
-        Core::WayPoint wayPoint(geoCoord, (SpyCore::PointType)iType);
+        WayPoint wayPoint(geoCoord, (SpyCore::PointType)iType);
         wayPoint.setSpeed((SpyCore::PointSpeed)iSpeed);
         wayPoint.setClockWise(bClockWise);
         vWayPointList << wayPoint;
@@ -591,12 +599,63 @@ void DroneBase::deserializePlan(const CXMLNode &node, QGeoPath &geoPath, QString
 
 QString DroneBase::serializeExclusionArea()
 {
-    return QString("");
+    CXMLNode shapesNode(TAG_EXCLUSION_AREA);
+    foreach (BaseShape *pShape, m_vExclusionArea)
+    {
+        qDebug() << "ICI";
+        if (pShape != nullptr)
+        {
+            CXMLNode shapeNode = CXMLNode::parseJSON(pShape->serialize());
+            shapeNode.setTag(TAG_SHAPE);
+            shapesNode.nodes() << shapeNode;
+        }
+    }
+    return shapesNode.toJsonString();
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void DroneBase::deserializeExclusionArea(const QString &sExclusionArea)
 {
-
+    qDeleteAll(m_vExclusionArea);
+    CXMLNode exclusionArea = CXMLNode::parseJSON(sExclusionArea);
+    QVector<CXMLNode> vShapeNodes = exclusionArea.getNodesByTagName(TAG_SHAPE);
+    foreach (CXMLNode shapeNode, vShapeNodes)
+    {
+        SpyCore::ExclusionShape eShapeType = (SpyCore::ExclusionShape)shapeNode.attributes()[ATTR_NODE_TYPE].toInt();
+        if (eShapeType == SpyCore::RECTANGLE)
+        {
+            QGeoCoordinate center;
+            QGeoPath geoPath;
+            RectangleShape::deserialize(shapeNode.toJsonString(), center, geoPath);
+            if (geoPath.size() == 4)
+            {
+                RectangleShape *pShape = new RectangleShape(this);
+                pShape->setPath(geoPath);
+                m_vExclusionArea << pShape;
+            }
+        }
+        else
+        if (eShapeType == SpyCore::TRIANGLE)
+        {
+            QGeoCoordinate center;
+            QGeoPath geoPath;
+            RectangleShape::deserialize(shapeNode.toJsonString(), center, geoPath);
+            if (geoPath.size() == 3)
+            {
+                TriangleShape *pShape = new TriangleShape(this);
+                pShape->setPath(geoPath);
+                m_vExclusionArea << pShape;
+            }
+        }
+        else
+        if (eShapeType == SpyCore::CIRCLE)
+        {
+            QGeoCoordinate center;
+            double dRadius = 0;
+            CircleShape::deserialize(shapeNode.toJsonString(), center, dRadius);
+            CircleShape *pShape = new CircleShape(center, dRadius, this);
+            m_vExclusionArea << pShape;
+        }
+    }
 }

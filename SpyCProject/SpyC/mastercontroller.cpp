@@ -415,7 +415,7 @@ void MasterController::onValidateExclusionArea(const QString &sDroneUID)
     {
         // Retrieve landing plan
         const QVector<Core::BaseShape *> &vShapes = pDrone->exclusionAreaModel()->shapes();
-        if (!vShapes.isEmpty())
+        if (vShapes.isEmpty())
             emit missionPlanError(SpyCore::EMPTY_EXCLUSION_AREA, pDrone->uid());
         else
             uploadExclusionArea(pDrone->uid());

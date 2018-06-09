@@ -130,6 +130,9 @@ public:
     //! Return bottom right
     QGeoCoordinate bottomRight() const;
 
+    //! Set path
+    void setPath(const QGeoPath &path);
+
     //! Deserialize
     static void deserialize(const QString &sSerialized, QGeoCoordinate &center, QGeoPath &geoPath);
 };
@@ -198,6 +201,17 @@ public:
 
     //! Destructor
     virtual ~TriangleShape();
+
+    //-------------------------------------------------------------------------------------------------
+    // Getters & setters
+    //-------------------------------------------------------------------------------------------------
+
+    //! Set path
+    void setPath(const QGeoPath &path);
+
+    //-------------------------------------------------------------------------------------------------
+    // Control methods
+    //-------------------------------------------------------------------------------------------------
 
     //! Deserialize
     static void deserialize(const QString &sSerialized, QGeoCoordinate &center, QGeoPath &geoPath);
