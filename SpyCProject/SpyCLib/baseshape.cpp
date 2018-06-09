@@ -165,7 +165,8 @@ QString BaseShape::serialize()
     else
     if (m_eType == SpyCore::TRIANGLE)
         shapeNode.setTag(TAG_TRIANGLE);
-    shapeNode.attributes()[ATTR_NODE_TYPE] = m_eType;
+    else return QString("");
+    shapeNode.attributes()[ATTR_NODE_TYPE] = QString::number(m_eType);
     QStringList lCenter;
     lCenter << QString::number(m_center.latitude()) << QString::number(m_center.longitude());
     shapeNode.attributes()[ATTR_CENTER] = lCenter.join(",");
@@ -268,11 +269,10 @@ void RectangleShape::setPath(const QGeoPath &path)
 void RectangleShape::deserialize(const QString &sSerialized, QGeoCoordinate &center, QGeoPath &geoPath)
 {
     Core::CXMLNode rootNode = Core::CXMLNode::parseJSON(sSerialized);
-    QVector<Core::CXMLNode> vNodes = rootNode.getNodesByTagName(TAG_RECTANGLE);
-    if (!vNodes.isEmpty())
+    SpyCore::ExclusionShape eShapeType = (SpyCore::ExclusionShape)rootNode.attributes()[ATTR_NODE_TYPE].toInt();
+    if (eShapeType == SpyCore::RECTANGLE)
     {
-        Core::CXMLNode triangleNode = vNodes.first();
-        QString sCenter = triangleNode.attributes()[ATTR_CENTER];
+        QString sCenter = rootNode.attributes()[ATTR_CENTER];
         QStringList lSplitted = sCenter.split(",");
         if (lSplitted.size() == 2)
         {
@@ -282,7 +282,7 @@ void RectangleShape::deserialize(const QString &sSerialized, QGeoCoordinate &cen
             center.setLongitude(dLongitude);
         }
 
-        QVector<Core::CXMLNode> vCoordNodes = triangleNode.getNodesByTagName(TAG_COORD);
+        QVector<Core::CXMLNode> vCoordNodes = rootNode.getNodesByTagName(TAG_COORD);
         foreach (Core::CXMLNode coordNode, vCoordNodes)
         {
             double dLatitude = coordNode.attributes()[ATTR_LATITUDE].toDouble();
@@ -328,7 +328,7 @@ double CircleShape::radius() const
 QString CircleShape::serialize()
 {
     Core::CXMLNode circleNode(TAG_CIRCLE);
-    circleNode.attributes()[ATTR_NODE_TYPE] = TAG_CIRCLE;
+    circleNode.attributes()[ATTR_NODE_TYPE] = QString::number(SpyCore::CIRCLE);
     QStringList lCenter;
     lCenter << QString::number(m_center.latitude()) << QString::number(m_center.longitude());
     circleNode.attributes()[ATTR_CENTER] = lCenter.join(",");
@@ -341,11 +341,11 @@ QString CircleShape::serialize()
 void CircleShape::deserialize(const QString &sSerialized, QGeoCoordinate &center, double &dRadius)
 {
     Core::CXMLNode rootNode = Core::CXMLNode::parseJSON(sSerialized);
-    QVector<Core::CXMLNode> vNodes = rootNode.getNodesByTagName(TAG_CIRCLE);
-    if (!vNodes.isEmpty())
+    SpyCore::ExclusionShape eShapeType = (SpyCore::ExclusionShape)rootNode.attributes()[ATTR_NODE_TYPE].toInt();
+    if (eShapeType == SpyCore::CIRCLE)
     {
-        Core::CXMLNode circleNode = vNodes.first();
-        QString sCenter = circleNode.attributes()[ATTR_CENTER];
+        Core::CXMLNode rootNode = Core::CXMLNode::parseJSON(sSerialized);
+        QString sCenter = rootNode.attributes()[ATTR_CENTER];
         QStringList lSplitted = sCenter.split(",");
         if (lSplitted.size() == 2)
         {
@@ -353,8 +353,8 @@ void CircleShape::deserialize(const QString &sSerialized, QGeoCoordinate &center
             double dLongitude = lSplitted[1].toDouble();
             center.setLatitude(dLatitude);
             center.setLongitude(dLongitude);
-            dRadius = circleNode.attributes()[ATTR_RADIUS].toDouble();
         }
+        dRadius = rootNode.attributes()[ATTR_RADIUS].toDouble();
     }
 }
 
@@ -417,11 +417,10 @@ void TriangleShape::setPath(const QGeoPath &path)
 void TriangleShape::deserialize(const QString &sSerialized, QGeoCoordinate &center, QGeoPath &geoPath)
 {
     Core::CXMLNode rootNode = Core::CXMLNode::parseJSON(sSerialized);
-    QVector<Core::CXMLNode> vNodes = rootNode.getNodesByTagName(TAG_TRIANGLE);
-    if (!vNodes.isEmpty())
+    SpyCore::ExclusionShape eShapeType = (SpyCore::ExclusionShape)rootNode.attributes()[ATTR_NODE_TYPE].toInt();
+    if (eShapeType == SpyCore::TRIANGLE)
     {
-        Core::CXMLNode triangleNode = vNodes.first();
-        QString sCenter = triangleNode.attributes()[ATTR_CENTER];
+        QString sCenter = rootNode.attributes()[ATTR_CENTER];
         QStringList lSplitted = sCenter.split(",");
         if (lSplitted.size() == 2)
         {
@@ -431,7 +430,7 @@ void TriangleShape::deserialize(const QString &sSerialized, QGeoCoordinate &cent
             center.setLongitude(dLongitude);
         }
 
-        QVector<Core::CXMLNode> vCoordNodes = triangleNode.getNodesByTagName(TAG_COORD);
+        QVector<Core::CXMLNode> vCoordNodes = rootNode.getNodesByTagName(TAG_COORD);
         foreach (Core::CXMLNode coordNode, vCoordNodes)
         {
             double dLatitude = coordNode.attributes()[ATTR_LATITUDE].toDouble();

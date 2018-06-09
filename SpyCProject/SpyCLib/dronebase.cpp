@@ -2,7 +2,6 @@
 #include <QDebug>
 #include <QTime>
 #include <QFile>
-#include <QTextStream>
 
 // Application
 #include <cxmlnode.h>
@@ -216,6 +215,13 @@ void DroneBase::setVideoUrl(const QString &sVideoUrl)
 
 //-------------------------------------------------------------------------------------------------
 
+const QVector<BaseShape *> &DroneBase::exclusionArea() const
+{
+    return m_vExclusionArea;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void DroneBase::setExclusionArea(const QVector<BaseShape *> &vExclusionArea)
 {
     m_vExclusionArea = vExclusionArea;
@@ -297,15 +303,6 @@ QString DroneBase::serializeGlobalStatus()
 
 void DroneBase::deserializeGlobalStatus(const QString &sGlobalStatus)
 {
-    QString sFileName = QString("d:/tmp/CLIENT-dronedeserializedglobalstatus%1").arg(m_sDroneUID);
-    QFile file(sFileName);
-    if (file.open(QIODevice::WriteOnly))
-    {
-        QTextStream out(&file);
-        out << sGlobalStatus;
-        file.close();
-    }
-
     CXMLNode statusNode = CXMLNode::parseJSON(sGlobalStatus);
     QString sNodeType = statusNode.attributes()[ATTR_NODE_TYPE];
     if (sNodeType == TAG_DRONE_STATUS)
@@ -599,27 +596,33 @@ void DroneBase::deserializePlan(const CXMLNode &node, QGeoPath &geoPath, QString
 
 QString DroneBase::serializeExclusionArea()
 {
-    CXMLNode shapesNode(TAG_EXCLUSION_AREA);
-    foreach (BaseShape *pShape, m_vExclusionArea)
+    CXMLNode exclAreaNode(TAG_EXCLUSION_AREA);
+    exclAreaNode.attributes()[ATTR_NODE_TYPE] = TAG_EXCLUSION_AREA;
+    exclAreaNode.attributes()[ATTR_DRONE_UID] = m_sDroneUID;
+    for (int i=0; i<m_vExclusionArea.size(); i++)
     {
-        qDebug() << "ICI";
+        BaseShape *pShape = m_vExclusionArea.at(i);
         if (pShape != nullptr)
         {
+            // Write shapes
             CXMLNode shapeNode = CXMLNode::parseJSON(pShape->serialize());
-            shapeNode.setTag(TAG_SHAPE);
-            shapesNode.nodes() << shapeNode;
+            shapeNode.setTag(TAG_SHAPES);
+            exclAreaNode.nodes() << shapeNode;
         }
     }
-    return shapesNode.toJsonString();
+    qDebug() << "DroneBase::serializeExclusionArea " << exclAreaNode.toJsonString();
+    return exclAreaNode.toJsonString();
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void DroneBase::deserializeExclusionArea(const QString &sExclusionArea)
 {
+    qDebug() << "DroneBase::deserializeExclusionArea" << sExclusionArea;
+
     qDeleteAll(m_vExclusionArea);
     CXMLNode exclusionArea = CXMLNode::parseJSON(sExclusionArea);
-    QVector<CXMLNode> vShapeNodes = exclusionArea.getNodesByTagName(TAG_SHAPE);
+    QVector<CXMLNode> vShapeNodes = exclusionArea.getNodesByTagName(TAG_SHAPES);
     foreach (CXMLNode shapeNode, vShapeNodes)
     {
         SpyCore::ExclusionShape eShapeType = (SpyCore::ExclusionShape)shapeNode.attributes()[ATTR_NODE_TYPE].toInt();

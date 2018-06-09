@@ -80,6 +80,17 @@ void ExclusionAreaModel::setCurrentShape(Core::BaseShape *pShape)
 
 //-------------------------------------------------------------------------------------------------
 
+void ExclusionAreaModel::setShapes(const QVector<Core::BaseShape *> &vShapes)
+{
+    beginResetModel();
+    qDeleteAll(m_vShapes);
+    m_vShapes.clear();
+    m_vShapes = vShapes;
+    endResetModel();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 int ExclusionAreaModel::shapeCount() const
 {
     return rowCount();

@@ -73,6 +73,9 @@ public:
     //! Set current shape
     void setCurrentShape(Core::BaseShape *pShape);
 
+    //! Set shapes
+    void setShapes(const QVector<Core::BaseShape *> &vShapes);
+
 private:
     //! Add shape
     void addShape(Core::BaseShape *pShape);

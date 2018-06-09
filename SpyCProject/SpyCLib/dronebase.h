@@ -116,6 +116,9 @@ public:
     //! Set video url
     void setVideoUrl(const QString &sVideoUrl);
 
+    //! Return exclusion area
+    const QVector<BaseShape *> &exclusionArea() const;
+
     //! Set exclusion area
     void setExclusionArea(const QVector<BaseShape *> &vShapes);
 

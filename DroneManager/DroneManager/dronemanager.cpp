@@ -171,7 +171,14 @@ void DroneManager::onNewConnectionFromGroundStation()
 
 void DroneManager::onIncomingMessage(const QString &sMessage)
 {
-    qDebug() << sMessage;
+    QString sFileName = QString("d:/tmp/exclarea.json");
+    QFile file(sFileName);
+    if (file.open(QIODevice::WriteOnly))
+    {
+        QTextStream out(&file);
+        out << sMessage;
+        file.close();
+    }
 
     // Retrieve message type
     QString sMessageType = Core::SerializeHelper::messageType(sMessage);

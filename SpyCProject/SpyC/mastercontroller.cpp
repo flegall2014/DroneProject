@@ -139,7 +139,10 @@ void MasterController::onIncomingMessage(const QString &sMessage)
 
     // Process drone status
     if (sMessageType == TAG_DRONE_STATUS)
+    {
         pDrone->deserializeGlobalStatus(sMessage);
+        pDrone->exclusionAreaModel()->setShapes(pDrone->exclusionArea());
+    }
     else
     // Safety plan
     if (sMessageType == TAG_SAFETY_PLAN)
@@ -152,6 +155,13 @@ void MasterController::onIncomingMessage(const QString &sMessage)
     // Landing plan
     if (sMessageType == TAG_LANDING_PLAN)
         pDrone->deserializeLandingPlan(sMessage);
+    else
+    // Exclusion area
+    if (sMessageType == TAG_EXCLUSION_AREA)
+    {
+        pDrone->deserializeExclusionArea(sMessage);
+        pDrone->exclusionAreaModel()->setShapes(pDrone->exclusionArea());
+    }
     else
     // Position
     if (sMessageType == TAG_POSITION)
