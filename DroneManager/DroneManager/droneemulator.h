@@ -35,6 +35,9 @@ public:
     //! Take off
     void takeOff();
 
+    //! Go home
+    void goHome();
+
     //! Fail safe
     void failSafe();
 

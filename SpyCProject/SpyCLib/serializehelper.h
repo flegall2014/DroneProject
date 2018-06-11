@@ -20,6 +20,9 @@ public:
     //! Serialize take off request
     static QString serializeTakeOffRequest(const QString &sDroneUID);
 
+    //! Serialize go home request
+    static QString serializeGoHomeRequest(const QString &sDroneUID);
+
     //! Deserialize take off request
     static void deserializeTakeOffRequest(const QString &sMessage, QString &sDroneUID);
 

@@ -93,16 +93,33 @@ void DroneEmulator::onBatteryLevelChanged(int iLevel, int iReturn)
 void DroneEmulator::takeOff()
 {
     if (missionPlan().isEmpty())
-        emit droneError(SpyCore::NO_SAFETY, uid());
+        emit droneError(SpyCore::EMPTY_SAFETY_PLAN, uid());
     else
     if (landingPlan().isEmpty())
-        emit droneError(SpyCore::NO_LANDING_PLAN, uid());
+        emit droneError(SpyCore::EMPTY_LANDING_PLAN, uid());
     else
     if (missionPlan().isEmpty())
-        emit droneError(SpyCore::NO_MISSION_PLAN, uid());
+        emit droneError(SpyCore::EMPTY_MISSION_PLAN, uid());
     else
     {
         m_pFlightSimulator->computeFlightPath(missionPlan());
+        m_pFlightSimulator->start();
+        m_pBatterySimulator->start();
+        setFlightStatus(SpyCore::FlightStatus::FLYING);
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneEmulator::goHome()
+{
+    if (flightStatus() != SpyCore::FLYING)
+        emit droneError(SpyCore::GOHOME_INFLYINGMODE_ONLY, uid());
+    else
+    {
+        WayPointList currentLandingPlan = landingPlan();
+        currentLandingPlan.insert(0, position());
+        m_pFlightSimulator->computeFlightPath(currentLandingPlan);
         m_pFlightSimulator->start();
         m_pBatterySimulator->start();
         setFlightStatus(SpyCore::FlightStatus::FLYING);

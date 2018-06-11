@@ -38,8 +38,7 @@ void Translator::setLanguage(int iLanguage)
     if ((SpyCore::Language)iLanguage == SpyCore::FRENCH)
     {
         // Setup translator
-        Helper helper;
-        if (!m_pTranslator->load(helper.i18nDir().absoluteFilePath("french.qm")))
+        if (!m_pTranslator->load(Core::Helper::i18nDir().absoluteFilePath("french.qm")))
             qDebug() << "Failed to load: " << iLanguage;
         else
             qDebug() << iLanguage << " successfully loaded";

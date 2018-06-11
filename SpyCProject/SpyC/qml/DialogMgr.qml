@@ -24,15 +24,27 @@ Item {
             root.msgType = SpyC.CRITICAL_MSG
         }
         else
+        if (dialogType === SpyC.CONFIRM_GO_HOME)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/ConfirmGoHomeDialog.qml"
+            root.msgType = SpyC.INFORMATION_MSG
+        }
+        else
         if (dialogType === SpyC.EMPTY_MISSION_PLAN_ERROR)
         {
             dialogLoader.source = "qrc:/qml/dialogs/EmptyMissionPlanErrorDialog.qml"
             root.msgType = SpyC.CRITICAL_MSG
         }
         else
-        if (dialogType === SpyC.EMPTY_SAFETY_ERROR)
+        if (dialogType === SpyC.EMPTY_SAFETY_PLAN_ERROR)
         {
             dialogLoader.source = "qrc:/qml/dialogs/EmptySafetyErrorDialog.qml"
+            root.msgType = SpyC.CRITICAL_MSG
+        }
+        else
+        if (dialogType === SpyC.EMPTY_LANDING_PLAN_ERROR)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/EmptyLandingPlanError.qml"
             root.msgType = SpyC.CRITICAL_MSG
         }
         else
@@ -84,12 +96,6 @@ Item {
             root.msgType = SpyC.CRITICAL_MSG
         }
         else
-        if (dialogType === SpyC.EMPTY_LANDING_PLAN_ERROR)
-        {
-            dialogLoader.source = "qrc:/qml/dialogs/EmptyLandingPlanErrorDialog.qml"
-            root.msgType = SpyC.CRITICAL_MSG
-        }
-        else
         if (dialogType === SpyC.LANDING_PLAN_VALIDATION)
         {
             dialogLoader.source = "qrc:/qml/dialogs/LandingPlanValidationDialog.qml"
@@ -106,6 +112,12 @@ Item {
         {
             dialogLoader.source = "qrc:/qml/dialogs/UnexpectedLandingPlanCountErrorDialog.qml"
             root.msgType = SpyC.CRITICAL_MSG
+        }
+        else
+        if (dialogType === SpyC.GOHOME_INFLYINGMODE_ONLY)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/GoHomeOnlyInFlyingModeErrorDialog.qml"
+            root.msgType = SpyC.INFORMATION_MSG
         }
         else
         if (dialogType === SpyC.EXIT_SPYC)

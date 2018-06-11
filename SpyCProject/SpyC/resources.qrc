@@ -136,5 +136,7 @@
         <file>icons/ico-ruler.svg</file>
         <file>qml/dialogs/EmptyExclusionAreaErrorDialog.qml</file>
         <file>images/ico-thales.png</file>
+        <file>qml/dialogs/ConfirmGoHomeDialog.qml</file>
+        <file>qml/dialogs/GoHomeOnlyInFlyingModeErrorDialog.qml</file>
     </qresource>
 </RCC>

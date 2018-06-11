@@ -124,6 +124,7 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-home.svg"
             enabled: targetDrone.flightStatus === SpyC.FLYING
+            onClicked: dialogMgr.showDialog(SpyC.CONFIRM_GO_HOME)
             label: qsTr("Go home")
             textPosition: "below"
         }

@@ -67,7 +67,6 @@ HEADERS += \
     dronemodel.h \
     exclusionareamodel.h \
     gallerymodel.h \
-    helper.h \
     iservice.h \
     mastercontroller.h \
     pluginloader.h \
@@ -84,7 +83,6 @@ SOURCES += \
     dronemodel.cpp \
     exclusionareamodel.cpp \
     gallerymodel.cpp \
-    helper.cpp \
     main.cpp \
     mastercontroller.cpp \
     pluginloader.cpp \

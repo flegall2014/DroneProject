@@ -18,6 +18,7 @@
 #include <baseshape.h>
 #include "translator.h"
 #include "helper.h"
+#include <qmlhelper.h>
 SpyC *SpyC::sInstance = nullptr;
 
 //-------------------------------------------------------------------------------------------------
@@ -31,7 +32,7 @@ SpyC::SpyC(QObject *parent) : QObject(parent)
     m_pMasterController = new MasterController(this);
 
     // Helper
-    m_pHelper = new Helper(this);
+    m_pHelper = new Core::QMLHelper(this);
 
     // Set context properties
     setContextProperties();

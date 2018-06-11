@@ -23,9 +23,9 @@ DroneManager::DroneManager(QObject *pParent) : QObject(pParent)
 
     // Video url
     QStringList lVideos;
-    lVideos << "D:/projects/SpyC/SpyCProject/SpyC/video/video1.mp4" <<
-               "D:/projects/SpyC/SpyCProject/SpyC/video/video2.mp4" <<
-               "D:/projects/SpyC/SpyCProject/SpyC/video/video3.mp4";
+    lVideos << "D:/projects/DroneProject/SpyCProject/SpyC/video/video1.mp4" <<
+               "D:/projects/DroneProject/SpyCProject/SpyC/video/video2.mp4" <<
+               "D:/projects/DroneProject/SpyCProject/SpyC/video/video3.mp4";
 
     // Initial position
     QVector<double> vLatitudes = QVector<double>() << 48.856614 << 40.7127753 << 9.641185499999999;
@@ -171,15 +171,6 @@ void DroneManager::onNewConnectionFromGroundStation()
 
 void DroneManager::onIncomingMessage(const QString &sMessage)
 {
-    QString sFileName = QString("d:/tmp/exclarea.json");
-    QFile file(sFileName);
-    if (file.open(QIODevice::WriteOnly))
-    {
-        QTextStream out(&file);
-        out << sMessage;
-        file.close();
-    }
-
     // Retrieve message type
     QString sMessageType = Core::SerializeHelper::messageType(sMessage);
 
@@ -205,6 +196,10 @@ void DroneManager::onIncomingMessage(const QString &sMessage)
         // Exclusion area
         if (sMessageType == TAG_EXCLUSION_AREA)
             pDrone->deserializeExclusionArea(sMessage);
+        // Go home
+        else
+        if (sMessageType == TAG_GO_HOME)
+            pDrone->goHome();
         else
         // Take off
         if (sMessageType == TAG_TAKE_OFF)

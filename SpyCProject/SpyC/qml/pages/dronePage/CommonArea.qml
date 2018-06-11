@@ -57,7 +57,6 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        console.log("ZOZO")
         targetDrone.flightStatusChanged.connect(onDroneFlightStatusChanged)
         targetDrone.workModeChanged.connect(onWorkModeChanged)
     }

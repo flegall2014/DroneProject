@@ -1,11 +1,15 @@
-#ifndef HELPER_H
-#define HELPER_H
+#ifndef QMLHELPER_H
+#define QMLHELPER_H
 
 // Qt
 #include <QDir>
 #include <QObject>
 
-class Helper : public QObject
+// Application
+#include "spyclib_global.h"
+
+namespace Core {
+class SPYCLIBSHARED_EXPORT QMLHelper : public QObject
 {
     Q_OBJECT
 
@@ -15,20 +19,14 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Constructor
-    Helper(QObject *pParent=nullptr);
+    QMLHelper(QObject *pParent=nullptr);
 
     //! Destructor
-    ~Helper();
+    ~QMLHelper();
 
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
-
-    //! Return application dir
-    Q_INVOKABLE QDir applicationDir();
-
-    //! Return i18n dir
-    Q_INVOKABLE QDir i18nDir();
 
     //! To local file
     Q_INVOKABLE QString toLocalFile(const QString &sInput);
@@ -36,5 +34,6 @@ public:
     //! From local file
     Q_INVOKABLE QString fromLocalFile(const QString &sInput);
 };
+}
 
-#endif // HELPER_H
+#endif // QMLHELPER_H

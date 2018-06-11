@@ -27,6 +27,7 @@ Item {
     }
     StandardTextField {
         id: input
+        horizontalAlignment: Text.AlignLeft
         anchors.left: label.right
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: selectButton.left

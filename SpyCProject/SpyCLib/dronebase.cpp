@@ -500,7 +500,7 @@ void DroneBase::deserializeLandingPlan(const QString &sLandingPlan)
 
 //-------------------------------------------------------------------------------------------------
 
-QString DroneBase::serializePlan(const QVector<WayPoint> &plan, const QString &sPlanType, const QString &sDroneUID)
+QString DroneBase::serializePlan(const WayPointList &plan, const QString &sPlanType, const QString &sDroneUID)
 {
     CXMLNode planNode(sPlanType);
     planNode.attributes()[ATTR_NODE_TYPE] = sPlanType;

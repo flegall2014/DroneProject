@@ -23,7 +23,7 @@ FlightSimulator::~FlightSimulator()
 
 //-------------------------------------------------------------------------------------------------
 
-void FlightSimulator::computeFlightPath(const QVector<WayPoint> &geoPath, int iPointCount)
+void FlightSimulator::computeFlightPath(const WayPointList &geoPath, int iPointCount)
 {
     m_iPointIndex++;
     m_vDetailedPath.clear();

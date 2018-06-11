@@ -34,7 +34,7 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Compute points
-    void computeFlightPath(const QVector<WayPoint> &geoPath, int iPointCount=100);
+    void computeFlightPath(const WayPointList &geoPath, int iPointCount=100);
 
     //! Play
     virtual void start();

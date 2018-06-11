@@ -10,7 +10,9 @@ class QQuickItem;
 #include "iservice.h"
 #include <spycore.h>
 class MasterController;
-class Helper;
+namespace Core {
+class QMLHelper;
+}
 
 class SpyC : public QObject, public IService
 {
@@ -57,7 +59,7 @@ private:
     MasterController *m_pMasterController = nullptr;
 
     //! Helper
-    Helper *m_pHelper = nullptr;
+    Core::QMLHelper *m_pHelper = nullptr;
 
     //! Main view
     QQmlApplicationEngine m_engine;

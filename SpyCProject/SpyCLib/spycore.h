@@ -22,7 +22,6 @@ class SPYCLIBSHARED_EXPORT SpyCore : public QObject
     Q_ENUMS(DroneRole)
     Q_ENUMS(ShapeRole)
     Q_ENUMS(GalleryRole)
-    Q_ENUMS(MissionPlanError)
     Q_ENUMS(UIOrientation)
     Q_ENUMS(Language)
     Q_ENUMS(MsgType)
@@ -39,9 +38,6 @@ public:
 
     //! Fly status
     enum FlightStatus {IDLE=Qt::UserRole+1, FLYING};
-
-    //! Drone error
-    enum DroneError {NO_SAFETY=Qt::UserRole+1, NO_LANDING_PLAN, NO_MISSION_PLAN};
 
     //! Point type
     enum PointType {POINT=Qt::UserRole+1, LOITER, EIGHT, HIPPODROM};
@@ -74,9 +70,9 @@ public:
     enum GalleryRole {FileNameRole=Qt::UserRole+1, FilePathRole, PositionRole};
 
     //! Mission plan error
-    enum MissionPlanError {EMPTY_SAFETY_PLAN=Qt::UserRole+1, NOT_ENOUGH_POINTS_IN_SAFETY,
+    enum DroneError {EMPTY_SAFETY_PLAN=Qt::UserRole+1, NOT_ENOUGH_POINTS_IN_SAFETY,
                            EMPTY_MISSION_PLAN, NOT_ENOUGH_POINTS_IN_MISSION_PLAN, EMPTY_EXCLUSION_AREA,
-                           EMPTY_LANDING_PLAN, UNEXPECTED_LANDING_PLAN_COUNT};
+                           EMPTY_LANDING_PLAN, UNEXPECTED_LANDING_PLAN_COUNT, GOHOME_INFLYINGMODE_ONLY};
 
     //! Setting type
     enum SettingType {ARMY=Qt::UserRole+1, UNIT, MISSION, OPERATOR, MAP_PATH, MISSION_PATH, LOG_PATH, ALERT_PATH, GALLERY_PATH, LANGUAGE_STRING, HAND};
@@ -91,8 +87,8 @@ public:
     enum MsgType {INFORMATION_MSG=Qt::UserRole+1, WARNING_MSG, CRITICAL_MSG};
 
     //! Dialog type
-    enum DialogType {CONFIRM_TAKE_OFF=Qt::UserRole+1, CONFIRM_FAILSAFE, EMPTY_MISSION_PLAN_ERROR,
-                     EMPTY_SAFETY_ERROR, MISSION_PLAN_VALIDATION, NOT_ENOUGH_POINT_IN_MISSION_PLAN,
+    enum DialogType {CONFIRM_TAKE_OFF=Qt::UserRole+1, CONFIRM_FAILSAFE, CONFIRM_GO_HOME, EMPTY_MISSION_PLAN_ERROR,
+                     EMPTY_SAFETY_PLAN_ERROR, MISSION_PLAN_VALIDATION, NOT_ENOUGH_POINT_IN_MISSION_PLAN,
                      NOT_ENOUGH_POINT_IN_SAFETY, SAFETY_VALIDATION, NO_EXCLUSION_AREA_ERROR,
                      EXCLUSION_AREA_VALIDATION, CONFIRM_REMOVE_CAPTURE, CONFIRM_CLEAR_GALLERY, EMPTY_LANDING_PLAN_ERROR,
                      LANDING_PLAN_VALIDATION, UNEXPECTED_LANDING_PLAN_COUNT_ERROR, EXIT_SPYC};
@@ -102,7 +98,6 @@ public:
 };
 
 Q_DECLARE_METATYPE(SpyCore::FlightStatus)
-Q_DECLARE_METATYPE(SpyCore::DroneError)
 Q_DECLARE_METATYPE(SpyCore::PointType)
 Q_DECLARE_METATYPE(SpyCore::PointSpeed)
 Q_DECLARE_METATYPE(SpyCore::AlertAttribues)
@@ -112,7 +107,7 @@ Q_DECLARE_METATYPE(SpyCore::WorkMode)
 Q_DECLARE_METATYPE(SpyCore::DroneRole)
 Q_DECLARE_METATYPE(SpyCore::ShapeRole)
 Q_DECLARE_METATYPE(SpyCore::GalleryRole)
-Q_DECLARE_METATYPE(SpyCore::MissionPlanError)
+Q_DECLARE_METATYPE(SpyCore::DroneError)
 Q_DECLARE_METATYPE(SpyCore::UIOrientation)
 Q_DECLARE_METATYPE(SpyCore::Language)
 Q_DECLARE_METATYPE(SpyCore::MsgType)

@@ -45,6 +45,16 @@ QString SerializeHelper::serializeTakeOffRequest(const QString &sDroneUID)
 
 //-------------------------------------------------------------------------------------------------
 
+QString SerializeHelper::serializeGoHomeRequest(const QString &sDroneUID)
+{
+    CXMLNode goHomeNode(TAG_TAKE_OFF);
+    goHomeNode.attributes()[ATTR_NODE_TYPE] = TAG_GO_HOME;
+    goHomeNode.attributes()[ATTR_DRONE_UID] = sDroneUID;
+    return goHomeNode.toJsonString();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void SerializeHelper::deserializeTakeOffRequest(const QString &sMessage, QString &sDroneUID)
 {
     CXMLNode rootNode = CXMLNode::parseJSON(sMessage);

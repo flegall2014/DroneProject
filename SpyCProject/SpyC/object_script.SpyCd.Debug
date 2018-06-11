@@ -5,7 +5,6 @@ INPUT(
 ./..\obj\dronemodel.o
 ./..\obj\exclusionareamodel.o
 ./..\obj\gallerymodel.o
-./..\obj\helper.o
 ./..\obj\main.o
 ./..\obj\mastercontroller.o
 ./..\obj\pluginloader.o
@@ -20,7 +19,6 @@ INPUT(
 ./..\obj\moc_dronemodel.o
 ./..\obj\moc_exclusionareamodel.o
 ./..\obj\moc_gallerymodel.o
-./..\obj\moc_helper.o
 ./..\obj\moc_mastercontroller.o
 ./..\obj\moc_settingcontroller.o
 ./..\obj\moc_spyc.o

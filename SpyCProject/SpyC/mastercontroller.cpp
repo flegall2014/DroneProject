@@ -49,6 +49,7 @@ MasterController::MasterController(QObject *pParent) : QObject(pParent)
     connect(this, &MasterController::validateLandingPlanReq, this, &MasterController::onValidateLandingPlan, Qt::QueuedConnection);
     connect(this, &MasterController::validateExclusionAreaReq, this, &MasterController::onValidateExclusionArea, Qt::QueuedConnection);
     connect(this, &MasterController::takeOffRequest, this, &MasterController::onTakeOffRequest, Qt::QueuedConnection);
+    connect(this, &MasterController::goHomeRequest, this, &MasterController::onGoHomeRequest, Qt::QueuedConnection);
     connect(this, &MasterController::failSafeRequest, this, &MasterController::onFailSafeRequest, Qt::QueuedConnection);
 }
 
@@ -234,6 +235,21 @@ void MasterController::onTakeOffRequest(const QString &sDroneUID)
     }
 }
 
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::onGoHomeRequest(const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+    {
+        if (pDrone->flightStatus() != SpyCore::FLYING)
+            emit missionPlanError(SpyCore::GOHOME_INFLYINGMODE_ONLY, sDroneUID);
+        else
+        sendMessage(Core::SerializeHelper::serializeGoHomeRequest(sDroneUID));
+    }
+}
+
 //-------------------------------------------------------------------------------------------------
 
 void MasterController::onFailSafeRequest(const QString &sDroneUID)
@@ -312,6 +328,13 @@ const QString &MasterController::applicationTitle() const
 void MasterController::takeOff(const QString &sDroneUID)
 {
     emit takeOffRequest(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::goHome(const QString &sDroneUID)
+{
+    emit goHomeRequest(sDroneUID);
 }
 
 //-------------------------------------------------------------------------------------------------

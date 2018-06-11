@@ -72,6 +72,9 @@ public:
     //! Take off
     Q_INVOKABLE void takeOff(const QString &sDroneUID);
 
+    //! Go home
+    Q_INVOKABLE void goHome(const QString &sDroneUID);
+
     //! Fail safe
     Q_INVOKABLE void failSafe(const QString &sDroneUID);
 
@@ -151,6 +154,9 @@ public slots:
     //! Take off request
     void onTakeOffRequest(const QString &sDroneUID);
 
+    //! Go home request
+    void onGoHomeRequest(const QString &sDroneUID);
+
     //! Fail safe request
     void onFailSafeRequest(const QString &sDroneUID);
 
@@ -196,6 +202,9 @@ signals:
 
     //! Send a take off request
     void takeOffRequest(const QString &sDroneUID);
+
+    //! Go home request
+    void goHomeRequest(const QString &sDroneUID);
 
     //! Send a failsafe request
     void failSafeRequest(const QString &sDroneUID);

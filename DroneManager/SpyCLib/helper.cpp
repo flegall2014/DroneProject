@@ -1,30 +1,45 @@
 // Qt
+#include <QTextStream>
+#include <QFile>
+#include <QDir>
 #include <QCoreApplication>
-#include <QUrl>
 
 // Application
 #include "helper.h"
+using namespace Core;
 
 //-------------------------------------------------------------------------------------------------
 
-Helper::Helper(QObject *pParent) : QObject(pParent)
-{
 
+bool Helper::save(const QString &sInputString, const QString &sFilePath)
+{
+    QFile file(sFilePath);
+    if (file.open(QIODevice::WriteOnly))
+    {
+        QTextStream out(&file);
+        out << sInputString;
+        file.close();
+        return true;
+    }
+    return false;
 }
 
 //-------------------------------------------------------------------------------------------------
 
-Helper::~Helper()
-{
 
+bool Helper::load(const QString &sFilePath, QString &sOutputString)
+{
+    QFile file(sFilePath);
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QTextStream out(&file);
+        out >> sOutputString;
+        file.close();
+        return true;
+    }
+    return false;
 }
 
-//-------------------------------------------------------------------------------------------------
-
-QDir Helper::applicationDir()
-{
-    return QCoreApplication::applicationDirPath();
-}
 
 //-------------------------------------------------------------------------------------------------
 
@@ -42,17 +57,10 @@ QDir Helper::i18nDir()
     return appDir;
 }
 
-//-------------------------------------------------------------------------------------------------
-
-QString Helper::toLocalFile(const QString &sInput)
-{
-    QUrl url(sInput);
-    return url.toLocalFile();
-}
 
 //-------------------------------------------------------------------------------------------------
 
-QString Helper::fromLocalFile(const QString &sInput)
+QDir Helper::applicationDir()
 {
-    return QUrl::fromLocalFile(sInput).toString();
+    return QCoreApplication::applicationDirPath();
 }

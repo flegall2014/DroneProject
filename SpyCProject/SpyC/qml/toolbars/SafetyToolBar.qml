@@ -39,7 +39,7 @@ ToolBarBase {
         endColor: Theme.defaultButtonColor
         onClicked: {
             if (targetDrone.safetyModel.pointCount === 0)
-                dialogMgr.showDialog(SpyC.EMPTY_SAFETY_ERROR, targetDrone.uid)
+                dialogMgr.showDialog(SpyC.EMPTY_SAFETY_PLAN_ERROR, targetDrone.uid)
             else
                 dialogMgr.showDialog(SpyC.SAFETY_VALIDATION, targetDrone.uid)
         }
