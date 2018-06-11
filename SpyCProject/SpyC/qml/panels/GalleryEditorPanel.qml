@@ -7,11 +7,10 @@ import "../widgets"
 PanelBase {
     id: root
     signal thumbNailMaximizeRequest(int index)
-    toolBarContents: Item {
+    rightToolBarContents: Item {
         anchors.fill: parent
         ImageButton {
             anchors.right: parent.right
-            anchors.rightMargin: Theme.standardMargin/2
             anchors.verticalCenter: parent.verticalCenter
             source: "qrc:/icons/ico-trash.svg"
             onClicked: dialogMgr.showDialog(SpyC.CONFIRM_CLEAR_GALLERY)

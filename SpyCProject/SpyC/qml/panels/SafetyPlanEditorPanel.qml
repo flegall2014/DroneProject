@@ -1,12 +1,12 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import QtQuick.Layouts 1.2
 import ".."
 import "../widgets"
+import "../toolbars"
 
 PanelBase {
-    centralTitle: qsTr("EDITING LANDING PLAN")
+    centralTitle: qsTr("EDITING SAFETY AREA")
     leftToolBarContents: Item {
         anchors.fill: parent
 
@@ -30,20 +30,9 @@ PanelBase {
     panelContents: Item {
         anchors.fill: parent
 
-        // Way point view
         WayPointView {
-            anchors.left: parent.left
-            anchors.right: singlePointEditor.left
-            height: parent.height
-            model: droneValid() ? targetDrone.landingPlanModel : undefined
-        }
-
-        // Single point editor
-        SinglePointEditor {
-            id: singlePointEditor
-            anchors.right: parent.right
-            width: parent.height
-            height: parent.height
+            anchors.fill: parent
+            model: droneValid() ? targetDrone.safetyModel : undefined
         }
     }
 }

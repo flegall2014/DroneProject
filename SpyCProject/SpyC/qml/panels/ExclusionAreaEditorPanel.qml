@@ -9,6 +9,26 @@ import "../widgets"
 PanelBase {
     id: root
     centralTitle: qsTr("EDITING EXCLUSION AREA")
+    leftToolBarContents: Item {
+        anchors.fill: parent
+
+        // Load
+        ImageButton {
+            id: load
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            source: "qrc:/icons/ico-open.svg"
+        }
+
+        // Save
+        ImageButton {
+            id: save
+            anchors.left: load.right
+            anchors.leftMargin: Theme.standardMargin
+            anchors.verticalCenter: parent.verticalCenter
+            source: "qrc:/icons/ico-save.svg"
+        }
+    }
     panelContents: Row {
         anchors.fill: parent
 

@@ -26,8 +26,11 @@ Item {
     // Panel contents
     property alias panelContents: panelContents.children
 
-    // Toolbar contents
-    property alias toolBarContents: toolBarContents.children
+    // Left toolbar
+    property alias leftToolBarContents: leftToolBarContents.children
+
+    // Right toolbar
+    property alias rightToolBarContents: rightToolBarContents.children
 
     // Panel object object (from JSON)
     property variant panelObject
@@ -42,11 +45,18 @@ Item {
         height: Theme.toolBarHeight
         StandardText {
             id: panelTitle
-            width: Theme.panelTitleWidth
             anchors.left: parent.left
             anchors.leftMargin: Theme.standardMargin
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignLeft
+        }
+        Item {
+            id: leftToolBarContents
+            anchors.left: panelTitle.right
+            anchors.leftMargin: Theme.standardMargin
+            anchors.right: parent.right
+            anchors.rightMargin: Theme.standardMargin
+            height: parent.height
         }
         StandardText {
             id: statusText
@@ -67,9 +77,11 @@ Item {
             }
         }
         Item {
-            id: toolBarContents
+            id: rightToolBarContents
             anchors.left: statusText.right
+            anchors.leftMargin: Theme.standardMargin
             anchors.right: parent.right
+            anchors.rightMargin: Theme.standardMargin
             height: parent.height
         }
     }

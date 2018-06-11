@@ -34,3 +34,10 @@ QString QMLHelper::fromLocalFile(const QString &sInput)
 {
     return QUrl::fromLocalFile(sInput).toString();
 }
+
+//-------------------------------------------------------------------------------------------------
+
+QString QMLHelper::applicationDir()
+{
+    return QCoreApplication::applicationDirPath();
+}

@@ -35,6 +35,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     title: qsTr("Maps") + TRANSLATOR.emptyString
+                    folder: MASTERCONTROLLER.settingController.mapPath
                     selectedFolder: MASTERCONTROLLER.settingController.mapPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.mapPath = selectedFolder
                 }
@@ -53,6 +54,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     title: qsTr("Mission") + TRANSLATOR.emptyString
+                    folder: MASTERCONTROLLER.settingController.missionPath
                     selectedFolder: MASTERCONTROLLER.settingController.missionPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.missionPath = selectedFolder
                 }
@@ -71,6 +73,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     title: qsTr("Logs") + TRANSLATOR.emptyString
+                    folder: MASTERCONTROLLER.settingController.logPath
                     selectedFolder: MASTERCONTROLLER.settingController.logPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.logPath = selectedFolder
                 }
@@ -89,6 +92,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     title: qsTr("Alerts") + TRANSLATOR.emptyString
+                    folder: MASTERCONTROLLER.settingController.alertPath
                     selectedFolder: MASTERCONTROLLER.settingController.alertPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.alertPath = selectedFolder
                 }
@@ -107,6 +111,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     title: qsTr("Gallery") + TRANSLATOR.emptyString
+                    folder: MASTERCONTROLLER.settingController.galleryPath
                     selectedFolder: MASTERCONTROLLER.settingController.galleryPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.galleryPath = selectedFolder
                 }

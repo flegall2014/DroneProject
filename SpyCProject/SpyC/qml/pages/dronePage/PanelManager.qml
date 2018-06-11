@@ -50,7 +50,7 @@ StackView {
         {
             "name": "SafetyPlanEditor",
             "displayName": "Safety Plan Editor",
-            "url": "qrc:/qml/panels/SafetyEditorPanel.qml"
+            "url": "qrc:/qml/panels/SafetyPlanEditorPanel.qml"
         },
         {
             "name": "LandingPlanEditor",

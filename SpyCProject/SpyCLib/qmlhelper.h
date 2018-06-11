@@ -33,6 +33,9 @@ public:
 
     //! From local file
     Q_INVOKABLE QString fromLocalFile(const QString &sInput);
+
+    //! Return application dir
+    Q_INVOKABLE QString applicationDir();
 };
 }
 

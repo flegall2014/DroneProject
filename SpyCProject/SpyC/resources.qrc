@@ -65,7 +65,6 @@
         <file>qml/panels/GalleryEditorPanel.qml</file>
         <file>qml/panels/MissionPlanEditorPanel.qml</file>
         <file>qml/panels/PayloadEditorPanel.qml</file>
-        <file>qml/panels/SafetyEditorPanel.qml</file>
         <file>qml/toolbars/DefaultToolBar.qml</file>
         <file>qml/toolbars/MapToolBar.qml</file>
         <file>qml/toolbars/MissionPlanToolBar.qml</file>
@@ -138,5 +137,7 @@
         <file>images/ico-thales.png</file>
         <file>qml/dialogs/ConfirmGoHomeDialog.qml</file>
         <file>qml/dialogs/GoHomeOnlyInFlyingModeErrorDialog.qml</file>
+        <file>qml/panels/SafetyPlanEditorPanel.qml</file>
+        <file>icons/ico-save.svg</file>
     </qresource>
 </RCC>
