@@ -38,13 +38,13 @@ Item {
         else
         if (dialogType === SpyC.EMPTY_SAFETY_PLAN_ERROR)
         {
-            dialogLoader.source = "qrc:/qml/dialogs/EmptySafetyErrorDialog.qml"
+            dialogLoader.source = "qrc:/qml/dialogs/EmptySafetyPlanErrorDialog.qml"
             root.msgType = SpyC.CRITICAL_MSG
         }
         else
         if (dialogType === SpyC.EMPTY_LANDING_PLAN_ERROR)
         {
-            dialogLoader.source = "qrc:/qml/dialogs/EmptyLandingPlanError.qml"
+            dialogLoader.source = "qrc:/qml/dialogs/EmptyLandingPlanErrorDialog.qml"
             root.msgType = SpyC.CRITICAL_MSG
         }
         else
@@ -172,7 +172,7 @@ Item {
             // Close button
             ImageButton {
                 anchors.right: parent.right
-                anchors.rightMargin: Theme.standardMargin/2
+                anchors.rightMargin: Theme.standardMargin
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/icons/ico-close.svg"
                 onClicked: root.state = ""

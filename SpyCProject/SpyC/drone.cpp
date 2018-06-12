@@ -8,6 +8,7 @@
 #include "gallerymodel.h"
 #include "exclusionareamodel.h"
 #include "settingcontroller.h"
+#include <helper.h>
 
 //-------------------------------------------------------------------------------------------------
 

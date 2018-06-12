@@ -1,10 +1,28 @@
 import QtQuick 2.5
+import Qt.labs.platform 1.0
 import "."
 import "./widgets"
 
 Item {
     id: root
     property variant targetDrone
+    property bool hasCloseButton: true
+    signal closePanel()
+    signal fileAccepted(string filePath)
+
+    // Open dialog
+    function openDialog(nameFilters, fileMode)
+    {
+        fileDialog.fileMode = fileMode
+        fileDialog.nameFilters = nameFilters
+        fileDialog.open()
+    }
+
+    // File dialog
+    FileDialog {
+        id: fileDialog
+        onAccepted: root.fileAccepted(fileDialog.file)
+    }
 
     function droneValid()
     {
@@ -16,9 +34,6 @@ Item {
         anchors.fill: parent
         color: Theme.defaultPanelBkgColor
     }
-
-    // Panel title
-    property alias title: panelTitle.text
 
     // Central title
     property alias centralTitle: statusText.text
@@ -43,16 +58,9 @@ Item {
         anchors.top: parent.top
         width: parent.width
         height: Theme.toolBarHeight
-        StandardText {
-            id: panelTitle
-            anchors.left: parent.left
-            anchors.leftMargin: Theme.standardMargin
-            anchors.verticalCenter: parent.verticalCenter
-            horizontalAlignment: Text.AlignLeft
-        }
         Item {
             id: leftToolBarContents
-            anchors.left: panelTitle.right
+            anchors.left: parent.left
             anchors.leftMargin: Theme.standardMargin
             anchors.right: parent.right
             anchors.rightMargin: Theme.standardMargin
@@ -80,9 +88,20 @@ Item {
             id: rightToolBarContents
             anchors.left: statusText.right
             anchors.leftMargin: Theme.standardMargin
-            anchors.right: parent.right
+            anchors.right: hasCloseButton ? closeButton.left : parent.right
             anchors.rightMargin: Theme.standardMargin
             height: parent.height
+        }
+
+        // Close button
+        ImageButton {
+            id: closeButton
+            visible: hasCloseButton
+            anchors.right: parent.right
+            anchors.rightMargin: Theme.standardMargin
+            anchors.verticalCenter: parent.verticalCenter
+            source: "qrc:/icons/ico-close.svg"
+            onClicked: closePanel()
         }
     }
 

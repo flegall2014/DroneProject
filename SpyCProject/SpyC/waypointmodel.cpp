@@ -168,6 +168,7 @@ void WayPointModel::setPlan(const QGeoPath &geoPath)
     for (int i=0; i<iPathSize; i++)
         m_vWayPoints << Core::WayPoint(geoPath.coordinateAt(i));
     endResetModel();
+    emit pathChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -215,3 +216,4 @@ void WayPointModel::closePath()
     endInsertRows();
     emit pathChanged();
 }
+

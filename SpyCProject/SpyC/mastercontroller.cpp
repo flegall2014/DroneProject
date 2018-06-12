@@ -14,6 +14,7 @@
 #include <defs.h>
 #include <waypoint.h>
 #include <serializehelper.h>
+#include <helper.h>
 
 //-------------------------------------------------------------------------------------------------
 
@@ -180,6 +181,7 @@ void MasterController::onIncomingMessage(const QString &sMessage)
         QString sDroneUID;
         SpyCore::DroneError eDroneError;
         Core::SerializeHelper::deSerializeDroneError(sMessage, eDroneError, sDroneUID);
+        emit missionPlanError(eDroneError, sDroneUID);
     }
     else
     {
@@ -221,18 +223,7 @@ void MasterController::onTakeOffRequest(const QString &sDroneUID)
 {
     Drone *pDrone = getDrone(sDroneUID);
     if (pDrone != nullptr)
-    {
-        if (pDrone->missionPlan().isEmpty())
-            emit missionPlanError(SpyCore::EMPTY_MISSION_PLAN, sDroneUID);
-        else
-        if (pDrone->safetyPlan().isEmpty())
-            emit missionPlanError(SpyCore::EMPTY_SAFETY_PLAN, sDroneUID);
-        else
-        if (pDrone->landingPlan().isEmpty())
-            emit missionPlanError(SpyCore::EMPTY_LANDING_PLAN, sDroneUID);
-        else
         sendMessage(Core::SerializeHelper::serializeTakeOffRequest(sDroneUID));
-    }
 }
 
 
@@ -291,6 +282,99 @@ void MasterController::uploadExclusionArea(const QString &sDroneUID)
     Drone *pDrone = getDrone(sDroneUID);
     if (pDrone != nullptr)
         sendMessage(pDrone->serializeExclusionArea());
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool MasterController::loadSafetyPlan(const QString &sFilePath)
+{
+    if (m_pCurrentDrone != nullptr)
+    {
+        QString sSafetyPlan = "";
+        if (Core::Helper::load(Core::Helper::toLocalFile(sFilePath), sSafetyPlan))
+        {
+            QString sCurrentDroneUID = m_pCurrentDrone->uid();
+            m_pCurrentDrone->deserializeSafetyPlan(sSafetyPlan);
+            m_pCurrentDrone->setUid(sCurrentDroneUID);
+            return true;
+        }
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool MasterController::saveSafetyPlan(const QString &sFilePath, const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+    {
+        Core::Helper::save(pDrone->serializeSafetyPlan(), Core::Helper::toLocalFile(sFilePath));
+        return true;
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool MasterController::loadMissionPlan(const QString &sFilePath)
+{
+    if (m_pCurrentDrone != nullptr)
+    {
+        QString sMissionPlan = "";
+        if (Core::Helper::load(Core::Helper::toLocalFile(sFilePath), sMissionPlan))
+        {
+            QString sCurrentDroneUID = m_pCurrentDrone->uid();
+            m_pCurrentDrone->deserializeMissionPlan(sMissionPlan);
+            m_pCurrentDrone->setUid(sCurrentDroneUID);
+            return true;
+        }
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool MasterController::saveMissionPlan(const QString &sFilePath, const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+    {
+        Core::Helper::save(pDrone->serializeMissionPlan(), Core::Helper::toLocalFile(sFilePath));
+        return true;
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool MasterController::loadLandingPlan(const QString &sFilePath)
+{
+    if (m_pCurrentDrone != nullptr)
+    {
+        QString sLandingPlan = "";
+        if (Core::Helper::load(Core::Helper::toLocalFile(sFilePath), sLandingPlan))
+        {
+            QString sCurrentDroneUID = m_pCurrentDrone->uid();
+            m_pCurrentDrone->deserializeLandingPlan(sLandingPlan);
+            m_pCurrentDrone->setUid(sCurrentDroneUID);
+            return true;
+        }
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool MasterController::saveLandingPlan(const QString &sFilePath, const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+    {
+        Core::Helper::save(pDrone->serializeLandingPlan(), Core::Helper::toLocalFile(sFilePath));
+        return true;
+    }
+    return false;
 }
 
 //-------------------------------------------------------------------------------------------------

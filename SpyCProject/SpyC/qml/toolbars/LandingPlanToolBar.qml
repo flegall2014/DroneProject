@@ -22,7 +22,7 @@ ToolBarBase {
         width: Theme.buttonSize
         height: Theme.buttonSize
         anchors.right: done.left
-        anchors.rightMargin: Theme.standardMargin/2
+        anchors.rightMargin: Theme.standardMargin
         anchors.verticalCenter: parent.verticalCenter
         label: qsTr("Cancel")
         endColor: Theme.defaultButtonColor
@@ -33,7 +33,7 @@ ToolBarBase {
         width: Theme.buttonSize
         height: Theme.buttonSize
         anchors.right: parent.right
-        anchors.rightMargin: Theme.standardMargin/2
+        anchors.rightMargin: Theme.standardMargin
         anchors.verticalCenter: parent.verticalCenter
         label: qsTr("Done")
         endColor: Theme.defaultButtonColor

@@ -22,6 +22,12 @@ public:
 
     //! Return application dir
     static QDir applicationDir();
+
+    //! To local file
+    static QString toLocalFile(const QString &sInput);
+
+    //! From local file
+    static QString fromLocalFile(const QString &sInput);
 };
 }
 

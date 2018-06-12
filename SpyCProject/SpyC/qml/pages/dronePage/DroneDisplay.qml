@@ -74,7 +74,7 @@ Rectangle {
                 ImageButton {
                     id: unlockButton
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.standardMargin/2
+                    anchors.rightMargin: Theme.standardMargin
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/icons/ico-edit.svg"
                     Behavior on opacity {
@@ -170,9 +170,9 @@ Rectangle {
                     ImageButton {
                         id: switchButton
                         anchors.left: parent.left
-                        anchors.leftMargin: Theme.standardMargin/2
+                        anchors.leftMargin: Theme.standardMargin
                         anchors.bottom: parent.bottom
-                        anchors.bottomMargin: Theme.standardMargin/2
+                        anchors.bottomMargin: Theme.standardMargin
                         source: "qrc:/icons/ico-swap.svg"
                         visible: (MASTERCONTROLLER.currentDrone !== null) && (targetDrone === MASTERCONTROLLER.currentDrone)
                         onClicked: {
@@ -198,9 +198,9 @@ Rectangle {
                         // Close button
                         ImageButton {
                             anchors.right: parent.right
-                            anchors.rightMargin: Theme.standardMargin/2
+                            anchors.rightMargin: Theme.standardMargin
                             anchors.top: parent.top
-                            anchors.topMargin: Theme.standardMargin/2
+                            anchors.topMargin: Theme.standardMargin
                             source: "qrc:/icons/ico-close.svg"
                             onClicked: flipable.state = ""
                         }

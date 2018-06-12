@@ -110,6 +110,24 @@ public:
     //! Uplaod exclusion area
     void uploadExclusionArea(const QString &sDroneUID);
 
+    //! Load safety plan
+    Q_INVOKABLE bool loadSafetyPlan(const QString &sFilePath);
+
+    //! Save safety plan
+    Q_INVOKABLE bool saveSafetyPlan(const QString &sFilePath, const QString &sDroneUID);
+
+    //! Load mission plan
+    Q_INVOKABLE bool loadMissionPlan(const QString &sFilePath);
+
+    //! Save mission plan
+    Q_INVOKABLE bool saveMissionPlan(const QString &sFilePath, const QString &sDroneUID);
+
+    //! Load landing plan
+    Q_INVOKABLE bool loadLandingPlan(const QString &sFilePath);
+
+    //! Save landing plan
+    Q_INVOKABLE bool saveLandingPlan(const QString &sFilePath, const QString &sDroneUID);
+
 private:
     //-------------------------------------------------------------------------------------------------
     // Getters & setters

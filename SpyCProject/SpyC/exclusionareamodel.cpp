@@ -86,12 +86,6 @@ void ExclusionAreaModel::setShapes(const QVector<Core::BaseShape *> &vShapes)
     qDeleteAll(m_vShapes);
     m_vShapes.clear();
     m_vShapes = vShapes;
-    foreach (Core::BaseShape *pShape, vShapes) {
-        qDebug() << "LOLO ! " << pShape;
-        Core::RectangleShape *p = dynamic_cast<Core::RectangleShape *>(pShape);
-        if (p!=nullptr)
-            qDebug() << p->topLeft().latitude() << p->topLeft().longitude() << p->bottomRight().latitude() << p->bottomRight().longitude();
-    }
     endResetModel();
     emit shapeCountChanged();
 }

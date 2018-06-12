@@ -29,7 +29,7 @@ Item {
         height: Theme.buttonSize
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
-        anchors.rightMargin: Theme.standardMargin/2
+        anchors.rightMargin: Theme.standardMargin
 
         // Gradient
         gradient: Gradient {

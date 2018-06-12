@@ -48,6 +48,14 @@ const QString &DroneBase::uid() const
 
 //-------------------------------------------------------------------------------------------------
 
+void DroneBase::setUid(const QString &sUID)
+{
+    m_sDroneUID = sUID;
+    emit uidChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 int DroneBase::flightStatus() const
 {
     return (int)m_eFlightStatus;
@@ -590,6 +598,34 @@ void DroneBase::deserializePlan(const CXMLNode &node, QGeoPath &geoPath, QString
         QGeoCoordinate geoCoord(dLatitude, dLongitude, dAltitude);
         geoPath.addCoordinate(geoCoord);
     }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool DroneBase::hasSafetyPlan() const
+{
+    return !m_safetyPlan.isEmpty();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool DroneBase::hasMissionPlan() const
+{
+    return !m_missionPlan.isEmpty();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool DroneBase::hasLandingPlan() const
+{
+    return !m_landingPlan.isEmpty();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool DroneBase::hasExclusionArea() const
+{
+    return !m_vExclusionArea.isEmpty();
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -75,6 +75,7 @@ PanelBase {
             }
         }
 
+        // Shape editor
         ShapeEditor {
             width: parent.width/2
             height: parent.height

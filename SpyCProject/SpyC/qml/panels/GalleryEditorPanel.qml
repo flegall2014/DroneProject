@@ -39,7 +39,7 @@ PanelBase {
                     // Snapshot index
                     StandardText {
                         anchors.left: parent.left
-                        anchors.leftMargin: Theme.standardMargin/2
+                        anchors.leftMargin: Theme.standardMargin
                         anchors.verticalCenter: parent.verticalCenter
                         text: index+1
                         font.bold: true
@@ -48,7 +48,7 @@ PanelBase {
                     // Close button
                     ImageButton {
                         anchors.right: parent.right
-                        anchors.rightMargin: Theme.standardMargin/2
+                        anchors.rightMargin: Theme.standardMargin
                         anchors.top: parent.top
                         width: parent.height
                         height: parent.height

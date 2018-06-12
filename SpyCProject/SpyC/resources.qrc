@@ -44,7 +44,6 @@
         <file>qml/dialogs/ConfirmFailSafeDialog.qml</file>
         <file>qml/dialogs/ConfirmTakeOffDialog.qml</file>
         <file>qml/dialogs/EmptyMissionPlanErrorDialog.qml</file>
-        <file>qml/dialogs/EmptySafetyErrorDialog.qml</file>
         <file>qml/dialogs/MissionPlanValidationDialog.qml</file>
         <file>qml/dialogs/NotEnoughPointInMissionPlanErrorDialog.qml</file>
         <file>qml/dialogs/NotEnoughPointInSafetyErrorDialog.qml</file>
@@ -139,5 +138,6 @@
         <file>qml/dialogs/GoHomeOnlyInFlyingModeErrorDialog.qml</file>
         <file>qml/panels/SafetyPlanEditorPanel.qml</file>
         <file>icons/ico-save.svg</file>
+        <file>qml/dialogs/EmptySafetyPlanErrorDialog.qml</file>
     </qresource>
 </RCC>

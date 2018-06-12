@@ -29,7 +29,7 @@ Item {
                 }
                 StandardText {
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.standardMargin/2
+                    anchors.rightMargin: Theme.standardMargin
                     anchors.verticalCenter: parent.verticalCenter
                     text: date
                 }

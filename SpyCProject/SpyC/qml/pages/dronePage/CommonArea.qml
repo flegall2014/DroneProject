@@ -20,7 +20,6 @@ Rectangle {
     // Listen to drone flight status changed
     function onDroneFlightStatusChanged()
     {
-        console.log("TOTO")
         if (targetDrone.flightStatus === SpyC.FLYING)
             panelMgr.loadPanel("FlightEditor")
         else
@@ -31,7 +30,6 @@ Rectangle {
     // Listen to drone work mode changed
     function onWorkModeChanged()
     {
-        console.log("Work mode changed")
         if (targetDrone.workMode === SpyC.MISSION_PLAN_EDIT)
             panelMgr.loadPanel("MissionPlanEditor")
         else

@@ -92,14 +92,14 @@ void DroneEmulator::onBatteryLevelChanged(int iLevel, int iReturn)
 
 void DroneEmulator::takeOff()
 {
-    if (missionPlan().isEmpty())
+    if (safetyPlan().isEmpty())
         emit droneError(SpyCore::EMPTY_SAFETY_PLAN, uid());
-    else
-    if (landingPlan().isEmpty())
-        emit droneError(SpyCore::EMPTY_LANDING_PLAN, uid());
     else
     if (missionPlan().isEmpty())
         emit droneError(SpyCore::EMPTY_MISSION_PLAN, uid());
+    else
+    if (landingPlan().isEmpty())
+        emit droneError(SpyCore::EMPTY_LANDING_PLAN, uid());
     else
     {
         m_pFlightSimulator->computeFlightPath(missionPlan());

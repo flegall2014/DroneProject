@@ -35,6 +35,12 @@ class SPYCLIBSHARED_EXPORT DroneBase : public QObject
     Q_PROPERTY(int batteryLevel READ batteryLevel WRITE setBatteryLevel NOTIFY batteryLevelChanged)
     Q_PROPERTY(int returnLevel READ returnLevel NOTIFY batteryLevelChanged)
 
+    // Safety plan/Mission plan/landing plan/exclusion area
+    Q_PROPERTY(bool hasSafetyPlan READ hasSafetyPlan NOTIFY safetyPlanChanged)
+    Q_PROPERTY(bool hasMissionPlan READ hasMissionPlan NOTIFY missionPlanChanged)
+    Q_PROPERTY(bool hasLandingPlan READ hasSafetyPlan NOTIFY landingPlanChanged)
+    Q_PROPERTY(bool hasExclusionArea READ hasSafetyPlan NOTIFY exclusionAreaChanged)
+
 public:
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
@@ -61,6 +67,9 @@ public:
 
     //! Return uid
     const QString &uid() const;
+
+    //! Set uid
+    void setUid(const QString &sUID);
 
     //! Return fly status
     int flightStatus() const;
@@ -199,6 +208,18 @@ private:
 
     //! Deserialize plan
     void deserializePlan(const CXMLNode &node, QGeoPath &geoPath, QString &sDroneUID);
+
+    //! Return true if drone has a non-empty safety plan
+    bool hasSafetyPlan() const;
+
+    //! Return true if drone has a non-empty mission plan
+    bool hasMissionPlan() const;
+
+    //! Return true if drone has a non-empty landing plan
+    bool hasLandingPlan() const;
+
+    //! Return true if drone has a non-empty exclusion area
+    bool hasExclusionArea() const;
 
 private:
     //! UID

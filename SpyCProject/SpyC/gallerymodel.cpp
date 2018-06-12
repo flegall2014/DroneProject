@@ -76,7 +76,6 @@ void GalleryModel::addSnapShot(const QString &sSnapShotPath, const QGeoCoordinat
     QImage img(sSnapShotPath);
     if (!img.isNull())
     {
-        qDebug() << "TEST ADDING: " << sSnapShotPath;
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
         m_vSnaps << SnapShot(sSnapShotPath, position);
         endInsertRows();

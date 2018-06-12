@@ -8,6 +8,15 @@ import "../widgets"
 
 PanelBase {
     centralTitle: qsTr("EDITING MISSION PLAN")
+    property string requestor: ""
+    onFileAccepted: {
+        if (requestor === "load")
+            MASTERCONTROLLER.loadMissionPlan(filePath)
+        else
+        if (requestor === "save")
+            MASTERCONTROLLER.saveMissionPlan(filePath, targetDrone.uid)
+    }
+
     leftToolBarContents: Item {
         anchors.fill: parent
 
@@ -17,6 +26,13 @@ PanelBase {
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             source: "qrc:/icons/ico-open.svg"
+            label: qsTr("Safety")
+            textPosition: "below"
+            enabled: droneValid()
+            onClicked: {
+                requestor = "load"
+                openDialog(["*.mp"], FileDialog.OpenFile)
+            }
         }
 
         // Save
@@ -26,6 +42,11 @@ PanelBase {
             anchors.leftMargin: Theme.standardMargin
             anchors.verticalCenter: parent.verticalCenter
             source: "qrc:/icons/ico-save.svg"
+            enabled: droneValid() && targetDrone.hasMissionPlan
+            onClicked: {
+                requestor = "save"
+                openDialog(["*.mp"], FileDialog.SaveFile)
+            }
         }
     }
     panelContents: Item {

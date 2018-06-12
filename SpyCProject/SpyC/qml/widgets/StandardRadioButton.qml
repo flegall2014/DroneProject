@@ -17,7 +17,7 @@ RadioButton {
                 visible: control.checked
                 color: "#555"
                 radius: 9
-                anchors.margins: Theme.standardMargin/2
+                anchors.margins: Theme.standardMargin
             }
         }
         label: StandardText {

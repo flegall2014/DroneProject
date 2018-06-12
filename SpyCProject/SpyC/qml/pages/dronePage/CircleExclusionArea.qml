@@ -40,12 +40,10 @@ MapItemView {
             }
             function onCurrentPathChanged()
             {
-                console.log("CURRENT PATH CHANGE")
                 if ((typeof targetShape !== "undefined") && (targetShape !== null))
                     circleShape.radius = targetShape.radius
             }
             onTargetShapeChanged: {
-                console.log("********************************************* shape changed")
                 if ((typeof targetShape !== "undefined") && (targetShape !== null))
                 {
                     circleShape.visible = (targetShape.type === SpyC.CIRCLE)

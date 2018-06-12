@@ -40,7 +40,6 @@ Item {
     property int goNextIconSize: 160
     property int standardDelegateHeight: 48
     property int busyIndicatorSize: 64
-    property int panelTitleWidth: 256
     property int coordinateDelegateHeight: buttonSize
     property int galleryViewToolBarHeight: 32
 

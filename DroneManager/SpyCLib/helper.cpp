@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QDir>
 #include <QCoreApplication>
+#include <QUrl>
 
 // Application
 #include "helper.h"
@@ -32,8 +33,8 @@ bool Helper::load(const QString &sFilePath, QString &sOutputString)
     QFile file(sFilePath);
     if (file.open(QIODevice::ReadOnly))
     {
-        QTextStream out(&file);
-        out >> sOutputString;
+        QTextStream in(&file);
+        sOutputString = in.readAll();
         file.close();
         return true;
     }
@@ -63,3 +64,19 @@ QDir Helper::applicationDir()
 {
     return QCoreApplication::applicationDirPath();
 }
+
+//-------------------------------------------------------------------------------------------------
+
+QString Helper::toLocalFile(const QString &sInput)
+{
+    QUrl url(sInput);
+    return url.toLocalFile();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+QString Helper::fromLocalFile(const QString &sInput)
+{
+    return QUrl::fromLocalFile(sInput).toString();
+}
+

@@ -25,6 +25,7 @@ void DroneModel::addDrone(Core::DroneBase *pDrone)
 {
     if ((pDrone != nullptr) && (!m_vDrones.contains(pDrone)))
     {
+        qDebug() << "ADDED NEW DRONE " << pDrone << pDrone->uid();
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
         m_vDrones << pDrone;
         connect(pDrone, &Core::DroneBase::batteryLevelChanged, this, &DroneModel::onUpdateView, Qt::QueuedConnection);

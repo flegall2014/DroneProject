@@ -38,7 +38,6 @@ Rectangle {
         id: video
         anchors.fill: parent
         source: HELPER.fromLocalFile(targetDrone.videoUrl)
-        onSourceChanged: console.log("******************************** ", source)
         loops: MediaPlayer.Infinite
         focus: true
         opacity: targetDrone.flightStatus === SpyC.FLYING ? 1 : 0

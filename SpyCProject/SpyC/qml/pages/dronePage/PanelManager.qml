@@ -147,8 +147,17 @@ StackView {
         if (panelFound === false) {
             var panel = createPanel(panelName)
             if ((typeof panel !== "undefined") && (panel !== null))
+            {
+                panel.closePanel.connect(onClosePanel)
                 push(panel)
+            }
         }
+    }
+
+    // Close panel and load default payload panel
+    function onClosePanel()
+    {
+        loadPanel("PayloadEditor")
     }
 
     Component.onCompleted: {

@@ -45,7 +45,7 @@ Rectangle {
     ImageButton {
         id: quitButton
         anchors.right: parent.right
-        anchors.rightMargin: Theme.standardMargin/2
+        anchors.rightMargin: Theme.standardMargin
         anchors.verticalCenter: parent.verticalCenter
         source: "qrc:/icons/ico-shutdown.png"
         onClicked: dialogMgr.showDialog(SpyC.EXIT_SPYC)
