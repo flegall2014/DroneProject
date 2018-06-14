@@ -118,6 +118,9 @@ public:
     //! Exclusion area model
     ExclusionAreaModel *exclusionAreaModel() const;
 
+    //! Set exclusion area
+    virtual void setExclusionArea(const QVector<Core::BaseShape *> &vShapes);
+
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------

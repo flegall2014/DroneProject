@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.2
+import Qt.labs.platform 1.0
 import Components 1.0
 import ".."
 import "../widgets"
@@ -9,6 +10,15 @@ import "../widgets"
 PanelBase {
     id: root
     centralTitle: qsTr("EDITING EXCLUSION AREA")
+    property string requestor: ""
+    onFileAccepted: {
+        if (requestor === "load")
+            MASTERCONTROLLER.loadExclusionArea(filePath)
+        else
+        if (requestor === "save")
+            MASTERCONTROLLER.saveExclusionArea(filePath, targetDrone.uid)
+    }
+
     leftToolBarContents: Item {
         anchors.fill: parent
 
@@ -18,6 +28,10 @@ PanelBase {
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             source: "qrc:/icons/ico-open.svg"
+            onClicked: {
+                requestor = "load"
+                openDialog(["*.excl"], FileDialog.OpenFile)
+            }
         }
 
         // Save
@@ -27,6 +41,10 @@ PanelBase {
             anchors.leftMargin: Theme.standardMargin
             anchors.verticalCenter: parent.verticalCenter
             source: "qrc:/icons/ico-save.svg"
+            onClicked: {
+                requestor = "save"
+                openDialog(["*.excl"], FileDialog.SaveFile)
+            }
         }
     }
     panelContents: Row {

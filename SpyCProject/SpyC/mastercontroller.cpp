@@ -380,6 +380,39 @@ bool MasterController::saveLandingPlan(const QString &sFilePath, const QString &
 
 //-------------------------------------------------------------------------------------------------
 
+bool MasterController::loadExclusionArea(const QString &sFilePath)
+{
+    if (m_pCurrentDrone != nullptr)
+    {
+        QString sExclusionArea = "";
+        if (Core::Helper::load(Core::Helper::toLocalFile(sFilePath), sExclusionArea))
+        {
+            QString sCurrentDroneUID = m_pCurrentDrone->uid();
+            m_pCurrentDrone->deserializeExclusionArea(sExclusionArea);
+            m_pCurrentDrone->setUid(sCurrentDroneUID);
+            return true;
+        }
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool MasterController::saveExclusionArea(const QString &sFilePath, const QString &sDroneUID)
+{
+    qDebug() << "SAVE XCLS";
+
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+    {
+        Core::Helper::save(pDrone->serializeExclusionArea(), Core::Helper::toLocalFile(sFilePath));
+        return true;
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void MasterController::setCurrentDrone(Drone *pCurrentDrone)
 {
     m_pCurrentDrone = pCurrentDrone;

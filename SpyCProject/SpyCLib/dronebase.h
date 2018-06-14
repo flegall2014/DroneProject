@@ -129,7 +129,7 @@ public:
     const QVector<BaseShape *> &exclusionArea() const;
 
     //! Set exclusion area
-    void setExclusionArea(const QVector<BaseShape *> &vShapes);
+    virtual void setExclusionArea(const QVector<BaseShape *> &vShapes);
 
     //-------------------------------------------------------------------------------------------------
     // Control methods

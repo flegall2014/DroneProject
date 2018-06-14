@@ -232,6 +232,8 @@ const QVector<BaseShape *> &DroneBase::exclusionArea() const
 
 void DroneBase::setExclusionArea(const QVector<BaseShape *> &vExclusionArea)
 {
+    qDeleteAll(m_vExclusionArea);
+    m_vExclusionArea.clear();
     m_vExclusionArea = vExclusionArea;
     emit exclusionAreaChanged();
 }
@@ -653,12 +655,13 @@ QString DroneBase::serializeExclusionArea()
 
 void DroneBase::deserializeExclusionArea(const QString &sExclusionArea)
 {
-    qDeleteAll(m_vExclusionArea);
-    m_vExclusionArea.clear();
     CXMLNode exclusionAreaNode = CXMLNode::parseJSON(sExclusionArea);
     QString sNodeType = exclusionAreaNode.attributes()[ATTR_NODE_TYPE];
     if (sNodeType == TAG_EXCLUSION_AREA)
     {
+        //! Exclusion area
+        QVector<BaseShape *> vExclusionArea;
+
         m_sDroneUID = exclusionAreaNode.attributes()[ATTR_DRONE_UID];
         QVector<CXMLNode> vShapeNodes = exclusionAreaNode.getNodesByTagName(TAG_SHAPES);
         foreach (CXMLNode shapeNode, vShapeNodes)
@@ -673,7 +676,7 @@ void DroneBase::deserializeExclusionArea(const QString &sExclusionArea)
                 {
                     RectangleShape *pShape = new RectangleShape(this);
                     pShape->setPath(geoPath);
-                    m_vExclusionArea << pShape;
+                    vExclusionArea << pShape;
                 }
             }
             else
@@ -686,7 +689,7 @@ void DroneBase::deserializeExclusionArea(const QString &sExclusionArea)
                 {
                     TriangleShape *pShape = new TriangleShape(this);
                     pShape->setPath(geoPath);
-                    m_vExclusionArea << pShape;
+                    vExclusionArea << pShape;
                 }
             }
             else
@@ -696,8 +699,10 @@ void DroneBase::deserializeExclusionArea(const QString &sExclusionArea)
                 double dRadius = 0;
                 CircleShape::deserialize(shapeNode.toJsonString(), center, dRadius);
                 CircleShape *pShape = new CircleShape(center, dRadius, this);
-                m_vExclusionArea << pShape;
+                vExclusionArea << pShape;
             }
+
+            setExclusionArea(vExclusionArea);
         }
     }
 }

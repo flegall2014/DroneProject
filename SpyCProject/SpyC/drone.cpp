@@ -213,6 +213,15 @@ ExclusionAreaModel *Drone::exclusionAreaModel() const
 
 //-------------------------------------------------------------------------------------------------
 
+void Drone::setExclusionArea(const QVector<Core::BaseShape *> &vShapes)
+{
+    DroneBase::setExclusionArea(vShapes);
+    if (m_pExclusionAreaModel != nullptr)
+        m_pExclusionAreaModel->setShapes(vShapes);
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void Drone::clearMissionPlan()
 {
     DroneBase::clearMissionPlan();

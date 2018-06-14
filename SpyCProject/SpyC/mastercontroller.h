@@ -128,6 +128,12 @@ public:
     //! Save landing plan
     Q_INVOKABLE bool saveLandingPlan(const QString &sFilePath, const QString &sDroneUID);
 
+    //! Load exclusion area
+    Q_INVOKABLE bool loadExclusionArea(const QString &sFilePath);
+
+    //! Save exclusion area
+    Q_INVOKABLE bool saveExclusionArea(const QString &sFilePath, const QString &sDroneUID);
+
 private:
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
