@@ -139,5 +139,7 @@
         <file>qml/panels/SafetyPlanEditorPanel.qml</file>
         <file>icons/ico-save.svg</file>
         <file>qml/dialogs/EmptySafetyPlanErrorDialog.qml</file>
+        <file>qml/pages/dronePage/ImageView.qml</file>
+        <file>qml/widgets/StandardSlider.qml</file>
     </qresource>
 </RCC>

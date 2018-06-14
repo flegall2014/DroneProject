@@ -33,7 +33,7 @@ class SPYCLIBSHARED_EXPORT DroneBase : public QObject
 
     // Battery and return levels
     Q_PROPERTY(int batteryLevel READ batteryLevel WRITE setBatteryLevel NOTIFY batteryLevelChanged)
-    Q_PROPERTY(int returnLevel READ returnLevel NOTIFY batteryLevelChanged)
+    Q_PROPERTY(int returnLevel READ returnLevel WRITE setReturnLevel NOTIFY returnLevelChanged)
 
     // Safety plan/Mission plan/landing plan/exclusion area
     Q_PROPERTY(bool hasSafetyPlan READ hasSafetyPlan NOTIFY safetyPlanChanged)

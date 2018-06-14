@@ -13,18 +13,6 @@ Item {
         return (typeof targetDrone !== "undefined") && (targetDrone !== null)
     }
 
-    /*
-    // Battery status widget
-    BatteryStatusWidget {
-        id: batteryStatusWidget
-        anchors.left: parent.left
-        anchors.leftMargin: Theme.standardMargin
-        anchors.verticalCenter: parent.verticalCenter
-        batteryLevel: droneValid() ? targetDrone.batteryLevel : 0
-        returnLevel: droneValid() ? targetDrone.returnLevel : 0
-    }
-    */
-
     Item {
         anchors.left: parent.left
         anchors.right: parent.right

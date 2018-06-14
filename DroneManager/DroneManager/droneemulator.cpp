@@ -62,7 +62,7 @@ DroneEmulator::DroneEmulator(const QString &sDroneUID, const QString &sVideoUrl,
     // Return timer
     m_returnTimer.setInterval(3000);
     connect(&m_returnTimer, &QTimer::timeout, this, &DroneEmulator::returnTimeOut, Qt::QueuedConnection);
-    m_positionTimer.start();
+    m_returnTimer.start();
 }
 
 //-------------------------------------------------------------------------------------------------

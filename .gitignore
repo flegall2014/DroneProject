@@ -11,7 +11,10 @@
 *.dylib
 *.Release
 *.mp4
-
+*qml.cpp
+*qmlcache.qrc
+*Release
+*Debug
 *.Debug
 
 /.qmake.cache
@@ -35,6 +38,7 @@ Makefile*
 *.qmlproject.user
 *.qmlproject.user.*
 
-build
-*.Release
-*.Debug
+
+
+SpyCProject/SpyC/object_script.SpyC.Release
+SpyCProject/SpyC/object_script.SpyCd.Debug

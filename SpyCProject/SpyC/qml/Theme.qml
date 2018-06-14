@@ -35,6 +35,7 @@ Item {
     property int controlPanelWidth: 316
     property int commonAreaHeight: 316
     property int buttonSize: toolBarHeight-8
+    property int sliderSize: toolBarHeight/2
     property int alertDeleagateHeight: 32
     property int mapOrVideoThumbnailSize: 256
     property int goNextIconSize: 160

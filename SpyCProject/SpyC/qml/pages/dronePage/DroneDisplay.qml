@@ -115,6 +115,7 @@ Rectangle {
                     NumberAnimation {target: rotation; property: "angle"; duration: 2*Theme.standardAnimationDuration}
                 }
 
+                // Map & Video views
                 front: Item {
                     width: parent.width
                     height: parent.height
@@ -186,25 +187,13 @@ Rectangle {
                         }
                     }
                 }
-                back: Rectangle {
+
+                // Image view
+                back: ImageView {
                     width: parent.width
                     height: parent.height
-                    color: Theme.backgroundColor
-                    Image {
-                        anchors.fill: parent
-                        source: HELPER.fromLocalFile(targetDrone.galleryModel.currentScreenCapPath)
-                        fillMode: Image.PreserveAspectFit
-
-                        // Close button
-                        ImageButton {
-                            anchors.right: parent.right
-                            anchors.rightMargin: Theme.standardMargin
-                            anchors.top: parent.top
-                            anchors.topMargin: Theme.standardMargin
-                            source: "qrc:/icons/ico-close.svg"
-                            onClicked: flipable.state = ""
-                        }
-                    }
+                    source: HELPER.fromLocalFile(targetDrone.galleryModel.currentScreenCapPath)
+                    onClose: flipable.state = ""
                 }
             }
         }

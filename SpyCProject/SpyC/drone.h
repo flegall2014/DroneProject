@@ -215,6 +215,9 @@ public slots:
     //! Shape count changed
     void onShapeCountChanged();
 
+    //! Battery level changed
+    void onBatteryLevelChanged();
+
 signals:
     //! Global status changed
     void globalStatusChanged();

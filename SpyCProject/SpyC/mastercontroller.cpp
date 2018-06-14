@@ -196,6 +196,7 @@ void MasterController::onIncomingMessage(const QString &sMessage)
 
 void MasterController::onDroneGlobalStatusChanged()
 {
+    qDebug() << "MasterController::onDroneGlobalStatusChanged()";
     Drone *pSender = dynamic_cast<Drone *>(sender());
     if (pSender != nullptr)
     {
