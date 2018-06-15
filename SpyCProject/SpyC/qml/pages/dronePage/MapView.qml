@@ -350,13 +350,13 @@ Map {
             if (targetDrone.workMode === SpyC.EXCLUSION_EDIT)
             {
                 if (targetDrone.currentExclusionShape === SpyC.RECTANGLE)
-                    targetDrone.exclusionAreaModel.addRectangle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+                    targetDrone.addRectangle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
                 else
                 if (targetDrone.currentExclusionShape === SpyC.TRIANGLE)
-                    targetDrone.exclusionAreaModel.addTriangle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+                    targetDrone.addTriangle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
                 else
                 if (targetDrone.currentExclusionShape === SpyC.CIRCLE)
-                    targetDrone.exclusionAreaModel.addCircle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+                    targetDrone.addCircle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
              }
         }
     }

@@ -143,7 +143,7 @@ void MasterController::onIncomingMessage(const QString &sMessage)
     if (sMessageType == TAG_DRONE_STATUS)
     {
         pDrone->deserializeGlobalStatus(sMessage);
-        pDrone->exclusionAreaModel()->setShapes(pDrone->exclusionArea());
+        pDrone->exclusionAreaModel()->setExclusionArea(pDrone->exclusionArea());
     }
     else
     // Safety plan
@@ -162,7 +162,7 @@ void MasterController::onIncomingMessage(const QString &sMessage)
     if (sMessageType == TAG_EXCLUSION_AREA)
     {
         pDrone->deserializeExclusionArea(sMessage);
-        pDrone->exclusionAreaModel()->setShapes(pDrone->exclusionArea());
+        pDrone->exclusionAreaModel()->setExclusionArea(pDrone->exclusionArea());
     }
     else
     // Position
@@ -400,7 +400,7 @@ bool MasterController::loadExclusionArea(const QString &sFilePath)
 
 bool MasterController::saveExclusionArea(const QString &sFilePath, const QString &sDroneUID)
 {
-    qDebug() << "SAVE XCLS";
+    qDebug() << "SAVE XCLS" << sDroneUID;
 
     Drone *pDrone = getDrone(sDroneUID);
     if (pDrone != nullptr)

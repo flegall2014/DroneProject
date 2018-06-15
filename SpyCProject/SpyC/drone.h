@@ -37,6 +37,9 @@ class Drone : public Core::DroneBase
     Q_PROPERTY(AlertModel *alertModel READ alertModel NOTIFY alertModelChanged)
     Q_PROPERTY(GalleryModel *galleryModel READ galleryModel NOTIFY galleryModelChanged)
 
+    // Exclusion area
+    Q_PROPERTY(Core::BaseShape *currentShape READ currentShape WRITE setCurrentShape NOTIFY currentShapeChanged)
+
 public:
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
@@ -137,6 +140,9 @@ public:
     //! Clear landing plan
     Q_INVOKABLE virtual void clearLandingPlan();
 
+    //! Clear exclusion area
+    Q_INVOKABLE virtual void clearExclusionArea();
+
     //! Add coordinate to mission plan
     Q_INVOKABLE void addCoordinateToMissionPlan(const QGeoCoordinate &geoCoordinate, int iPosition=-1);
 
@@ -164,8 +170,17 @@ public:
     //! Remove coordinate from landing plan at index
     Q_INVOKABLE void removeCoordinateFromLandingPlanAtIndex(int iPointIndex);
 
-    //! Clear exclusion areas
-    Q_INVOKABLE void clearExclusionAreas();
+    //! Add rectangle
+    Q_INVOKABLE void addRectangle(const QGeoCoordinate &center);
+
+    //! Add circle
+    Q_INVOKABLE void addCircle(const QGeoCoordinate &center);
+
+    //! Add triangle
+    Q_INVOKABLE void addTriangle(const QGeoCoordinate &center);
+
+    //! Remove shape
+    Q_INVOKABLE void removeShape(int iShapeIndex);
 
     //! Close safety
     void closeSafety();
@@ -173,6 +188,13 @@ public:
 private:
     //! Update battery status
     void updateBatteryStatus();
+
+    //! Return current shape
+    Core::BaseShape *currentShape() const;
+
+    //! Set current shape
+    void setCurrentShape(Core::BaseShape *pShape);
+
 
 private:
     //! Settings
@@ -211,12 +233,12 @@ private:
     //! Exclusion area model
     ExclusionAreaModel *m_pExclusionAreaModel = nullptr;
 
+    //! Current shape
+    Core::BaseShape *m_pCurrentShape = nullptr;
+
 public slots:
     //! Global status changed
     void onGlobalStatusChanged();
-
-    //! Shape count changed
-    void onShapeCountChanged();
 
     //! Battery level changed
     void onBatteryLevelChanged();
@@ -254,6 +276,9 @@ signals:
 
     //! Current exclusion shape changed
     void currentExclusionShapeChanged();
+
+    //! Current shape changed
+    void currentShapeChanged();
 };
 
 #endif // DRONE_H

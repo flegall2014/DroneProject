@@ -15,7 +15,7 @@ ToolBarBase {
         anchors.verticalCenter: parent.verticalCenter
         label: qsTr("Clear")
         endColor: Theme.defaultButtonColor
-        onClicked: targetDrone.clearExclusionAreas()
+        onClicked: targetDrone.clearExclusionArea()
     }
     StandardButton {
         id: cancel
@@ -38,7 +38,7 @@ ToolBarBase {
         label: qsTr("Done")
         endColor: Theme.defaultButtonColor
         onClicked: {
-            if (targetDrone.exclusionAreaModel.shapeCount === 0)
+            if (targetDrone.shapeCount === 0)
                 dialogMgr.showDialog(SpyC.NO_EXCLUSION_AREA_ERROR, targetDrone.uid)
             else
                 dialogMgr.showDialog(SpyC.EXCLUSION_AREA_VALIDATION, targetDrone.uid)

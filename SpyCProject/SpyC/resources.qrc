@@ -141,5 +141,6 @@
         <file>qml/dialogs/EmptySafetyPlanErrorDialog.qml</file>
         <file>qml/pages/dronePage/ImageView.qml</file>
         <file>qml/widgets/StandardSlider.qml</file>
+        <file>icons/ico-back.svg</file>
     </qresource>
 </RCC>

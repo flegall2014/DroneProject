@@ -39,7 +39,7 @@ class SPYCLIBSHARED_EXPORT DroneBase : public QObject
     Q_PROPERTY(bool hasSafetyPlan READ hasSafetyPlan NOTIFY safetyPlanChanged)
     Q_PROPERTY(bool hasMissionPlan READ hasMissionPlan NOTIFY missionPlanChanged)
     Q_PROPERTY(bool hasLandingPlan READ hasSafetyPlan NOTIFY landingPlanChanged)
-    Q_PROPERTY(bool hasExclusionArea READ hasSafetyPlan NOTIFY exclusionAreaChanged)
+    Q_PROPERTY(bool hasExclusionArea READ hasExclusionArea NOTIFY exclusionAreaChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -144,6 +144,9 @@ public:
     //! Clear landing plan
     virtual void clearLandingPlan();
 
+    //! Clear exclusion area
+    virtual void clearExclusionArea();
+
     //-------------------------------------------------------------------------------------------------
     // Serialization
     //-------------------------------------------------------------------------------------------------
@@ -221,6 +224,10 @@ private:
     //! Return true if drone has a non-empty exclusion area
     bool hasExclusionArea() const;
 
+protected:
+    //! Exclusion area
+    QVector<BaseShape *> m_vExclusionArea;
+
 private:
     //! UID
     QString m_sDroneUID = "";
@@ -251,9 +258,6 @@ private:
 
     //! Return level
     int m_iReturnLevel = 0;
-
-    //! Exclusion area
-    QVector<BaseShape *> m_vExclusionArea;
 
 signals:
     //! UID changed

@@ -14,8 +14,7 @@ class BaseShape;
 class ExclusionAreaModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(Core::BaseShape *currentShape READ currentShape WRITE setCurrentShape NOTIFY currentShapeChanged)
-    Q_PROPERTY(int shapeCount READ shapeCount NOTIFY shapeCountChanged)
+    Q_PROPERTY(int shapeCount READ shapeCount NOTIFY exclusionAreaCountChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -45,17 +44,11 @@ public:
     // Control methods
     //-------------------------------------------------------------------------------------------------
 
-    //! Add rect
-    Q_INVOKABLE void addRectangle(const QGeoCoordinate &center);
-
-    //! Add circle
-    Q_INVOKABLE void addCircle(const QGeoCoordinate &center);
-
-    //! Add triangle
-    Q_INVOKABLE void addTriangle(const QGeoCoordinate &center);
+    //! Add shape
+    void addExclusionArea(Core::BaseShape *pShape);
 
     //! Remove shape
-    Q_INVOKABLE void removeShape(int iShapeIndex);
+    void removeExclusionArea(int iShapeIndex);
 
     //! Clear
     void clear();
@@ -67,35 +60,20 @@ public:
     //! Return exclusion area list
     const QVector<Core::BaseShape *> &shapes() const;
 
-    //! Return current shape
-    Core::BaseShape *currentShape() const;
-
-    //! Set current shape
-    void setCurrentShape(Core::BaseShape *pShape);
-
     //! Set shapes
-    void setShapes(const QVector<Core::BaseShape *> &vShapes);
+    void setExclusionArea(const QVector<Core::BaseShape *> &vShapes);
 
 private:
-    //! Add shape
-    void addShape(Core::BaseShape *pShape);
-
     //! Return shape count
     int shapeCount() const;
 
 private:
     //! Shapes
-    QVector<Core::BaseShape *> m_vShapes;
-
-    //! Current shape
-    Core::BaseShape *m_pCurrentShape = nullptr;
+    QVector<Core::BaseShape *> m_vExclusionArea;
 
 signals:
-    //! Current shape changed
-    void currentShapeChanged();
-
     //! Shape count changed
-    void shapeCountChanged();
+    void exclusionAreaCountChanged();
 };
 
 #endif // EXCLUSIONAREAMODEL_H

@@ -54,7 +54,6 @@ void Drone::initialize(const QMap<int, QVariant> &mSettings)
     m_pAlertModel = new AlertModel(this);
     m_pGalleryModel = new GalleryModel(m_mSettings[SpyCore::GALLERY_PATH].toString(), this);
     m_pExclusionAreaModel = new ExclusionAreaModel(this);
-    connect(m_pExclusionAreaModel, &ExclusionAreaModel::shapeCountChanged, this, &Drone::onShapeCountChanged, Qt::QueuedConnection);
     connect(this, &Drone::batteryLevelChanged, this, &Drone::onBatteryLevelChanged, Qt::QueuedConnection);
     connect(this, &Drone::batteryStatusChanged, this, &Drone::onGlobalStatusChanged, Qt::QueuedConnection);;
 }
@@ -215,9 +214,10 @@ ExclusionAreaModel *Drone::exclusionAreaModel() const
 
 void Drone::setExclusionArea(const QVector<Core::BaseShape *> &vShapes)
 {
+    QVector<Core::BaseShape *> vEmptyShapes;
+    m_pExclusionAreaModel->setExclusionArea(vEmptyShapes);
     DroneBase::setExclusionArea(vShapes);
-    if (m_pExclusionAreaModel != nullptr)
-        m_pExclusionAreaModel->setShapes(vShapes);
+    m_pExclusionAreaModel->setExclusionArea(vShapes);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -225,8 +225,7 @@ void Drone::setExclusionArea(const QVector<Core::BaseShape *> &vShapes)
 void Drone::clearMissionPlan()
 {
     DroneBase::clearMissionPlan();
-    if (m_pMissionPlanModel != nullptr)
-        m_pMissionPlanModel->clear();
+    m_pMissionPlanModel->clear();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -234,8 +233,7 @@ void Drone::clearMissionPlan()
 void Drone::clearSafetyPlan()
 {
     DroneBase::clearSafetyPlan();
-    if (m_pSafetyModel != nullptr)
-        m_pSafetyModel->clear();
+    m_pSafetyModel->clear();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -243,126 +241,95 @@ void Drone::clearSafetyPlan()
 void Drone::clearLandingPlan()
 {
     DroneBase::clearLandingPlan();
-    if (m_pLandingPlanModel != nullptr)
-        m_pLandingPlanModel->clear();
+    m_pLandingPlanModel->clear();
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Drone::addCoordinateToMissionPlan(const QGeoCoordinate &geoCoordinate, int iPosition)
 {
-    if (m_pMissionPlanModel != nullptr)
-    {
-        m_pMissionPlanModel->addCoordinate(geoCoordinate, iPosition);
-        DroneBase::setMissionPlan(m_pMissionPlanModel->plan());
-    }
+    m_pMissionPlanModel->addCoordinate(geoCoordinate, iPosition);
+    DroneBase::setMissionPlan(m_pMissionPlanModel->plan());
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Drone::addCoordinateToSafety(const QGeoCoordinate &geoCoordinate, int iPosition)
 {
-    if (m_pSafetyModel != nullptr)
-    {
-        m_pSafetyModel->addCoordinate(geoCoordinate, iPosition);
-        setSafetyPlan(m_pSafetyModel->geoPath());
-    }
+    m_pSafetyModel->addCoordinate(geoCoordinate, iPosition);
+    setSafetyPlan(m_pSafetyModel->geoPath());
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Drone::addCoordinateToLandingPlan(const QGeoCoordinate &geoCoordinate, int iPosition)
 {
-    if (m_pLandingPlanModel != nullptr)
-    {
-        m_pLandingPlanModel->addCoordinate(geoCoordinate, iPosition);
-        DroneBase::setLandingPlan(m_pLandingPlanModel->plan());
-    }
+    m_pLandingPlanModel->addCoordinate(geoCoordinate, iPosition);
+    DroneBase::setLandingPlan(m_pLandingPlanModel->plan());
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Drone::setMissionPlanPointPosition(int iPointIndex, const QGeoCoordinate &geoCoord)
 {
-    if (m_pMissionPlanModel != nullptr)
-    {
-        m_pMissionPlanModel->setPointPosition(iPointIndex, geoCoord);
-        DroneBase::setMissionPlan(m_pMissionPlanModel->plan());
-    }
+    m_pMissionPlanModel->setPointPosition(iPointIndex, geoCoord);
+    DroneBase::setMissionPlan(m_pMissionPlanModel->plan());
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Drone::setSafetyPointPosition(int iPointIndex, const QGeoCoordinate &geoCoord)
 {
-    if (m_pSafetyModel != nullptr)
-    {
-        m_pSafetyModel->setPointPosition(iPointIndex, geoCoord);
-        DroneBase::setSafetyPlan(m_pSafetyModel->geoPath());
-    }
+    m_pSafetyModel->setPointPosition(iPointIndex, geoCoord);
+    DroneBase::setSafetyPlan(m_pSafetyModel->geoPath());
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Drone::setLandingPlanPointPosition(int iPointIndex, const QGeoCoordinate &geoCoord)
 {
-    if (m_pLandingPlanModel != nullptr)
-    {
-        m_pLandingPlanModel->setPointPosition(iPointIndex, geoCoord);
-        DroneBase::setLandingPlan(m_pLandingPlanModel->plan());
-    }
+    m_pLandingPlanModel->setPointPosition(iPointIndex, geoCoord);
+    DroneBase::setLandingPlan(m_pLandingPlanModel->plan());
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Drone::removeCoordinateFromSafetyPlanAtIndex(int iPointIndex)
 {
-    if (m_pSafetyModel != nullptr)
-    {
-        m_pSafetyModel->removeCoordinateAtIndex(iPointIndex);
-        DroneBase::setSafetyPlan(m_pSafetyModel->geoPath());
-    }
+    m_pSafetyModel->removeCoordinateAtIndex(iPointIndex);
+    DroneBase::setSafetyPlan(m_pSafetyModel->geoPath());
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Drone::removeCoordinateFromMissionPlanAtIndex(int iPointIndex)
 {
-    if (m_pMissionPlanModel != nullptr)
-    {
-        m_pMissionPlanModel->removeCoordinateAtIndex(iPointIndex);
-        DroneBase::setMissionPlan(m_pMissionPlanModel->plan());
-    }
+    m_pMissionPlanModel->removeCoordinateAtIndex(iPointIndex);
+    DroneBase::setMissionPlan(m_pMissionPlanModel->plan());
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Drone::removeCoordinateFromLandingPlanAtIndex(int iPointIndex)
 {
-    if (m_pLandingPlanModel != nullptr)
-    {
-        m_pLandingPlanModel->removeCoordinateAtIndex(iPointIndex);
-        DroneBase::setLandingPlan(m_pLandingPlanModel->plan());
-    }
+    m_pLandingPlanModel->removeCoordinateAtIndex(iPointIndex);
+    DroneBase::setLandingPlan(m_pLandingPlanModel->plan());
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void Drone::clearExclusionAreas()
+void Drone::clearExclusionArea()
 {
-    if (m_pExclusionAreaModel != nullptr)
-        m_pExclusionAreaModel->clear();
+    DroneBase::clearExclusionArea();
+    m_pExclusionAreaModel->clear();
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void Drone::closeSafety()
 {
-    if (m_pSafetyModel != nullptr)
-    {
-        m_pSafetyModel->closePath();
-        DroneBase::setSafetyPlan(m_pSafetyModel->geoPath());
-    }
+    m_pSafetyModel->closePath();
+    DroneBase::setSafetyPlan(m_pSafetyModel->geoPath());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -370,19 +337,8 @@ void Drone::closeSafety()
 void Drone::onGlobalStatusChanged()
 {
     SpyCore::Status eNewGlobalStatus = (SpyCore::Status)batteryStatus();
-    qDebug() << "DRONE GLOBAL STATUS CHANGED" << eNewGlobalStatus << m_eGlobalStatus;
-
     if (eNewGlobalStatus != m_eGlobalStatus)
         setGlobalStatus(eNewGlobalStatus);
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void Drone::onShapeCountChanged()
-{
-    // Set exclusion area
-    if (m_pExclusionAreaModel != nullptr)
-        setExclusionArea(m_pExclusionAreaModel->shapes());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -406,3 +362,60 @@ void Drone::updateBatteryStatus()
         setBatteryStatus(eBatteryStatus);
 }
 
+
+//-------------------------------------------------------------------------------------------------
+
+Core::BaseShape *Drone::currentShape() const
+{
+    return m_pCurrentShape;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void Drone::setCurrentShape(Core::BaseShape *pShape)
+{
+    m_pCurrentShape = pShape;
+    emit currentShapeChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void Drone::addRectangle(const QGeoCoordinate &center)
+{
+    QGeoCoordinate topLeft = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 135);
+    QGeoCoordinate bottomRight = center.atDistanceAndAzimuth(DEFAULT_RADIUS, -45);
+    Core::RectangleShape *pShape = new Core::RectangleShape(topLeft, bottomRight, this);
+    setCurrentShape(pShape);
+    m_vExclusionArea << pShape;
+    m_pExclusionAreaModel->addExclusionArea(pShape);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void Drone::addCircle(const QGeoCoordinate &center)
+{
+    Core::CircleShape *pShape = new Core::CircleShape(center, DEFAULT_RADIUS, this);
+    setCurrentShape(pShape);
+    m_vExclusionArea << pShape;
+    m_pExclusionAreaModel->addExclusionArea(pShape);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void Drone::addTriangle(const QGeoCoordinate &center)
+{
+    QGeoCoordinate point1 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 90);
+    QGeoCoordinate point2 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 210);
+    QGeoCoordinate point3 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 330);
+    Core::TriangleShape *pShape = new Core::TriangleShape(point1, point2, point3, this);
+    setCurrentShape(pShape);
+    m_vExclusionArea << pShape;
+    m_pExclusionAreaModel->addExclusionArea(pShape);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void Drone::removeShape(int iShapeIndex)
+{
+    m_pExclusionAreaModel->removeExclusionArea(iShapeIndex);
+}

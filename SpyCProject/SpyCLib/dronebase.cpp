@@ -232,10 +232,13 @@ const QVector<BaseShape *> &DroneBase::exclusionArea() const
 
 void DroneBase::setExclusionArea(const QVector<BaseShape *> &vExclusionArea)
 {
-    qDeleteAll(m_vExclusionArea);
-    m_vExclusionArea.clear();
-    m_vExclusionArea = vExclusionArea;
-    emit exclusionAreaChanged();
+    qDebug() << "LOLO";
+    if (vExclusionArea != m_vExclusionArea)
+    {
+        clearExclusionArea();
+        m_vExclusionArea = vExclusionArea;
+        emit exclusionAreaChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -258,6 +261,18 @@ void DroneBase::clearMissionPlan()
 void DroneBase::clearLandingPlan()
 {
     m_landingPlan.clear();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::clearExclusionArea()
+{
+    if (!m_vExclusionArea.isEmpty())
+    {
+        qDeleteAll(m_vExclusionArea);
+        m_vExclusionArea.clear();
+    }
+    emit exclusionAreaChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -642,6 +657,7 @@ QString DroneBase::serializeExclusionArea()
         BaseShape *pShape = m_vExclusionArea.at(i);
         if (pShape != nullptr)
         {
+            qDebug() << "ADDING SHAPE";
             // Write shapes
             CXMLNode shapeNode = CXMLNode::parseJSON(pShape->serialize());
             shapeNode.setTag(TAG_SHAPES);
@@ -701,8 +717,8 @@ void DroneBase::deserializeExclusionArea(const QString &sExclusionArea)
                 CircleShape *pShape = new CircleShape(center, dRadius, this);
                 vExclusionArea << pShape;
             }
-
-            setExclusionArea(vExclusionArea);
         }
+
+        setExclusionArea(vExclusionArea);
     }
 }
