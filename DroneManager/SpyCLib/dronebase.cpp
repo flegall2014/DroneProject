@@ -232,7 +232,6 @@ const QVector<BaseShape *> &DroneBase::exclusionArea() const
 
 void DroneBase::setExclusionArea(const QVector<BaseShape *> &vExclusionArea)
 {
-    qDebug() << "LOLO";
     if (vExclusionArea != m_vExclusionArea)
     {
         clearExclusionArea();

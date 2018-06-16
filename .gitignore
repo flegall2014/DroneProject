@@ -42,3 +42,4 @@ Makefile*
 
 SpyCProject/SpyC/object_script.SpyC.Release
 SpyCProject/SpyC/object_script.SpyCd.Debug
+DroneManager/moc/moc_predefs.h
