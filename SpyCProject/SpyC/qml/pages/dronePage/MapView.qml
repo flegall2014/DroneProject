@@ -15,11 +15,12 @@ Map {
     property variant targetDrone
     property bool mapGestureEnabled: true
     gesture.enabled: mapGestureEnabled
+    activeMapType: supportedMapTypes[3]
 
     // Map plugin
     Plugin {
         id: mapPlugin
-        name: "osm"
+        name: "googlemaps"
     }
 
     // Draw mission plan way points

@@ -10,7 +10,7 @@ TCPServer::TCPServer(QObject *parent) : QObject(parent)
 {
     m_pServer = new QTcpServer(this);
     m_pBuffer = new QByteArray;
-    connect(m_pServer, QTcpServer::newConnection, this, &TCPServer::onNewConnection, Qt::DirectConnection);
+    connect(m_pServer, &QTcpServer::newConnection, this, &TCPServer::onNewConnection, Qt::DirectConnection);
     qDebug() << "Listening:" << m_pServer->listen(QHostAddress::Any, PORT);
 }
 

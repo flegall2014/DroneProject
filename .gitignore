@@ -43,3 +43,15 @@ Makefile*
 SpyCProject/SpyC/object_script.SpyC.Release
 SpyCProject/SpyC/object_script.SpyCd.Debug
 DroneManager/moc/moc_predefs.h
+DroneManager/moc/moc_predefs.h
+SpyCProject/.qmake.stash
+SpyCProject/bin/spyclib.exp
+SpyCProject/.qmake.stash
+SpyCProject/moc/moc_predefs.h
+SpyCProject/moc/moc_predefs.h
+DroneManager/bin/spyclibd.exp
+DroneManager/moc/moc_predefs.h
+SpyCProject/.qmake.stash
+*.stash
+SpyCProject/.qmake.stash
+SpyCProject/moc/moc_predefs.h

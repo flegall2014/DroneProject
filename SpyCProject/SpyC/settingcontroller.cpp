@@ -28,7 +28,7 @@ SettingController::SettingController(QObject *pParent) : QObject(pParent)
 {
     // Translator
     m_pTranslator = new Translator(this);
-    connect(this, &SettingController::languageChanged, this, SettingController::onLanguageChanged, Qt::QueuedConnection);
+    connect(this, &SettingController::languageChanged, this, &SettingController::onLanguageChanged, Qt::QueuedConnection);
 
     // Speech management
     m_pSpeech = new QTextToSpeech(this);
