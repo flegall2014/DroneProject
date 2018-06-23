@@ -201,7 +201,7 @@ public:
 
 private:
     //! Serialize plan
-    QString serializePlan(const QVector<Core::WayPoint> &plan, const QString &sPlanType, const QString &sDroneUID);
+    QString serializePlan(const WayPointList &plan, const QString &sPlanType, const QString &sDroneUID);
 
     //! Serialize plan
     QString serializePlan(const QGeoPath &plan, const QString &sPlanType, const QString &sDroneUID);
