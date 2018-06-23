@@ -41,6 +41,24 @@ public:
     //! Set geoCoord
     void setGeoCoord(const QGeoCoordinate &geoCoord);
 
+    //! Return latitude
+    double latitude() const;
+
+    //! Set latitude
+    void setLatitude(double dLatitude);
+
+    //! Return longitude
+    double longitude() const;
+
+    //! Set longitude
+    void setLongitude(double dLongitude);
+
+    //! Return altitude
+    double altitude() const;
+
+    //! Set altitude
+    void setAltitude(double dAltitude);
+
     //! Return type
     const SpyCore::PointType &type() const;
 

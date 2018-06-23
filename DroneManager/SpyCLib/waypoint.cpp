@@ -50,6 +50,48 @@ void WayPoint::setGeoCoord(const QGeoCoordinate &geoCoord)
 
 //-------------------------------------------------------------------------------------------------
 
+double WayPoint::latitude() const
+{
+    return m_geoCoord.latitude();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void WayPoint::setLatitude(double dLatitude)
+{
+    m_geoCoord.setLatitude(dLatitude);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double WayPoint::longitude() const
+{
+    return m_geoCoord.longitude();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void WayPoint::setLongitude(double dLongitude)
+{
+    m_geoCoord.setLongitude(dLongitude);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double WayPoint::altitude() const
+{
+    return m_geoCoord.altitude();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void WayPoint::setAltitude(double dAltitude)
+{
+    m_geoCoord.setAltitude(dAltitude);
+}
+
+//-------------------------------------------------------------------------------------------------
+
 const SpyCore::PointType &WayPoint::type() const
 {
     return m_eType;

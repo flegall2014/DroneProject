@@ -87,19 +87,19 @@ ListView {
             SpeedDelegate {
                 width: listView.width/columnTitles.length
                 height: parent.height
-                echoRadioChecked: wayPointSpeed === WayPointModel.ECO
-                obsRadioChecked: wayPointSpeed === WayPointModel.OBS
-                fastRadioChecked: wayPointSpeed === WayPointModel.FAST
+                ecoRadioChecked: wayPointSpeed === SpyC.ECO
+                obsRadioChecked: wayPointSpeed === SpyC.OBS
+                fastRadioChecked: wayPointSpeed === SpyC.FAST
                 onEcoClicked: {
-                    wayPointSpeed = WayPointModel.ECO
+                    wayPointSpeed = SpyC.ECO
                     listView.model.currentPointIndex = index
                 }
                 onObsClicked: {
-                    wayPointSpeed = WayPointModel.OBS
+                    wayPointSpeed = SpyC.OBS
                     listView.model.currentPointIndex = index
                 }
                 onFastClicked: {
-                    wayPointSpeed = WayPointModel.FAST
+                    wayPointSpeed = SpyC.FAST
                     listView.model.currentPointIndex = index
                 }
             }

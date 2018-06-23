@@ -38,6 +38,9 @@ public:
     //! Return data
     virtual QVariant data(const QModelIndex &index, int role) const;
 
+    //! Set data
+    virtual bool setData(const QModelIndex &index, const QVariant &value, int role);
+
     //! Set point position
     void setPointPosition(int iIndex, const QGeoCoordinate &geoCoord);
 

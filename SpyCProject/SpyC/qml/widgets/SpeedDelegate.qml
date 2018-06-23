@@ -2,7 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 
 Row {
-    property alias echoRadioChecked: ecoRadio.checked
+    property alias ecoRadioChecked: ecoRadio.checked
     property alias obsRadioChecked: obsRadio.checked
     property alias fastRadioChecked: fastRadio.checked
     signal ecoClicked

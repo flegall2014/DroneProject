@@ -70,6 +70,65 @@ QVariant WayPointModel::data(const QModelIndex &index, int iRole) const
 
 //-------------------------------------------------------------------------------------------------
 
+bool WayPointModel::setData(const QModelIndex &index, const QVariant &vValue, int iRole)
+{
+    // Check index
+    if (!index.isValid())
+        return false;
+    if ((index.row() < 0) || (index.row() > rowCount()-1))
+        return false;
+
+    // Get target way point
+    Core::WayPoint targetWayPoint = m_vWayPoints[index.row()];
+    bool bChanged = false;
+
+    // Set way point latitude
+    if (iRole == SpyCore::WayPointLatitude)
+    {
+        targetWayPoint.setLatitude(vValue.toDouble());
+        bChanged = true;
+    }
+
+    // Return way point longitude
+    if (iRole == SpyCore::WayPointLongitude)
+    {
+        targetWayPoint.setLongitude(vValue.toDouble());
+        bChanged = true;
+    }
+
+    // Return way point altitude
+    if (iRole == SpyCore::WayPointAltitude)
+    {
+        targetWayPoint.setAltitude(vValue.toDouble());
+        bChanged = true;
+    }
+
+    // Return way point type
+    if (iRole == SpyCore::WayPointType)
+    {
+        targetWayPoint.setType((SpyCore::PointType)vValue.toInt());
+        bChanged = true;
+    }
+
+    // Return way point speed
+    if (iRole == SpyCore::WayPointSpeed)
+    {
+        qDebug() << "SETTING SPEED TO" << vValue;
+        targetWayPoint.setSpeed(vValue.toDouble());
+        bChanged = true;
+    }
+
+    if (bChanged)
+    {
+        emit dataChanged(index, index);
+        return true;
+    }
+
+    return false;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void WayPointModel::setPointPosition(int iIndex, const QGeoCoordinate &geoCoord)
 {
     QModelIndex srcIndex = index(iIndex, 0, QModelIndex());
@@ -94,7 +153,7 @@ QHash<int, QByteArray> WayPointModel::roleNames() const
     hRoleNames[SpyCore::WayPointAltitude] = "wayPointAltitude";
     hRoleNames[SpyCore::WayPointLongitude] = "wayPointLongitude";
     hRoleNames[SpyCore::WayPointType] = "wayPointType";
-    hRoleNames[SpyCore::WayPointType] = "wayPointSpeed";
+    hRoleNames[SpyCore::WayPointSpeed] = "wayPointSpeed";
 
     return hRoleNames;
 }

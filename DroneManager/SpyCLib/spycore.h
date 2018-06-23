@@ -43,7 +43,7 @@ public:
     enum PointType {POINT=Qt::UserRole+1, LOITER, EIGHT, HIPPODROM};
 
     //! Point speed
-    enum PointSpeed {ECO=Qt::UserRole+1, OBSERVATION, FAST};
+    enum PointSpeed {ECO=Qt::UserRole+1, OBS, FAST};
 
     //! Alert attributes
     enum AlertAttribues {AlertIdentification=Qt::UserRole+1, AlertLevel, AlertMsg, AlertDate};
