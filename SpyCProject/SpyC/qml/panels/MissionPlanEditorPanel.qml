@@ -7,7 +7,7 @@ import ".."
 import "../widgets"
 
 PanelBase {
-    centralTitle: qsTr("EDITING MISSION PLAN")
+    panelTitle: qsTr("EDITING MISSION PLAN")
     property string requestor: ""
     onFileAccepted: {
         if (requestor === "load")

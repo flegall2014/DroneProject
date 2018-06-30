@@ -242,6 +242,21 @@ void DroneBase::setExclusionArea(const QVector<BaseShape *> &vExclusionArea)
 
 //-------------------------------------------------------------------------------------------------
 
+bool DroneBase::canTakeOff() const
+{
+    return m_bCanTakeOff;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::setCanTakeOff(bool bCanTakeOff)
+{
+    m_bCanTakeOff = bCanTakeOff;
+    emit canTakeOffChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void DroneBase::clearSafetyPlan()
 {
     while (!m_safetyPlan.isEmpty())
@@ -380,6 +395,7 @@ QString DroneBase::serializePosition()
     positionNode.attributes()[ATTR_ALTITUDE] = QString::number(m_position.altitude());
     positionNode.attributes()[ATTR_HEADING] = QString::number(m_dHeading);
     positionNode.attributes()[ATTR_FLIGHT_STATUS] = QString::number(m_eFlightStatus);
+    positionNode.attributes()[ATTR_CAN_TAKEOFF] = QString::number(m_bCanTakeOff);
     return positionNode.toJsonString();
 }
 
@@ -402,6 +418,7 @@ void DroneBase::deserializePosition(const QString &sPosition)
         setPosition(geoCoord);
         setHeading(positionNode.attributes()[ATTR_HEADING].toDouble());
         setFlightStatus(positionNode.attributes()[ATTR_FLIGHT_STATUS].toInt());
+        setCanTakeOff((bool)positionNode.attributes()[ATTR_CAN_TAKEOFF].toInt());
     }
 }
 

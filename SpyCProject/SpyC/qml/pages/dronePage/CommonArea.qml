@@ -17,6 +17,12 @@ Rectangle {
         targetDrone: commonArea.targetDrone
     }
 
+    // Load panel
+    function loadPanel(panelName)
+    {
+        panelMgr.onLoadPanel(panelName)
+    }
+
     // Listen to drone flight status changed
     function onDroneFlightStatusChanged()
     {

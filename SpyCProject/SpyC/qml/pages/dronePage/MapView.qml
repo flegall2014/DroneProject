@@ -23,6 +23,12 @@ Map {
         name: "googlemaps"
     }
 
+    // Center on drone
+    function centerOnDrone()
+    {
+        mapView.center = targetDrone.position
+    }
+
     // Draw mission plan way points
     MapItemView {
         id: missionPlanWayPoints

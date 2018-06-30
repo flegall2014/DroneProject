@@ -35,8 +35,9 @@ Item {
         color: Theme.defaultPanelBkgColor
     }
 
-    // Central title
-    property alias centralTitle: statusText.text
+    // Panel title
+    property alias panelTitle: panelTitle.text
+    property bool blinking: true
 
     // Panel contents
     property alias panelContents: panelContents.children
@@ -67,18 +68,18 @@ Item {
             height: parent.height
         }
         StandardText {
-            id: statusText
+            id: panelTitle
             color: Theme.warningColor
             anchors.centerIn: parent
             font.bold: true
-            opacity: 0
+            opacity: blinking ? 0 : 1
             Timer {
                 id: timer
-                running: statusText.text.length > 0
-                interval: Theme.centralTitleBlinkInterval
+                running: blinking && (panelTitle.text.length > 0)
+                interval: Theme.blinkTitleBlinkInterval
                 repeat: true
                 triggeredOnStart: true
-                onTriggered: statusText.opacity = 1-statusText.opacity
+                onTriggered: panelTitle.opacity = 1-panelTitle.opacity
             }
             Behavior on opacity {
                 NumberAnimation {duration: timer.interval}
@@ -86,7 +87,7 @@ Item {
         }
         Item {
             id: rightToolBarContents
-            anchors.left: statusText.right
+            anchors.left: panelTitle.right
             anchors.leftMargin: Theme.standardMargin
             anchors.right: hasCloseButton ? closeButton.left : parent.right
             anchors.rightMargin: Theme.standardMargin

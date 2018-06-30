@@ -11,36 +11,10 @@ Rectangle {
     width: Theme.controlPanelWidth
     property variant targetDrone
     signal takeSnapShot()
+    signal loadPanel(string panelName)
 
-    TabView {
+    ControlPanelWizard {
         anchors.fill: parent
-        // Commands tab
-        Tab {
-            title: qsTr("Commands")
-            Item {
-                anchors.fill: parent
-                anchors.margins: Theme.standardMargin
-                DroneActions {
-                    anchors.fill: parent
-                    targetDrone: root.targetDrone
-                    onTakeSnapShot: root.takeSnapShot()
-                }
-            }
-        }
-
-        // Alerts tab
-        Tab {
-            title: qsTr("Alerts")
-            Item {
-                anchors.fill: parent
-                anchors.margins: Theme.standardMargin
-                DroneAlertView {
-                    anchors.fill: parent
-                    targetDrone: root.targetDrone
-                }
-            }
-        }
-
-        style: Theme.controlPanelTabViewStyle
+        targetDrone: root.targetDrone
     }
 }

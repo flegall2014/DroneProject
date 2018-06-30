@@ -142,5 +142,12 @@
         <file>qml/pages/dronePage/ImageView.qml</file>
         <file>qml/widgets/StandardSlider.qml</file>
         <file>icons/ico-back.svg</file>
+        <file>qml/pages/dronePage/ControlPanelWizard.qml</file>
+        <file>qml/pages/dronePage/MissionPage.qml</file>
+        <file>qml/pages/dronePage/ExclusionPage.qml</file>
+        <file>qml/pages/dronePage/ControlPage.qml</file>
+        <file>qml/pages/dronePage/SettingsPage.qml</file>
+        <file>icons/ico-centeron.svg</file>
+        <file>icons/ico-navigation.svg</file>
     </qresource>
 </RCC>

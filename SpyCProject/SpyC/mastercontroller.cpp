@@ -188,6 +188,9 @@ void MasterController::onIncomingMessage(const QString &sMessage)
         qDebug() << "UNKNOWN MESSAGE " << sMessageType << sMessage;
     }
 
+    // Update canTakeOff state
+    pDrone->setCanTakeOff(pDrone->hasSafetyPlan() && pDrone->hasMissionPlan() && pDrone->hasLandingPlan());
+
     // Add drone
     m_pDroneModel->addDrone(pDrone);
 }

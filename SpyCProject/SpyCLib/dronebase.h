@@ -40,6 +40,7 @@ class SPYCLIBSHARED_EXPORT DroneBase : public QObject
     Q_PROPERTY(bool hasMissionPlan READ hasMissionPlan NOTIFY missionPlanChanged)
     Q_PROPERTY(bool hasLandingPlan READ hasSafetyPlan NOTIFY landingPlanChanged)
     Q_PROPERTY(bool hasExclusionArea READ hasExclusionArea NOTIFY exclusionAreaChanged)
+    Q_PROPERTY(bool canTakeOff READ canTakeOff WRITE setCanTakeOff NOTIFY canTakeOffChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -131,6 +132,24 @@ public:
     //! Set exclusion area
     virtual void setExclusionArea(const QVector<BaseShape *> &vShapes);
 
+    //! Can take off?
+    bool canTakeOff() const;
+
+    //! Set can take off
+    void setCanTakeOff(bool bCanTakeOff);
+
+    //! Return true if drone has a non-empty safety plan
+    bool hasSafetyPlan() const;
+
+    //! Return true if drone has a non-empty mission plan
+    bool hasMissionPlan() const;
+
+    //! Return true if drone has a non-empty landing plan
+    bool hasLandingPlan() const;
+
+    //! Return true if drone has a non-empty exclusion area
+    bool hasExclusionArea() const;
+
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
@@ -212,18 +231,6 @@ private:
     //! Deserialize plan
     void deserializePlan(const CXMLNode &node, QGeoPath &geoPath, QString &sDroneUID);
 
-    //! Return true if drone has a non-empty safety plan
-    bool hasSafetyPlan() const;
-
-    //! Return true if drone has a non-empty mission plan
-    bool hasMissionPlan() const;
-
-    //! Return true if drone has a non-empty landing plan
-    bool hasLandingPlan() const;
-
-    //! Return true if drone has a non-empty exclusion area
-    bool hasExclusionArea() const;
-
 protected:
     //! Exclusion area
     QVector<BaseShape *> m_vExclusionArea;
@@ -258,6 +265,9 @@ private:
 
     //! Return level
     int m_iReturnLevel = 0;
+
+    //! Can take off?
+    bool m_bCanTakeOff = false;
 
 signals:
     //! UID changed
@@ -295,6 +305,9 @@ signals:
 
     //! New message
     void droneError(const SpyCore::DroneError &eDroneError, const QString &sDroneUID);
+
+    //! Can take off changed
+    void canTakeOffChanged();
 };
 }
 

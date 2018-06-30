@@ -4,7 +4,6 @@ import "../.."
 import "../../widgets"
 
 Item {
-    anchors.fill: parent
     anchors.margins: Theme.standardMargin
     property variant targetDrone
     ListView {
@@ -17,7 +16,11 @@ Item {
             width: alertView.width
             height: Theme.alertDeleagateHeight
             Rectangle {
-                anchors.fill: parent
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.standardMargin
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.standardMargin
+                height: parent.height
                 color: "transparent"
                 border.color: (level === SpyC.NOMINAL) ? Theme.nominalColor : (level === SpyC.WARNING ? Theme.warningColor : Theme.criticalColor)
                 border.width: 3

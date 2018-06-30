@@ -9,7 +9,7 @@ import "../widgets"
 
 PanelBase {
     id: root
-    centralTitle: qsTr("EDITING EXCLUSION AREA")
+    panelTitle: qsTr("EDITING EXCLUSION AREA")
     property string requestor: ""
     onFileAccepted: {
         if (requestor === "load")

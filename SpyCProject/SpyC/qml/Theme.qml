@@ -57,7 +57,7 @@ Item {
 
     // Animation
     property int standardAnimationDuration: 300
-    property int centralTitleBlinkInterval: 1000
+    property int blinkTitleBlinkInterval: 1000
     property int shapeBlinkInterval: 250
 
     // Margins

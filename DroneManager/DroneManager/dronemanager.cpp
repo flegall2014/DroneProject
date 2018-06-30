@@ -208,6 +208,12 @@ void DroneManager::onIncomingMessage(const QString &sMessage)
         // Fail safe
         if (sMessageType == TAG_FAIL_SAFE)
             pDrone->failSafe();
+
+        // Update canTakeOff state
+        qDebug() << "HAS SAFETY : " << pDrone->hasSafetyPlan();
+        qDebug() << "HAS MISSION : " << pDrone->hasMissionPlan();
+        qDebug() << "HAS LANDING : " << pDrone->hasLandingPlan();
+        pDrone->setCanTakeOff(pDrone->hasSafetyPlan() && pDrone->hasMissionPlan() && pDrone->hasLandingPlan());
     }
 }
 

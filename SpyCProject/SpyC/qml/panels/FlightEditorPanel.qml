@@ -4,6 +4,8 @@ import "../widgets"
 
 PanelBase {
     id: root
+    panelTitle: qsTr("Flight Editor")
+    blinking: false
     panelContents: Item {
         anchors.fill: parent
 

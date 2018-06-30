@@ -44,6 +44,7 @@ Rectangle {
             anchors.top: parent.top
             targetDrone: drone
             onTakeSnapShot: videoView.takeSnapShot()
+            onLoadPanel: commonArea.loadPanel(panelName)
         }
 
         Item {
@@ -142,16 +143,16 @@ Rectangle {
                             if (targetDrone.workMode === SpyC.MISSION_PLAN_EDIT)
                                 horizontalToolBarLoader.source = "qrc:/qml/toolbars/MissionPlanToolBar.qml"
                             else
-                                if (targetDrone.workMode === SpyC.SAFETY_EDIT)
-                                    horizontalToolBarLoader.source =  "qrc:/qml/toolbars/SafetyToolBar.qml"
-                                else
-                                    if (targetDrone.workMode === SpyC.LANDING_PLAN_EDIT)
-                                        horizontalToolBarLoader.source =  "qrc:/qml/toolbars/LandingPlanToolBar.qml"
-                                    else
-                                        if (targetDrone.workMode === SpyC.EXCLUSION_EDIT)
-                                            horizontalToolBarLoader.source =  "qrc:/qml/toolbars/ExclusionAreaToolBar.qml"
-                                        else
-                                            horizontalToolBarLoader.source = ""
+                            if (targetDrone.workMode === SpyC.SAFETY_EDIT)
+                                horizontalToolBarLoader.source =  "qrc:/qml/toolbars/SafetyToolBar.qml"
+                            else
+                            if (targetDrone.workMode === SpyC.LANDING_PLAN_EDIT)
+                                horizontalToolBarLoader.source =  "qrc:/qml/toolbars/LandingPlanToolBar.qml"
+                            else
+                            if (targetDrone.workMode === SpyC.EXCLUSION_EDIT)
+                                horizontalToolBarLoader.source =  "qrc:/qml/toolbars/ExclusionAreaToolBar.qml"
+                            else
+                                horizontalToolBarLoader.source = ""
                         }
                         Component.onCompleted: targetDrone.workModeChanged.connect(onWorkModeChanged)
                     }
@@ -165,6 +166,18 @@ Rectangle {
                         z: 0
                         width: parent.width
                         height: parent.height/2
+                    }
+
+                    // Center on drone
+                    ImageButton {
+                        id: centerOnDroneButton
+                        anchors.left: parent.left
+                        anchors.leftMargin: Theme.standardMargin
+                        anchors.top: parent.top
+                        anchors.topMargin: Theme.standardMargin
+                        source: "qrc:/icons/ico-centeron.svg"
+                        visible: (MASTERCONTROLLER.currentDrone !== null) && (targetDrone === MASTERCONTROLLER.currentDrone)
+                        onClicked: mapView.centerOnDrone()
                     }
 
                     // Swith carto/video
@@ -300,15 +313,18 @@ Rectangle {
     // Current drone changed
     function onCurrentDroneChanged()
     {
-        if (MASTERCONTROLLER.currentDrone !== null)
+        if (typeof MASTERCONTROLLER !== "undefined" && MASTERCONTROLLER !== null)
         {
-            if (targetDrone === MASTERCONTROLLER.currentDrone)
-                droneDisplay.state = "map_maximized"
-        }
-        else
-        {
-            flipable.state = ""
-            droneDisplay.state = ""
+            if (MASTERCONTROLLER.currentDrone !== null)
+            {
+                if (targetDrone === MASTERCONTROLLER.currentDrone)
+                    droneDisplay.state = "map_maximized"
+            }
+            else
+            {
+                flipable.state = ""
+                droneDisplay.state = ""
+            }
         }
     }
 

@@ -7,7 +7,7 @@ import "../widgets"
 import "../toolbars"
 
 PanelBase {
-    centralTitle: qsTr("EDITING SAFETY AREA")
+    panelTitle: qsTr("EDITING SAFETY AREA")
     property string requestor: ""
     onFileAccepted: {
         if (requestor === "load")

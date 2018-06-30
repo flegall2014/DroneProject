@@ -368,7 +368,7 @@ void SettingController::loadSettings()
 
     int iLanguage = settings.value(USER_LANGUAGE).toInt();
     if (iLanguage == 0)
-        iLanguage = (int)SpyCore::FRENCH;
+        iLanguage = (int)SpyCore::ENGLISH;
     setLanguage(iLanguage);
 
     int iHand = settings.value(USER_HAND).toInt();
@@ -409,6 +409,7 @@ void SettingController::createDir(const QString &sDirPath)
 
 void SettingController::say(const QString &sSpeech)
 {
+    return;
     m_pSpeech->say(sSpeech.toLower());
 }
 
