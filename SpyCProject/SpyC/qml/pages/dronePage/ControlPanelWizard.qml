@@ -51,7 +51,7 @@ Item {
     Item {
         id: controlPanel
         width: parent.width
-        height: parent.height/2
+        height: parent.height*2/3
         anchors.top: parent.top
         Rectangle {
             anchors.fill: parent
@@ -60,7 +60,7 @@ Item {
             color: "transparent"
 
             Item {
-                id: titleArea1
+                id: titleArea
                 anchors.top: parent.top
                 width: parent.width
                 height: Theme.buttonSize/2
@@ -81,12 +81,14 @@ Item {
                     anchors.rightMargin: Theme.standardMargin
                     anchors.verticalCenter: parent.verticalCenter
                     text: itemModel.get(0).objectName
+                    color: "orange"
                 }
             }
 
+            // Page view
             ListView {
                 id: listView
-                anchors.top: titleArea1.bottom
+                anchors.top: titleArea.bottom
                 anchors.bottom: parent.bottom
                 width: parent.width
                 model: itemModel
@@ -96,6 +98,36 @@ Item {
                 onCurrentIndexChanged: currentPage.text = itemModel.get(currentIndex).objectName
                 highlightRangeMode: ListView.StrictlyEnforceRange
             }
+
+            // Next page
+            ImageButton {
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.standardMargin
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: Theme.standardMargin
+                source: "qrc:/icons/ico-next.svg"
+                enabled: listView.currentIndex < (itemModel.count-1)
+                onClicked: {
+                    var currentIndex = listView.currentIndex
+                    currentIndex++
+                    listView.currentIndex = currentIndex
+                }
+            }
+
+            // Previous page
+            ImageButton {
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.standardMargin
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: Theme.standardMargin
+                source: "qrc:/icons/ico-previous.svg"
+                enabled: listView.currentIndex > 0
+                onClicked: {
+                    var currentIndex = listView.currentIndex
+                    currentIndex--
+                    listView.currentIndex = currentIndex
+                }
+            }
         }
     }
 
@@ -103,7 +135,7 @@ Item {
     Item {
         id: alertPanel
         width: parent.width
-        height: parent.height/2
+        height: parent.height/3
         anchors.top: controlPanel.bottom
         Rectangle {
             anchors.fill: parent

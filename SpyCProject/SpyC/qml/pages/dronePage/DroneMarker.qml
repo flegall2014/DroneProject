@@ -3,6 +3,7 @@ import QtPositioning 5.6
 import QtLocation 5.6
 import QtQuick.Controls 1.4
 import Components 1.0
+import QtGraphicalEffects 1.0
 import "../../widgets"
 import "../.."
 
@@ -32,6 +33,12 @@ MapQuickItem {
                 origin.y: droneIcon.height/2
                 angle: targetDrone.heading
             }
+        }
+
+        ColorOverlay {
+            anchors.fill: droneIcon
+            source: droneIcon
+            color: "#80800000"
         }
     }
 }
