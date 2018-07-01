@@ -58,7 +58,7 @@ public:
     enum WorkMode {MISSION_PLAN_EDIT=Qt::UserRole+1, SAFETY_EDIT, LANDING_PLAN_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT, EXCLUSION_EDIT};
 
     //! Exclusion shape
-    enum ExclusionShape {CIRCLE=Qt::UserRole+1, RECTANGLE, TRIANGLE};
+    enum ExclusionShape {NONE=Qt::UserRole+1, CIRCLE=Qt::UserRole+1, RECTANGLE, TRIANGLE};
 
     //! Drone role
     enum DroneRole {Drone=Qt::UserRole+1};

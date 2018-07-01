@@ -82,7 +82,6 @@ INPUT(
 ./..\obj\qml_dialogs_EmptyMissionPlanErrorDialog_qml.o
 ./..\obj\qml_dialogs_ConfirmGoHomeDialog_qml.o
 ./..\obj\qml_dialogs_EmptySafetyPlanErrorDialog_qml.o
-./..\obj\qml_pages_dronePage_DroneActions_qml.o
 ./..\obj\qml_pages_dronePage_VideoView_qml.o
 ./..\obj\qml_pages_dronePage_PolygonExclusionArea_qml.o
 ./..\obj\qml_pages_dronePage_DroneDisplay_qml.o
@@ -97,8 +96,8 @@ INPUT(
 ./..\obj\qml_pages_dronePage_DroneMarker_qml.o
 ./..\obj\qml_pages_dronePage_ExclusionPage_qml.o
 ./..\obj\qml_pages_dronePage_SettingsPage_qml.o
-./..\obj\qml_pages_dronePage_ImageView_qml.o
 ./..\obj\qml_pages_dronePage_ControlPage_qml.o
+./..\obj\qml_pages_dronePage_ImageView_qml.o
 ./..\obj\qml_pages_dronePage_MissionPlanPoints_qml.o
 ./..\obj\qml_pages_dronePage_MapView_qml.o
 ./..\obj\qml_pages_loginPage_LoginPage_qml.o

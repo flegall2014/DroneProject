@@ -62,7 +62,6 @@ Map {
                         mapGestureEnabled = false
                         targetDrone.missionPlanModel.currentPointIndex = index
                         circle.selected = true
-                                                console.log("ICI ", mapGestureEnabled)
                     }
                     onPositionChanged: {
                         if (circle.selected)

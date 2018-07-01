@@ -42,7 +42,7 @@ Item {
                             targetDrone.currentExclusionShape = SpyC.CIRCLE
                         }
                         checkable: true
-                        checked: root.droneValid() ? (targetDrone.currentExclusionShape === SpyC.CIRCLE) : false
+                        checked: root.droneValid() ? ((targetDrone.workMode === SpyC.EXCLUSION_EDIT) && (targetDrone.currentExclusionShape === SpyC.CIRCLE)) : false
                         anchors.centerIn: parent
                     }
                 }
@@ -62,7 +62,7 @@ Item {
                             targetDrone.currentExclusionShape = SpyC.RECTANGLE
                         }
                         checkable: true
-                        checked: root.droneValid() ? (targetDrone.currentExclusionShape === SpyC.RECTANGLE) : false
+                        checked: root.droneValid() ? ((targetDrone.workMode === SpyC.EXCLUSION_EDIT) && (targetDrone.currentExclusionShape === SpyC.RECTANGLE)) : false
                         anchors.centerIn: parent
                     }
                 }
@@ -82,7 +82,7 @@ Item {
                             targetDrone.currentExclusionShape = SpyC.TRIANGLE
                         }
                         checkable: true
-                        checked: root.droneValid() ? (targetDrone.currentExclusionShape === SpyC.TRIANGLE) : false
+                        checked: root.droneValid() ? ((targetDrone.workMode === SpyC.EXCLUSION_EDIT) && (targetDrone.currentExclusionShape === SpyC.TRIANGLE)) : false
                         anchors.centerIn: parent
                     }
                 }

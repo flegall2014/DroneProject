@@ -210,7 +210,7 @@ private:
     SpyCore::WorkMode m_eDefaultWorkMode = SpyCore::PAYLOAD_EDIT;
 
     //! Current exclusion shape
-    SpyCore::ExclusionShape m_eExclusionShape = SpyCore::CIRCLE;
+    SpyCore::ExclusionShape m_eExclusionShape = SpyCore::NONE;
 
     //! Global status
     SpyCore::Status m_eGlobalStatus = SpyCore::NOMINAL;

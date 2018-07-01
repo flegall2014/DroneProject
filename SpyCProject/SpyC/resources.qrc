@@ -50,7 +50,6 @@
         <file>qml/dialogs/SafetyValidationDialog.qml</file>
         <file>qml/pages/dronePage/CommonArea.qml</file>
         <file>qml/pages/dronePage/ControlPanel.qml</file>
-        <file>qml/pages/dronePage/DroneActions.qml</file>
         <file>qml/pages/dronePage/DroneAlertView.qml</file>
         <file>qml/pages/dronePage/DroneDisplay.qml</file>
         <file>qml/pages/dronePage/DronePage.qml</file>

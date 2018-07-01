@@ -59,3 +59,5 @@ DroneManager/.qmake.stash
 SpyCProject/SpyC/object_script.SpyC.Release
 SpyCProject/SpyC/object_script.SpyC.Release
 SpyCProject/SpyC/object_script.SpyCd.Debug
+*.Release
+*.Debug
