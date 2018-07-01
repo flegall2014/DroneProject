@@ -203,6 +203,14 @@ int BaseShape::type() const
 
 //-------------------------------------------------------------------------------------------------
 
+
+const QString &BaseShape::strType() const
+{
+    return m_sType;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 const QGeoCoordinate &BaseShape::center() const
 {
     return m_center;
@@ -213,6 +221,7 @@ const QGeoCoordinate &BaseShape::center() const
 RectangleShape::RectangleShape(QObject *pParent) : BaseShape(pParent)
 {
     m_eType = SpyCore::RECTANGLE;
+    m_sType = tr("RECTANGLE");
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -221,6 +230,7 @@ RectangleShape::RectangleShape(const QGeoCoordinate &topLeft, const QGeoCoordina
     BaseShape(pParent)
 {
     m_eType = SpyCore::RECTANGLE;
+    m_sType = tr("RECTANGLE");
     m_path.addCoordinate(topLeft);
     m_path.addCoordinate(QGeoCoordinate(bottomRight.latitude(), topLeft.longitude()));
     m_path.addCoordinate(bottomRight);
@@ -298,6 +308,7 @@ void RectangleShape::deserialize(const QString &sSerialized, QGeoCoordinate &cen
 CircleShape::CircleShape(QObject *pParent) : BaseShape(pParent)
 {
     m_eType = SpyCore::CIRCLE;
+    m_sType = tr("CIRCLE");
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -306,6 +317,7 @@ CircleShape::CircleShape(const QGeoCoordinate &center, double dRadius, QObject *
     m_dRadius(dRadius)
 {
     m_eType = SpyCore::CIRCLE;
+    m_sType = tr("CIRCLE");
     m_center = center;
 }
 
@@ -380,6 +392,7 @@ void CircleShape::rescale(int iIncrement)
 TriangleShape::TriangleShape(QObject *pParent) : BaseShape(pParent)
 {
     m_eType = SpyCore::TRIANGLE;
+    m_sType = tr("TRIANGLE");
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -388,6 +401,7 @@ TriangleShape::TriangleShape(const QGeoCoordinate &point1, const QGeoCoordinate 
     BaseShape(pParent)
 {
     m_eType = SpyCore::TRIANGLE;
+    m_sType = tr("TRIANGLE");
     m_path.addCoordinate(point1);
     m_path.addCoordinate(point2);
     m_path.addCoordinate(point3);

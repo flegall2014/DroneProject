@@ -173,8 +173,8 @@ Rectangle {
                         id: centerOnDroneButton
                         anchors.left: parent.left
                         anchors.leftMargin: Theme.standardMargin
-                        anchors.top: parent.top
-                        anchors.topMargin: Theme.standardMargin
+                        anchors.bottom: switchButton.top
+                        anchors.bottomMargin: Theme.standardMargin
                         source: "qrc:/icons/ico-centeron.svg"
                         visible: (MASTERCONTROLLER.currentDrone !== null) && (targetDrone === MASTERCONTROLLER.currentDrone)
                         onClicked: mapView.centerOnDrone()

@@ -149,5 +149,6 @@
         <file>qml/pages/dronePage/SettingsPage.qml</file>
         <file>icons/ico-centeron.svg</file>
         <file>icons/ico-navigation.svg</file>
+        <file>qml/widgets/StandardGroup.qml</file>
     </qresource>
 </RCC>

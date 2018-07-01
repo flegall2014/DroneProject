@@ -14,7 +14,8 @@ Rectangle {
     signal loadPanel(string panelName)
 
     ControlPanelWizard {
-        anchors.fill: parent
+        width: parent.width
+        height: parent.height
         targetDrone: root.targetDrone
     }
 }

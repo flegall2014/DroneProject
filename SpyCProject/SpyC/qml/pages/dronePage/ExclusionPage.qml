@@ -3,9 +3,8 @@ import Components 1.0
 import "../../widgets"
 import "../.."
 
-Grid {
+Item {
     id: root
-    columns: 3
     property variant targetDrone
 
     // Return true if drone is valid
@@ -14,63 +13,80 @@ Grid {
         return (typeof targetDrone !== "undefined") && (targetDrone !== null)
     }
 
-    // Circle
     Item {
-        width: parent.width/3
-        height: width
-        ImageButton {
-            id: circleExclusion
-            source: "qrc:/icons/ico-circle.svg"
-            label: qsTr("Circle")
-            textPosition: "below"
-            textColor: Theme.defaultFontColor
-            onClicked: {
-                onClicked: targetDrone.workMode = SpyC.EXCLUSION_EDIT
-                targetDrone.currentExclusionShape = SpyC.CIRCLE
-            }
-            checkable: true
-            checked: root.droneValid() ? (targetDrone.currentExclusionShape === SpyC.CIRCLE) : false
-            anchors.centerIn: parent
-        }
-    }
+        id: topContainer
+        width: parent.width
+        height: parent.height
 
-    // Rectangle
-    Item {
-        width: parent.width/3
-        height: width
-        ImageButton {
-            id: rectExclusion
-            source: "qrc:/icons/ico-rectangle.svg"
-            label: qsTr("Rectangle")
-            textPosition: "below"
-            textColor: Theme.defaultFontColor
-            onClicked: {
-                onClicked: targetDrone.workMode = SpyC.EXCLUSION_EDIT
-                targetDrone.currentExclusionShape = SpyC.RECTANGLE
-            }
-            checkable: true
-            checked: root.droneValid() ? (targetDrone.currentExclusionShape === SpyC.RECTANGLE) : false
-            anchors.centerIn: parent
-        }
-    }
+        StandardGroup {
+            anchors.fill: parent
+            anchors.margins: Theme.standardMargin
+            title: qsTr("Shapes")
+            contents: Grid {
+                columns: 3
+                anchors.fill: parent
+                clip: true
 
-    // Triangle
-    Item {
-        width: parent.width/3
-        height: width
-        ImageButton {
-            id: triangleExclusion
-            source: "qrc:/icons/ico-triangle.svg"
-            label: qsTr("Triangle")
-            textPosition: "below"
-            textColor: Theme.defaultFontColor
-            onClicked: {
-                onClicked: targetDrone.workMode = SpyC.EXCLUSION_EDIT
-                targetDrone.currentExclusionShape = SpyC.TRIANGLE
+                // Circle
+                Item {
+                    width: parent.width/3
+                    height: width
+                    ImageButton {
+                        id: circleExclusion
+                        source: "qrc:/icons/ico-circle.svg"
+                        label: qsTr("Circle")
+                        textPosition: "below"
+                        textColor: Theme.defaultFontColor
+                        onClicked: {
+                            onClicked: targetDrone.workMode = SpyC.EXCLUSION_EDIT
+                            targetDrone.currentExclusionShape = SpyC.CIRCLE
+                        }
+                        checkable: true
+                        checked: root.droneValid() ? (targetDrone.currentExclusionShape === SpyC.CIRCLE) : false
+                        anchors.centerIn: parent
+                    }
+                }
+
+                // Rectangle
+                Item {
+                    width: parent.width/3
+                    height: width
+                    ImageButton {
+                        id: rectExclusion
+                        source: "qrc:/icons/ico-rectangle.svg"
+                        label: qsTr("Rectangle")
+                        textPosition: "below"
+                        textColor: Theme.defaultFontColor
+                        onClicked: {
+                            onClicked: targetDrone.workMode = SpyC.EXCLUSION_EDIT
+                            targetDrone.currentExclusionShape = SpyC.RECTANGLE
+                        }
+                        checkable: true
+                        checked: root.droneValid() ? (targetDrone.currentExclusionShape === SpyC.RECTANGLE) : false
+                        anchors.centerIn: parent
+                    }
+                }
+
+                // Triangle
+                Item {
+                    width: parent.width/3
+                    height: width
+                    ImageButton {
+                        id: triangleExclusion
+                        source: "qrc:/icons/ico-triangle.svg"
+                        label: qsTr("Triangle")
+                        textPosition: "below"
+                        textColor: Theme.defaultFontColor
+                        onClicked: {
+                            onClicked: targetDrone.workMode = SpyC.EXCLUSION_EDIT
+                            targetDrone.currentExclusionShape = SpyC.TRIANGLE
+                        }
+                        checkable: true
+                        checked: root.droneValid() ? (targetDrone.currentExclusionShape === SpyC.TRIANGLE) : false
+                        anchors.centerIn: parent
+                    }
+                }
             }
-            checkable: true
-            checked: root.droneValid() ? (targetDrone.currentExclusionShape === SpyC.TRIANGLE) : false
-            anchors.centerIn: parent
         }
     }
 }

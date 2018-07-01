@@ -20,6 +20,7 @@ class SPYCLIBSHARED_EXPORT BaseShape : public QObject
     Q_PROPERTY(QGeoCoordinate center READ center NOTIFY pathChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(int type READ type NOTIFY typeChanged)
+    Q_PROPERTY(QString strType READ strType NOTIFY typeChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -61,6 +62,18 @@ public:
     //! Return path
     const QGeoPath &path() const;
 
+    //! Return count
+    int count() const;
+
+    //! Return type
+    int type() const;
+
+    //! Return type as string
+    const QString &strType() const;
+
+    //! Return center
+    const QGeoCoordinate &center() const;
+
 protected:
     //! Constructor
     BaseShape(QObject *pParent=nullptr);
@@ -78,15 +91,8 @@ protected:
     //! Type
     SpyCore::ExclusionShape m_eType = SpyCore::RECTANGLE;
 
-private:
-    //! Return count
-    int count() const;
-
-    //! Return type
-    int type() const;
-
-    //! Return center
-    const QGeoCoordinate &center() const;
+    //! Type
+    QString m_sType = tr("RECTANGLE");
 
 signals:
     //! Path changed

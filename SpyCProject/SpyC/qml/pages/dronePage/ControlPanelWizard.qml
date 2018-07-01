@@ -15,8 +15,8 @@ Item {
             id: missionPage
             objectName: qsTr("MISSION PLAN")
             targetDrone: root.targetDrone
-            width: root.width
-            height: root.height
+            width: listView.width
+            height: listView.height
         }
 
         // Exclusion page
@@ -24,8 +24,9 @@ Item {
             id: exclusionPage
             objectName: qsTr("EXCLUSION AREA")
             targetDrone: root.targetDrone
-            width: root.width
-            height: root.height
+            width: listView.width
+            height: listView.height
+            clip: true
         }
 
         // Control page
@@ -33,8 +34,8 @@ Item {
             id: controlPage
             objectName: qsTr("ACTIONS")
             targetDrone: root.targetDrone
-            width: root.width
-            height: root.height
+            width: listView.width
+            height: listView.height
         }
 
         // Settings
@@ -42,8 +43,8 @@ Item {
             id: settingsPage
             objectName: qsTr("SETTINGS")
             targetDrone: root.targetDrone
-            width: root.width
-            height: root.height
+            width: listView.width
+            height: listView.height
         }
     }
 
@@ -57,6 +58,7 @@ Item {
             anchors.margins: Theme.standardMargin
             border.color: Theme.defaultFontColor
             color: "transparent"
+
             Item {
                 id: titleArea1
                 anchors.top: parent.top
@@ -83,6 +85,7 @@ Item {
             }
 
             ListView {
+                id: listView
                 anchors.top: titleArea1.bottom
                 anchors.bottom: parent.bottom
                 width: parent.width

@@ -39,6 +39,7 @@ INPUT(
 ./..\obj\qml_widgets_FileSelectorWidget_qml.o
 ./..\obj\qml_widgets_ImageButton_qml.o
 ./..\obj\qml_widgets_WayPointDelegate_qml.o
+./..\obj\qml_widgets_StandardGroup_qml.o
 ./..\obj\qml_widgets_DroneStatusWidget_qml.o
 ./..\obj\qml_widgets_SpeedDelegate_qml.o
 ./..\obj\qml_widgets_LangWidget_qml.o
