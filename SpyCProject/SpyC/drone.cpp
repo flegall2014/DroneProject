@@ -365,17 +365,17 @@ void Drone::updateBatteryStatus()
 
 //-------------------------------------------------------------------------------------------------
 
-Core::BaseShape *Drone::currentShape() const
+Core::BaseShape *Drone::currentExclusionArea() const
 {
     return m_pCurrentShape;
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void Drone::setCurrentShape(Core::BaseShape *pShape)
+void Drone::setCurrentExclusionArea(Core::BaseShape *pShape)
 {
     m_pCurrentShape = pShape;
-    emit currentShapeChanged();
+    emit currentExclusionAreaChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -385,7 +385,7 @@ void Drone::addRectangle(const QGeoCoordinate &center)
     QGeoCoordinate topLeft = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 135);
     QGeoCoordinate bottomRight = center.atDistanceAndAzimuth(DEFAULT_RADIUS, -45);
     Core::RectangleShape *pShape = new Core::RectangleShape(topLeft, bottomRight, this);
-    setCurrentShape(pShape);
+    setCurrentExclusionArea(pShape);
     m_vExclusionArea << pShape;
     m_pExclusionAreaModel->addExclusionArea(pShape);
 }
@@ -395,7 +395,7 @@ void Drone::addRectangle(const QGeoCoordinate &center)
 void Drone::addCircle(const QGeoCoordinate &center)
 {
     Core::CircleShape *pShape = new Core::CircleShape(center, DEFAULT_RADIUS, this);
-    setCurrentShape(pShape);
+    setCurrentExclusionArea(pShape);
     m_vExclusionArea << pShape;
     m_pExclusionAreaModel->addExclusionArea(pShape);
 }
@@ -408,7 +408,7 @@ void Drone::addTriangle(const QGeoCoordinate &center)
     QGeoCoordinate point2 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 210);
     QGeoCoordinate point3 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 330);
     Core::TriangleShape *pShape = new Core::TriangleShape(point1, point2, point3, this);
-    setCurrentShape(pShape);
+    setCurrentExclusionArea(pShape);
     m_vExclusionArea << pShape;
     m_pExclusionAreaModel->addExclusionArea(pShape);
 }

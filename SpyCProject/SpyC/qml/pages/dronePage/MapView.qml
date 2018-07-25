@@ -44,7 +44,7 @@ Map {
                     latitude: wayPointLatitude
                     longitude: wayPointLongitude
                 }
-                radius: 250
+                radius: 50
                 color: Theme.missionPlanColor
                 border.width: 3
                 MouseArea {
@@ -125,7 +125,7 @@ Map {
                     latitude: wayPointLatitude
                     longitude: wayPointLongitude
                 }
-                radius: 250
+                radius: 50
                 color: Theme.safetyColor
                 border.width: 3
                 MouseArea {
@@ -203,7 +203,7 @@ Map {
                     latitude: wayPointLatitude
                     longitude: wayPointLongitude
                 }
-                radius: 250
+                radius: 50
                 color: Theme.landingPlanColor
                 border.width: 3
                 MouseArea {

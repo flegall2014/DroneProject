@@ -20,7 +20,7 @@ MapItemView {
         Timer {
             interval: Theme.shapeBlinkInterval
             repeat: true
-            running: ((shape === targetDrone.currentShape) && (targetDrone.workMode === SpyC.EXCLUSION_EDIT))
+            running: ((shape === targetDrone.currentExclusionArea) && (targetDrone.workMode === SpyC.EXCLUSION_EDIT))
             onTriggered: {
                 if (border.color === Theme.exclusionAreaBorderColor)
                     border.color = Theme.exclusionAreaColor
@@ -66,14 +66,14 @@ MapItemView {
                     targetDrone.removeShape(index)
             }
             onPressed: {
-                targetDrone.currentShape = shape
+                targetDrone.currentExclusionArea = shape
                 mapView.gesture.enabled = false
             }
             onReleased: {
                 mapView.gesture.enabled = true
             }
             onPositionChanged: {
-                if (shape === targetDrone.currentShape)
+                if (shape === targetDrone.currentExclusionArea)
                 {
                     var mapped = mouseArea.mapToItem(mapView, mouse.x, mouse.y)
                     var newPosition = mapView.toCoordinate(Qt.point(mapped.x, mapped.y))
@@ -81,7 +81,7 @@ MapItemView {
                 }
             }
             onWheel: {
-                if (shape === targetDrone.currentShape)
+                if (shape === targetDrone.currentExclusionArea)
                 {
                     if (wheel.modifiers & Qt.ControlModifier) {
                         shape.rescale(wheel.angleDelta.y > 0 ? 1 : -1)

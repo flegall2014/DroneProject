@@ -503,7 +503,6 @@ QString DroneBase::serializeMissionPlan()
 
 //-------------------------------------------------------------------------------------------------
 
-
 void DroneBase::deserializeMissionPlan(const QString &sMissionPlan)
 {
     CXMLNode missionPlanNode = CXMLNode::parseJSON(sMissionPlan);
@@ -525,7 +524,6 @@ QString DroneBase::serializeLandingPlan()
 }
 
 //-------------------------------------------------------------------------------------------------
-
 
 void DroneBase::deserializeLandingPlan(const QString &sLandingPlan)
 {

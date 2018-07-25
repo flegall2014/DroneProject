@@ -35,7 +35,6 @@ INPUT(
 ./..\obj\qml_panels_LandingPlanEditorPanel_qml.o
 ./..\obj\qml_widgets_AltitudeWidget_qml.o
 ./..\obj\qml_widgets_StandardButton_qml.o
-./..\obj\qml_widgets_ItemStatus_qml.o
 ./..\obj\qml_widgets_FileSelectorWidget_qml.o
 ./..\obj\qml_widgets_ImageButton_qml.o
 ./..\obj\qml_widgets_WayPointDelegate_qml.o
@@ -56,7 +55,6 @@ INPUT(
 ./..\obj\qml_widgets_ArtificialHorizonWidget_qml.o
 ./..\obj\qml_widgets_SnapShotButton_qml.o
 ./..\obj\qml_widgets_DateDisplay_qml.o
-./..\obj\qml_widgets_BatteryStatusWidget_qml.o
 ./..\obj\qml_toolbars_MissionPlanToolBar_qml.o
 ./..\obj\qml_toolbars_MapToolBar_qml.o
 ./..\obj\qml_toolbars_LandingPlanToolBar_qml.o

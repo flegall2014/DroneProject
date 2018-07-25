@@ -38,7 +38,7 @@ class Drone : public Core::DroneBase
     Q_PROPERTY(GalleryModel *galleryModel READ galleryModel NOTIFY galleryModelChanged)
 
     // Exclusion area
-    Q_PROPERTY(Core::BaseShape *currentShape READ currentShape WRITE setCurrentShape NOTIFY currentShapeChanged)
+    Q_PROPERTY(Core::BaseShape *currentExclusionArea READ currentExclusionArea WRITE setCurrentExclusionArea NOTIFY currentExclusionAreaChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -190,10 +190,10 @@ private:
     void updateBatteryStatus();
 
     //! Return current shape
-    Core::BaseShape *currentShape() const;
+    Core::BaseShape *currentExclusionArea() const;
 
     //! Set current shape
-    void setCurrentShape(Core::BaseShape *pShape);
+    void setCurrentExclusionArea(Core::BaseShape *pShape);
 
 
 private:
@@ -278,7 +278,7 @@ signals:
     void currentExclusionShapeChanged();
 
     //! Current shape changed
-    void currentShapeChanged();
+    void currentExclusionAreaChanged();
 };
 
 #endif // DRONE_H

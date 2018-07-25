@@ -69,13 +69,11 @@
         <file>qml/toolbars/SafetyToolBar.qml</file>
         <file>qml/widgets/AltitudeWidget.qml</file>
         <file>qml/widgets/ArtificialHorizonWidget.qml</file>
-        <file>qml/widgets/BatteryStatusWidget.qml</file>
         <file>qml/widgets/CustomRadioButton.qml</file>
         <file>qml/widgets/DateDisplay.qml</file>
         <file>qml/widgets/DroneStatusWidget.qml</file>
         <file>qml/widgets/FileSelectorWidget.qml</file>
         <file>qml/widgets/ImageButton.qml</file>
-        <file>qml/widgets/ItemStatus.qml</file>
         <file>qml/widgets/LangWidget.qml</file>
         <file>qml/widgets/PitchIndicator.qml</file>
         <file>qml/widgets/SnapShotButton.qml</file>

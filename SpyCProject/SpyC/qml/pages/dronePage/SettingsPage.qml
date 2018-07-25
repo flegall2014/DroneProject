@@ -18,6 +18,8 @@ Grid {
     Item {
         width: parent.width/3
         height: width
+
+        // Navigation
         ImageButton {
             endColor: Theme.defaultButtonColor
             source: "qrc:/icons/ico-navigation.svg"
@@ -27,6 +29,23 @@ Grid {
             anchors.centerIn: parent
             textColor: Theme.defaultFontColor
             onClicked: loadPanel("FlightEditor")
+        }
+    }
+
+    // Navigation
+    Item {
+        width: parent.width/3
+        height: width
+
+        // Snapshots
+        ImageButton {
+            endColor: Theme.defaultButtonColor
+            source: "qrc:/icons/ico-gallery.svg"
+            label: qsTr("Gallery")
+            textPosition: "below"
+            anchors.centerIn: parent
+            textColor: Theme.defaultFontColor
+            onClicked: loadPanel("GalleryEditor")
         }
     }
 }

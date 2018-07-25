@@ -72,7 +72,7 @@ PanelBase {
         ShapeEditor {
             width: parent.width/2
             height: parent.height
-            currentShape: droneValid() ? targetDrone.currentShape : null
+            currentShape: droneValid() ? targetDrone.currentExclusionArea : null
         }
     }
 }
