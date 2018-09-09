@@ -44,6 +44,7 @@
 #define TAG_TRIANGLE "TRIANGLE"
 #define TAG_COORD "COORD"
 
+#define TAG_ARM "ARM"
 #define TAG_TAKE_OFF "TAKEOFF"
 #define TAG_GO_HOME "GOHOME"
 #define TAG_FAIL_SAFE "FAILSAFE"

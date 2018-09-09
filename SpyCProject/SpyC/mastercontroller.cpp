@@ -49,6 +49,7 @@ MasterController::MasterController(QObject *pParent) : QObject(pParent)
     connect(this, &MasterController::validateMissionPlanReq, this, &MasterController::onValidateMissionPlan, Qt::QueuedConnection);
     connect(this, &MasterController::validateLandingPlanReq, this, &MasterController::onValidateLandingPlan, Qt::QueuedConnection);
     connect(this, &MasterController::validateExclusionAreaReq, this, &MasterController::onValidateExclusionArea, Qt::QueuedConnection);
+    connect(this, &MasterController::armRequest, this, &MasterController::onArmRequest, Qt::QueuedConnection);
     connect(this, &MasterController::takeOffRequest, this, &MasterController::onTakeOffRequest, Qt::QueuedConnection);
     connect(this, &MasterController::goHomeRequest, this, &MasterController::onGoHomeRequest, Qt::QueuedConnection);
     connect(this, &MasterController::failSafeRequest, this, &MasterController::onFailSafeRequest, Qt::QueuedConnection);
@@ -223,13 +224,21 @@ void MasterController::onDroneGlobalStatusChanged()
 
 //-------------------------------------------------------------------------------------------------
 
+void MasterController::onArmRequest(const QString &sDroneUID)
+{
+    Drone *pDrone = getDrone(sDroneUID);
+    if (pDrone != nullptr)
+        sendMessage(Core::SerializeHelper::serializeArmRequest(sDroneUID));
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void MasterController::onTakeOffRequest(const QString &sDroneUID)
 {
     Drone *pDrone = getDrone(sDroneUID);
     if (pDrone != nullptr)
         sendMessage(Core::SerializeHelper::serializeTakeOffRequest(sDroneUID));
 }
-
 
 //-------------------------------------------------------------------------------------------------
 
@@ -442,6 +451,13 @@ void MasterController::setApplicationTitle(const QString &sApplicationTitle)
 const QString &MasterController::applicationTitle() const
 {
     return m_sApplicationTitle;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::arm(const QString &sDroneUID)
+{
+    emit armRequest(sDroneUID);
 }
 
 //-------------------------------------------------------------------------------------------------

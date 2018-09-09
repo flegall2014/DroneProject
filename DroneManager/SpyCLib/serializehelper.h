@@ -17,6 +17,9 @@ public:
     //! Serialize drone error
     static void deSerializeDroneError(const QString &sMessage, SpyCore::DroneError &eDroneError, QString &sDroneUID);
 
+    //! Serialize arm request
+    static QString serializeArmRequest(const QString &sDroneUID);
+
     //! Serialize take off request
     static QString serializeTakeOffRequest(const QString &sDroneUID);
 

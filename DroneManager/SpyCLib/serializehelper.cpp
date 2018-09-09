@@ -35,6 +35,16 @@ void SerializeHelper::deSerializeDroneError(const QString &sMessage, SpyCore::Dr
 
 //-------------------------------------------------------------------------------------------------
 
+QString SerializeHelper::serializeArmRequest(const QString &sDroneUID)
+{
+    CXMLNode armNode(TAG_ARM);
+    armNode.attributes()[ATTR_NODE_TYPE] = TAG_ARM;
+    armNode.attributes()[ATTR_DRONE_UID] = sDroneUID;
+    return armNode.toJsonString();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 QString SerializeHelper::serializeTakeOffRequest(const QString &sDroneUID)
 {
     CXMLNode takeOffNode(TAG_TAKE_OFF);

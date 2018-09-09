@@ -69,6 +69,9 @@ public:
     //! Validate an exclusion area request
     Q_INVOKABLE void validateExclusionAreaRequest(const QString &sDroneUID);
 
+    //! Arm
+    Q_INVOKABLE void arm(const QString &sDroneUID);
+
     //! Take off
     Q_INVOKABLE void takeOff(const QString &sDroneUID);
 
@@ -175,6 +178,9 @@ public slots:
     //! Drone global status changed
     void onDroneGlobalStatusChanged();
 
+    //! Arm request
+    void onArmRequest(const QString &sDroneUID);
+
     //! Take off request
     void onTakeOffRequest(const QString &sDroneUID);
 
@@ -223,6 +229,9 @@ signals:
 
     //! Validate exclusion area request
     void validateExclusionAreaReq(const QString &sDroneUID);
+
+    //! Send arm request
+    void armRequest(const QString &sDroneUID);
 
     //! Send a take off request
     void takeOffRequest(const QString &sDroneUID);
