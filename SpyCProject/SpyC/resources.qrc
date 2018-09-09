@@ -149,5 +149,6 @@
         <file>qml/widgets/StandardGroup.qml</file>
         <file>icons/ico-next.svg</file>
         <file>icons/ico-previous.svg</file>
+        <file>qml/dialogs/ConfirmArmDialog.qml</file>
     </qresource>
 </RCC>

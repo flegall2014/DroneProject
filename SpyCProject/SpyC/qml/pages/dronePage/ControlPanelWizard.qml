@@ -93,10 +93,23 @@ Item {
                 width: parent.width
                 model: itemModel
                 orientation: Qt.Horizontal
-                snapMode: ListView.SnapOneItem
+                snapMode: ListView.SnapToItem
                 clip: true
                 onCurrentIndexChanged: currentPage.text = itemModel.get(currentIndex).objectName
                 highlightRangeMode: ListView.StrictlyEnforceRange
+                interactive: false
+                highlightFollowsCurrentItem: false
+                highlight: Rectangle {
+                    x: listView.currentItem.x
+                    Behavior on x {
+                        SmoothedAnimation {
+                            easing.type: Easing.Linear
+                            duration: 200;
+                            maximumEasingTime: 300
+                            velocity: 1000
+                        }
+                    }
+                }
             }
 
             // Next page

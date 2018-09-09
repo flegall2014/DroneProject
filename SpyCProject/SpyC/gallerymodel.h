@@ -56,7 +56,7 @@ public:
     Q_INVOKABLE void addSnapShot(const QString &sSnapShotPath, const QGeoCoordinate &position);
 
     //! Return next snapshot name
-    Q_INVOKABLE QString getNextSnapShotName(const QString &sDroneUID);
+    Q_INVOKABLE QString getNextSnapShotName(const QString &sDroneUID, bool bIsMap);
 
     //! Initialize
     Q_INVOKABLE void initialize();

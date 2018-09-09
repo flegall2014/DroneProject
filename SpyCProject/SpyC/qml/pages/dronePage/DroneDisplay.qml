@@ -19,6 +19,13 @@ Rectangle {
         flipable.state = "back"
     }
 
+    // Take map snaphot
+    function takeMapSnapShot()
+    {
+        var snapShotPath = targetDrone.galleryModel.getNextSnapShotName(targetDrone.uid, true)
+        mapView.grabToImage(function(result) {result.saveToFile(snapShotPath)})
+    }
+
     Item {
         anchors.fill: parent
         anchors.margins: parent.border.width
@@ -43,7 +50,10 @@ Rectangle {
             anchors.bottom: commonArea.top
             anchors.top: parent.top
             targetDrone: drone
-            onTakeSnapShot: videoView.takeSnapShot()
+            onTakeSnapShot: {
+                videoView.takeSnapShot()
+                takeMapSnapShot()
+            }
             onLoadPanel: commonArea.loadPanel(panelName)
         }
 

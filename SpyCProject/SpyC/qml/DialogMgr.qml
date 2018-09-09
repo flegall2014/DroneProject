@@ -12,6 +12,12 @@ Item {
     function showDialog(dialogType, droneUID)
     {
         root.state = "active"
+        if (dialogType === SpyC.CONFIRM_ARM)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/ConfirmArmDialog.qml"
+            root.msgType = SpyC.INFORMATION_MSG
+        }
+        else
         if (dialogType === SpyC.CONFIRM_TAKE_OFF)
         {
             dialogLoader.source = "qrc:/qml/dialogs/ConfirmTakeOffDialog.qml"

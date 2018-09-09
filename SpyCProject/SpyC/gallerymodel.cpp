@@ -84,7 +84,7 @@ void GalleryModel::addSnapShot(const QString &sSnapShotPath, const QGeoCoordinat
 
 //-------------------------------------------------------------------------------------------------
 
-QString GalleryModel::getNextSnapShotName(const QString &sDroneUID)
+QString GalleryModel::getNextSnapShotName(const QString &sDroneUID, bool bIsMap)
 {
     QDateTime currentDateTime = QDateTime::currentDateTime();
     int iYear = currentDateTime.date().year();
@@ -93,7 +93,8 @@ QString GalleryModel::getNextSnapShotName(const QString &sDroneUID)
     int iHour = currentDateTime.time().hour();
     int iMin = currentDateTime.time().minute();
     int iSec = currentDateTime.time().second();
-    QString sUniqueName = QString("%1_%2_%3_%4_%5_%6_%7.jpg").arg(sDroneUID).arg(iYear).arg(iMonth).arg(iDay).arg(iHour).arg(iMin).arg(iSec);
+    QString sSnapShotExt = bIsMap ? "_map" : "";
+    QString sUniqueName = QString("%1_%2_%3_%4_%5_%6_%7%8.jpg").arg(sDroneUID).arg(iYear).arg(iMonth).arg(iDay).arg(iHour).arg(iMin).arg(iSec).arg(sSnapShotExt);
     sUniqueName.replace(" ", "_");
     return QDir(m_sSnapShotDir).absoluteFilePath(sUniqueName);
 }
